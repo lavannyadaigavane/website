@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Lavannya</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Pacifico&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #fcefee, #e9f8ff, #fef6ff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1rem;
+      color: #444;
+    }
+
+    nav {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #7e5bef;
+      margin: 0 1rem;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #d14ba6;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      color: #ff69b4;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote {
+      font-family: 'Shadows Into Light', cursive;
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .about-box {
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 2rem;
+      max-width: 700px;
+      box-shadow: 0 0 30px rgba(255, 200, 250, 0.2);
+      text-align: center;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .about-box p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .sparkle {
+      animation: sparkle 2s infinite alternate;
+      display: inline-block;
+      color: #f8a5c2;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.3); opacity: 0.7; }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .insta {
+      margin-top: 2rem;
+    }
+
+    .insta a {
+      color: #ff5da2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .insta a:hover {
+      color: #d14ba6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <h1>Lavannya </h1>
+  <div class="quote">"Made of doodles, dreams, and a little sparkle ✨"</div>
+
+  <div class="about-box">
+    <p>
+Hey, I’m Lavannya — 18, curious, and always up for something a little unexpected. I love doing wild, spontaneous things and finding creativity in everything — whether it’s art, science, nature, or just life itself.
+</p>
+
+<p>
+This website is my personal space where all the pieces of my world come together. You’ll find moments, ideas, and things I create — from visuals to thoughts, random experiments to meaningful memories. It’s not polished or perfect, just real and evolving — like me.
+</p>
+
+<div class="quote-box">“This site grows as I do.”</div>
+
+  </div>
+
+</body>
+</html>
