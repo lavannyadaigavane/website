@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lavannya Daigavane</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -34,13 +36,13 @@
       padding: 3rem 1rem 1rem;
       text-align: center;
     }
-
     header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-family: 'Dancing Script', curvise;
+      font-size: 3.2rem;
       color: #d48d9b;
       margin-bottom: 0.5rem;
       letter-spacing: 1px;
+    
     }
 
     .bio {
@@ -130,6 +132,51 @@
       letter-spacing: 0.2rem;
     }
 
+    /* 🌸 Neon Flower Animation Section */
+    .neon-wrapper {
+      position: relative;
+      margin: 4rem 1rem 2rem;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    .neon-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle, rgba(255,182,193,0.4), transparent 70%);
+      filter: blur(40px);
+      z-index: 0;
+    }
+
+    .neon-flowers {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .neon-flowers lottie-player {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    .welcome-quote {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-shadow: 0 0 10px #ffb6c1, 0 0 20px #ffa07a;
+      font-size: 2rem;
+      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+
     footer {
       margin: 3rem 0 2rem;
       font-size: 0.9rem;
@@ -151,17 +198,26 @@
       nav a {
         padding: 0.5rem 1.2rem;
       }
+
+      .welcome-quote {
+        font-size: 1.4rem;
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
     <h1>Lavannya Daigavane</h1>
     <p class="bio">Just a student sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
     <nav>
-      <a href="#">About</a>
+      <a href="about.html">About</a>
       <a href="https://medium.com/@lavannyadaigavane/about" target="_blank">Blog</a>
-      <a href="#">Contact</a>
+      <a href="#contact">Contact</a>
+     
+<p style="font-size: 0.9rem; color: #aaa;">
+  </div>
+</section>
     </nav>
     <div class="social-link">
       📸 <a href="https://instagram.com/laaavannyaa" target="_blank">Follow me on Instagram</a>
@@ -174,8 +230,55 @@
   <section class="quote-section">
     <p>"Not all those who wander are lost." – J.R.R. Tolkien</p>
     <p>"Collect moments, not things."</p>
-    </section>
 
+  <div style="text-align: center; font-size: 2rem; margin-top: 2rem; margin-bottom: -1rem; letter-spacing: 0.1rem; color: #d48d9b;">
+  🌷 ✨ 🧃 ☁️ 🎀 🌼 🎨 🌈 🍓 
+</div>  </section>
+<section id="contact" style="margin-top: 4rem; padding: 2rem; text-align: center;">
+  <div style="
+    background: rgba(255, 255, 255, 0.9);
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+    border: 2px dashed #ffd1dc;
+    font-family: 'Quicksand', sans-serif;
+  ">
+    <h2 style="color: #d48d9b; font-family: 'Playfair Display', serif; font-size: 2rem;">Let's Connect!</h2>
+    <p style="margin: 1rem 0; color: #555;">I’d love to hear from you — whether it's ideas, feedback, or just a hello 🌷</p>
+    
+    <div style="margin: 1.5rem 0;">
+      <a href="mailto:lavannyaaad@gmail.com" style="
+        display: inline-block;
+        margin: 0.5rem;
+        padding: 0.7rem 1.5rem;
+        background-color: #ffa69e;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      ">📧 Email Me</a>
+
+      <a href="https://www.linkedin.com/in/your-profile-link" target="_blank" style="
+        display: inline-block;
+        margin: 0.5rem;
+        padding: 0.7rem 1.5rem;
+        background-color: #c1e1ec;
+        color: #333;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      ">💼 LinkedIn</a>
+    </div>
+
+    <p style="font-size: 0.9rem; color: #aaa;">Let’s make something beautiful together 🌸</p>
+  </div>
+</section>
   <section class="posts-preview">
     <div class="post-card">
       <h2>✨ Coming Soon: My First Blog Post</h2>
@@ -183,7 +286,7 @@
     </div>
   </section>
 
-  <footer>
+ 
     Made with ☁️ pastels, 🌿 curiosity, and a little ✨ by Lavannya.
   </footer>
 </body>
