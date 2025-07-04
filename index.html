@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lavannya Daigavane</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #fdf6f0, #e0f7f4, #ffe4ec);
+      color: #444;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      transition: all 0.3s ease;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    header {
+      padding: 3rem 1rem 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #d48d9b;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .bio {
+      font-size: 1.2rem;
+      max-width: 700px;
+      color: #555;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #ffa69e;
+      padding: 0.6rem 1.4rem;
+      border-radius: 12px;
+      transition: 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      background-color: #ff6f61;
+      transform: scale(1.05);
+    }
+
+    .quote-section {
+      font-style: italic;
+      color: #777;
+      margin: 2rem 1rem;
+      text-align: center;
+      font-size: 1.1rem;
+      max-width: 600px;
+      line-height: 1.8;
+    }
+
+    .posts-preview {
+      max-width: 800px;
+      width: 90%;
+      text-align: center;
+      margin-top: 2rem;
+      border-top: 1px solid #eee;
+      padding-top: 2rem;
+    }
+
+    .post-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .social-link {
+      margin-top: 1rem;
+      font-size: 1rem;
+    }
+
+    .social-link a {
+      color: #d48d9b;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .social-link a:hover {
+      text-decoration: underline;
+      color: #b56b7e;
+    }
+
+    .doodles {
+      font-size: 2rem;
+      margin-top: 1rem;
+      letter-spacing: 0.2rem;
+    }
+
+    footer {
+      margin: 3rem 0 2rem;
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      .bio {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      nav a {
+        padding: 0.5rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lavannya Daigavane</h1>
+    <p class="bio">Just a student sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
+    <nav>
+      <a href="#">About</a>
+      <a href="https://medium.com/@lavannyadaigavane/about" target="_blank">Blog</a>
+      <a href="#">Contact</a>
+    </nav>
+    <div class="social-link">
+      📸 <a href="https://instagram.com/laaavannyaa" target="_blank">Follow me on Instagram</a>
+    </div>
+    <div class="doodles">
+      ✨ 🌿 🌸 🔬 🧬 🧠 📖 🌼
+    </div>
+  </header>
+
+  <section class="quote-section">
+    <p>"Not all those who wander are lost." – J.R.R. Tolkien</p>
+    <p>"Collect moments, not things."</p>
+    </section>
+
+  <section class="posts-preview">
+    <div class="post-card">
+      <h2>✨ Coming Soon: My First Blog Post</h2>
+      <p>Stay tuned as I begin this journey of thoughts, stories, and discoveries!</p>
+    </div>
+  </section>
+
+  <footer>
+    Made with ☁️ pastels, 🌿 curiosity, and a little ✨ by Lavannya.
+  </footer>
+</body>
+</html>
