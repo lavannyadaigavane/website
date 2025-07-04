@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title> vibes ✨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ffdee9, #b5ead7, #c9cfff, #fce1e4);
+      background-size: 800% 800%;
+      animation: colorShift 25s ease infinite;
+      padding: 3vw;
+    }
+
+    @keyframes colorShift {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 50% 50%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 100%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wrapper {
+      border: 8px solid white;
+      border-radius: 2rem;
+      background-color: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3rem;
+      text-align: center;
+      color: #6a5acd;
+      margin-bottom: 2rem;
+      text-shadow: 2px 2px #fff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: #fff0f8;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03) rotate(-1deg);
+    }
+
+    .card img {
+      max-width: 100%;
+      border-radius: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      font-size: 1.5rem;
+      color: #ff69b4;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #777;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    [data-aos] {
+      opacity: 0;
+      transition-property: transform, opacity;
+    }
+
+    [data-aos].aos-animate {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper" data-aos="zoom-in">
+    <h1 data-aos="fade-down">Lavannya's Vibes 🌸</h1>
+
+    <div class="grid">
+      <div class="card" data-aos="fade-up">
+        <img src="https://source.unsplash.com/300x200/?aesthetic,pink" alt="vibe">
+        <h3>just a chill girl 💖</h3>
+        <p>I live for music and warm people. That’s my core vibe.</p>
+      </div>
+      <div class="card" data-aos="fade-up" data-aos-delay="150">
+        <img src="https://source.unsplash.com/300x200/?clouds,dreamy" alt="vibe">
+        <h3>Dreamscape ☁️</h3>
+        <p>My head’s in the clouds with glitter thoughts and cotton candy plans.</p>
+      </div>
+      <div class="card" data-aos="fade-up" data-aos-delay="300">
+        <img src="https://source.unsplash.com/300x200/?flowers,pastel" alt="vibe">
+        <h3>Floral Chaos 🌼</h3>
+        <p>Flowers in my hair, chaos in my diary, peace in my soul.</p>
+      </div>
+      <div class="card" data-aos="fade-up" data-aos-delay="450">
+        <img src="https://source.unsplash.com/300x200/?stars,cute" alt="vibe">
+        <h3>Starry Mood 🌙</h3>
+        <p>Late night journals, soft fairy lights and dreaming with open eyes.</p>
+      </div>
+    </div>
+
+    <div class="footer" data-aos="fade-up" data-aos-delay="600">
+      Made with 💜 by Lavannya • Powered by vibes ✨
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 1200 });</script>
+
+</body>
+</html>
