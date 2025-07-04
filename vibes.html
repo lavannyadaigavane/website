@@ -1,12 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><!-- 💫 Floating Vibe Buttons -->
+<div class="floating-nav">
+  <a href="index.html" title="Home">🏠</a>
+  <a href="#gallery" title="Gallery">📸</a>
+  <a href="#about" title="About">💬</a>
+  <a href="#contact" title="Contact">📧</a>
+</div>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> vibes ✨</title>
+  <title>vibes ✨</title>
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <style>
+.floating-nav {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  z-index: 1000;
+}
+
+.floating-nav a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, #ffc6ec, #c1f0f6, #ffe0ac);
+  background-size: 300% 300%;
+  animation: pastelFlow 8s ease infinite;
+  padding: 0.6rem 0.9rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.floating-nav a:hover {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+@keyframes pastelFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
     * {
       margin: 0;
       padding: 0;
