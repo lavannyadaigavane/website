@@ -10,7 +10,8 @@
   <style>
     * {
       box-sizing: border-box;
-   }  body {
+   }
+  body {
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
@@ -232,6 +233,42 @@
   <div style="text-align: center; font-size: 2rem; margin-top: 2rem; margin-bottom: -1rem; letter-spacing: 0.1rem; color: #d48d9b;">
   🧃 ☁️ 🎀 
 </div>  </section>
+
+<!-- 💖 Vibes Button -->
+<a href="vibes.html" class="vibe-button">🌸 Vibes</a>
+
+<style>
+  .vibe-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.3rem;
+    font-family: 'Pacifico', cursive;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ffc6ec, #c1f0f6, #ffe0ac);
+    background-size: 300% 300%;
+    border: none;
+    border-radius: 2rem 0 2rem 0;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    animation: pastelFlow 6s ease infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vibe-button:hover {
+    transform: scale(1.07) rotate(-1deg);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+  }
+
+  @keyframes pastelFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+</style>
 <section id="contact" style="margin-top: 4rem; padding: 2rem; text-align: center;">
   <div style="
     background: rgba(255, 255, 255, 0.9);
