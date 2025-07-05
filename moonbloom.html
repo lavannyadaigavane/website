@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moonbloom</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      background: radial-gradient(ellipse at top, #fceefc, #d8e3f0);
+      font-family: 'Dancing Script', cursive;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .poem-container {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 3rem;
+      border-radius: 30px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.07);
+      max-width: 700px;
+      animation: fadeBloom 2s ease;
+    }
+
+    .poem-title {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #6a4f78;
+    }
+
+    .poem-text {
+      font-size: 1.7rem;
+      line-height: 2.2;
+      color: #3a2e3d;
+      white-space: pre-line;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: #9b4b99;
+      font-size: 1.2rem;
+    }
+
+    @keyframes fadeBloom {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poem-container">
+    <div class="poem-title">Moonbloom</div>
+    <div class="poem-text">
+      She doesn't shine—she unfurls,  
+      petal by petal in the hush of night.  
+      Not made of silver, but lullabies  
+      and things that once felt right.
+
+      No star could dare eclipse her glow,  
+      for she is bloom, not blaze.  
+      A tender myth the dark once dreamt  
+      to soften all its days.
+    </div>
+    <a class="back-button" href="index.html">← Back to stamps</a>
+  </div>

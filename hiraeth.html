@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hiraeth</title>
+  <style>
+    body {
+      background: #f9f6f1;
+      font-family: 'Segoe Script', cursive;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    .poem-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2rem 3rem;
+      border-radius: 28px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.07);
+      max-width: 600px;
+      animation: floatFade 2s ease;
+    }
+
+    .poem-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #5a4a3f;
+    }
+
+    .poem-text {
+      font-size: 1.4rem;
+      line-height: 2;
+      color: #3d3d3d;
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 2rem;
+      color: #aa6699;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    @keyframes floatFade {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="poem-box">
+    <div class="poem-title">Hiraeth</div>
+    <div class="poem-text">
+      I wake in rooms that know me not,  
+      where echoes wear my name.  
+      A mapless ache beneath my ribs,  
+      for days that never came.
+
+      A door that hums behind my mind —  
+      unopened, undefined.  
+      Not past, not place, but pulse and dust...  
+      a home I never find.
+    </div>
+    <a class="back" href="index.html">← Back to stamps</a>
+  </div>
+
+</body>
+</html>
