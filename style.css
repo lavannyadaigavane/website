@@ -1,0 +1,106 @@
+body {
+  background-color: #fdfaf6;
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 2rem;
+  color: #444;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.page-title h1 {
+  font-family: 'Caveat', cursive;
+  font-size: 2.8rem;
+  color: #7b5ea7;
+}
+
+.underline {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(to right, #ffbde6, #c3f4ff);
+  margin: 0.6rem auto 0;
+  border-radius: 50px;
+}
+
+.stamp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  padding: 0 1rem;
+}
+
+.stamp {
+  text-align: center;
+  text-decoration: none;
+  color: #6e6e6e;
+  transition: transform 0.4s ease;
+}
+
+.stamp img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 16px;
+  filter: drop-shadow(0 4px 10px rgba(255, 194, 255, 0.4));
+  transition: transform 0.4s ease, filter 0.4s ease;
+  background-color: #fffdfc;
+}
+
+.stamp:hover img {
+  transform: rotate(4deg) scale(1.05);
+  filter: drop-shadow(0 6px 15px rgba(255, 194, 255, 0.6));
+}
+
+.stamp span {
+  margin-top: 0.6rem;
+  display: block;
+  font-size: 0.95rem;
+  color: #946fc0;
+}
+
+.gallery-button-wrapper {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.rainbow-button {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #fcb7ff, #b4f8c8, #a0c4ff, #ffc6ff);
+  background-size: 400% 400%;
+  animation: rainbowGlow 6s ease infinite;
+  box-shadow: 0 0 15px rgba(255, 180, 255, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.rainbow-button:hover {
+  transform: scale(1.1) rotate(6deg);
+  box-shadow: 0 0 20px rgba(255, 150, 255, 0.8);
+}
+
+@keyframes rainbowGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.gallery-label {
+  margin-top: 10px;
+  font-family: 'Caveat', cursive;
+  font-size: 18px;
+  color: #555;
+  letter-spacing: 1px;
+}
+
