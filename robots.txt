@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://lavannya.me/sitemap.xml
