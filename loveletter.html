@@ -173,32 +173,16 @@
 
 <div class="reply-box">
   <label for="reply">Write back to yourself 💌</label>
-  <textarea id="reply" placeholder="Dear past me..."></textarea>
+  <textarea id="reply" placeholder="Dear future me..."></textarea>
   <button onclick="saveReply()">Send (just for fun!)</button>
 </div>
 
-<button class="music-btn" onclick="toggleMusic()" id="music-btn">🎵 Music: On/Off</button>
 
-<audio id="bg-music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_9b6f24524f.mp3?filename=soft-piano-ambient-126002.mp3" type="audio/mp3">
-</audio>
+
 
 <script>
-  const music = document.getElementById("bg-music");
-  const musicBtn = document.getElementById("music-btn");
-  let playing = false;
-
-  function toggleMusic() {
-    if (!playing) {
-      music.play();
-      musicBtn.classList.add("playing");
-      playing = true;
-    } else {
-      music.pause();
-      musicBtn.classList.remove("playing");
-      playing = false;
-    }
-  }
+  
+  
 
   function saveReply() {
     const reply = document.getElementById("reply").value;
