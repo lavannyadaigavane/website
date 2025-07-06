@@ -224,6 +224,92 @@
 </head>
 
 <body>
+<!-- 🌸 Aesthetic Navigation Bar -->
+<style>
+  .nav-container {
+    font-family: 'Poppins', sans-serif;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .nav-logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #ff99cc;
+    letter-spacing: 1px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #444;
+    font-size: 1rem;
+    transition: all 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: #ff66b2;
+  }
+
+  .hamburger {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #444;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #fffafc;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      flex-direction: column;
+      padding: 10px 20px;
+    }
+
+    .nav-links.active {
+      display: flex;
+    }
+
+    .hamburger {
+      display: block;
+    }
+  
+</style>
+
+<div class="nav-container">
+  <div class="nav-logo">L🧋</div>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+  <div class="nav-links" id="navLinks">
+    <a href="gallery.html">Gallery</a>
+    <a href="vibes.html">Vibes</a>
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+  }
+</script>
   <header>
     <h1>Lavannya Daigavane</h1>
     <p class="bio">Just a student sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
@@ -252,42 +338,7 @@
   🧃 ☁️ 🎀 
 </div>  </section>
 
-<!-- 💖 Vibes Button -->
-<a href="vibes.html" class="vibe-button">🌸 Vibes</a><div class="gallery-button-wrapper"><a href="gallery.html" class="rainbow-button">🎨</a>
-  <p class="gallery-label">Gallery</p>
-</div>
-<style>
-  .vibe-button {
-    display: inline-block;
-    padding: 1rem 2rem;
-    font-size: 1.3rem;
-    font-family: 'Pacifico', cursive;
-    color: #fff;
-    text-decoration: none;
-    background: linear-gradient(135deg, #ffc6ec, #c1f0f6, #ffe0ac);
-    background-size: 300% 300%;
-    border: none;
-    border-radius: 2rem 0 2rem 0;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    animation: pastelFlow 6s ease infinite;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .vibe-button:hover {
-    transform: scale(1.07) rotate(-1deg);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
-  }
-
-  @keyframes pastelFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-</style>
+ 
 <section id="contact" style="margin-top: 4rem; padding: 2rem; text-align: center;">
   <div style="
     background: rgba(255, 255, 255, 0.9);
@@ -331,12 +382,6 @@
   <div class="page-title">
     <h1>Words I've Written · Places I've Dreamed</h1>
     <div class="underline"></div>
-  
- 
-
-  </a>
-  
-  </div>
 
 
   <div class="stamp-grid">
