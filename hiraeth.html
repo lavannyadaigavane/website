@@ -1,83 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hiraeth</title>
+  <link href="https://fonts.googleapis.com/css2?family=Zeyada&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      background: #f9f6f1;
-      font-family: 'Segoe Script', cursive;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    .poem-box {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 2rem 3rem;
-      border-radius: 28px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.07);
-      max-width: 600px;
-      animation: floatFade 2s ease;
+    body {
+      font-family: 'Zeyada', cursive;
+      background: linear-gradient(120deg, #fce8ec, #e5f5fc, #f6ecff, #fff5e5);
+      background-size: 400% 400%;
+      animation: pastelFlow 30s ease infinite;
+      color: #51425f;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .poem-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+    .container {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border: 2px solid #f2defa;
+      border-radius: 20px;
+      max-width: 720px;
+      width: 100%;
+      padding: 3rem 2rem;
+      box-shadow: 0 0 30px rgba(203, 177, 255, 0.2);
+      position: relative;
+    }
+
+    h1 {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 2.4rem;
+      color: #a675b3;
       text-align: center;
-      color: #5a4a3f;
+      margin-bottom: 1.8rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px #f0d4ff88;
+      animation: fadeIn 2s ease;
     }
 
-    .poem-text {
+    .poem {
       font-size: 1.4rem;
-      line-height: 2;
-      color: #3d3d3d;
-      white-space: pre-line;
-      text-align: center;
+      line-height: 2.4rem;
+      color: #684c71;
+      white-space: pre-wrap;
+      text-align: left;
+      animation: slideUp 1.5s ease;
     }
 
-    .back {
-      display: block;
+    .quote {
+      font-family: 'Quicksand', sans-serif;
+      font-style: italic;
       text-align: center;
       margin-top: 2rem;
-      color: #aa6699;
-      text-decoration: none;
-      font-weight: bold;
+      font-size: 1rem;
+      color: #a98fbc;
+      animation: shimmer 5s ease-in-out infinite;
     }
 
-    @keyframes floatFade {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+    .petals {
+      position: absolute;
+      top: -20px;
+      right: 25px;
+      font-size: 1.5rem;
+      color: #dfa7ff;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .corner-note {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      font-size: 1rem;
+      color: #cc8fcf;
+      transform: rotate(-6deg);
+      text-shadow: 0 0 4px #efcaff;
+    }
+
+    @keyframes pastelFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @media screen and (max-width: 480px) {
+      .container {
+        padding: 2rem 1.2rem;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .poem {
+        font-size: 1.15rem;
+        line-height: 2rem;
+      }
+
+      .quote {
+        font-size: 0.9rem;
       }
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <div class="petals">🌸 🧵</div>
+    <h1>hiraeth</h1>
+    <div class="poem">
+i miss a place that never stayed,  
+a home i built from light and fade.  
+it lives in corners of my mind,  
+behind the now, and out of time.  
 
-  <div class="poem-box">
-    <div class="poem-title">Hiraeth</div>
-    <div class="poem-text">
-      I wake in rooms that know me not,  
-      where echoes wear my name.  
-      A mapless ache beneath my ribs,  
-      for days that never came.
-
-      A door that hums behind my mind —  
-      unopened, undefined.  
-      Not past, not place, but pulse and dust...  
-      a home I never find.
+i see it sometimes, soft and far,  
+between the sky and who we are.  
+not real, but still it aches so deep—  
+a dream i lost, but couldn’t keep.
     </div>
-    <a class="back" href="index.html">← Back to stamps</a>
+    <div class="quote">“some homes are not places, but memories.”</div>
+    <div class="corner-note">⋆ stitched in longing ⋆</div>
   </div>
-
 </body>
 </html>
