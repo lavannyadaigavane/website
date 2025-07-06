@@ -3,153 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gallery | Lavannya</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
-
+  <title>gallery</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-    }<nav class="navbar">
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="gallery.html" class="active">Gallery</a>
-  <a href="vibes.html">Vibes</a>
-  <a href="contact.html">Contact</a>
-</nav>
-<img src="stickers/flower.png" alt="flower sticker" class="sticker">
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Quicksand', sans-serif;
-      background: #fdfdff;
-      color: #333;
+      font-family: 'Outfit', sans-serif;
+      background: #fdfcfb;
+      color: #3a2e2e;
+      padding: 2rem;
     }
 
-    /* Navbar */
-    .navbar {
-      background: #f5f5ff;
-      padding: 1rem;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      border-bottom: 1px solid #eee;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .navbar a {
-      text-decoration: none;
-      color: #444;
-      font-weight: 600;
-      transition: 0.3s;
-    }
-
-    .navbar a:hover {
-      color: #7e5bef;
-    }
-
-    /* Heading */
     h1 {
       text-align: center;
-      margin: 2rem 0 1rem;
-      font-size: 2.5rem;
-      color: #7e5bef;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: #5e4b44;
+      letter-spacing: 0.5px;
     }
 
-    /* Gallery Grid */
-    .gallery {
+    .back-button {
+      display: inline-block;
+      margin: 0 auto 2rem auto;
+      text-align: center;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid #d1bfa4;
+      border-radius: 12px;
+      background-color: #f9f6f1;
+      color: #6e5e52;
+      text-decoration: none;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      display: block;
+      width: fit-content;
+    }
+
+    .back-button:hover {
+      background-color: #efe7dd;
+      transform: translateY(-2px);
+    }
+
+    .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
     }
 
-    .gallery-item {
-      overflow: hidden;
-      border-radius: 1rem;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-      transform: translateY(40px);
-      opacity: 0;
-      animation: fadeUp 1s ease-out forwards;
-      animation-delay: var(--delay);
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    .photo-card {
+      position: relative;
+      padding: 6px;
+      background: #f8f5f0;
+      border: 2px solid #e4d6c5;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      transition: transform 0.3s ease;
     }
 
-    .gallery-item:hover {
-      transform: scale(1.08) rotate(1deg);
-      box-shadow: 0 10px 25px rgba(200, 150, 255, 0.3);
+    .photo-card:hover {
+      transform: scale(1.02);
     }
 
-    .gallery-item img {
+    .photo-card img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 1rem;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      filter: sepia(10%) contrast(102%) brightness(98%);
     }
 
     .caption {
+      margin-top: 0.4rem;
       text-align: center;
+      font-weight: 500;
       font-size: 0.9rem;
-      padding: 0.5rem 0;
-      color: #666;
+      color: #7b6a60;
     }
 
-    @keyframes fadeUp {
-      to {
-        transform: translateY(0);
-        opacity: 1;
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      .caption {
+        font-size: 0.8rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- ✅ Navigation Bar -->
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="gallery.html">Gallery</a>
-  </nav>
+  <h1>moments I cherish</h1>
 
-  <h1>My Gallery</h1>
+  <a href="index.html" class="back-button">← Back to Home</a>
 
-  <!-- ✅ Gallery Grid -->
-  <div class="gallery">
-    <div class="gallery-item" style="--delay: 0s;">
-      <img src="images/1.jpg" alt="Gallery Item">
-      <div class="caption">A moment I loved</div>
+  <div class="gallery-grid">
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.29 PM.jpeg" alt="Memory 1">
+      <div class="caption">golden hours</div>
     </div>
-
-    <div class="gallery-item" style="--delay: 0.2s;">
-      <img src="images/2.jpg" alt="Gallery Item">
-      <div class="caption">Captured chaos</div>
+    <div class="photo-card">
+      <img src="file:///C:/Users/mail/Downloads/WhatsApp%20Image%202025-07-06%20at%206.09.09%20PM%20(2).jpeg" alt="Memory 2">
+      <div class="caption">urban eclipse</div>
     </div>
-
-    <div class="gallery-item" style="--delay: 0.4s;">
-      <img src="images/3.jpg" alt="Gallery Item">
-      <div class="caption">Doodle vibes</div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.12 PM (1).jpeg" alt="Memory 3">
+      <div class="caption">twilight solace</div>
     </div>
-
-    <!-- Add more as needed -->
-    <div class="gallery-item" style="--delay: 0.6s;">
-      <img src="images/4.jpg" alt="Gallery Item">
-      <div class="caption">Nature + Me</div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.17 PM (1).jpeg" alt="Memory 4">
+      <div class="caption">rustic rounds</div>
     </div>
-
-    <div class="gallery-item" style="--delay: 0.8s;">
-      <img src="images/5.jpg" alt="Gallery Item">
-      <div class="caption">Colors of life</div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.31 PM.jpeg" alt="Memory 5">
+      <div class="caption">petal overflow</div>
     </div>
-
-    <div class="gallery-item" style="--delay: 1s;">
-      <img src="images/6.jpg" alt="Gallery Item">
-      <div class="caption">Random sparks</div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.31 PM (1).jpeg" alt="Memory 6">
+      <div class="caption">brunna</div>
     </div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.32 PM.jpeg" alt="Memory 7">
+      <div class="caption">ivory stillness</div>
+    </div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.33 PM.jpeg" alt="Memory 8">
+      <div class="caption">popcorn hours</div>
+    </div>
+    <div class="photo-card">
+      <img src="C:\Users\mail\Downloads\WhatsApp Image 2025-07-06 at 6.09.15 PM.jpeg" alt="Memory 9">
+      <div class="caption">canopy calm</div>
+    
   </div>
 
 </body>
-</html
+</html>
