@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dear Future Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+
+
+   .back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  text-decoration: none;
+  font-family: 'Quicksand', sans-serif;
+  background: #fce6ff;
+  color: #b35ac3;
+  padding: 6px 14px;
+  font-size: 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(179, 90, 195, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+.back-btn:hover {
+  background: #f5d9fc;
+  transform: scale(1.05);
+} body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #fff7fb, #f0e7ff);
+      font-family: 'Handlee', cursive;
+      color: #5c4b72;
+      overflow-x: hidden;
+    }
+
+    .letter-container {
+      max-width: 600px;
+      margin: 100px auto 50px;
+      background: #ffffffcc;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      backdrop-filter: blur(6px);
+      animation: fadeIn 2s ease;
+    }
+
+    .letter-container::before {
+      content: "💌";
+      font-size: 48px;
+      position: absolute;
+      top: -30px;
+      left: 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      text-align: center;
+      margin-bottom: 30px;
+      color: #b07acb;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    .signature {
+      text-align: right;
+      font-size: 20px;
+      margin-top: 40px;
+    }
+
+    .floating-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.3;
+      animation: slowFade 10s infinite alternate;
+    }
+
+    @keyframes slowFade {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.4; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fbe3ff;
+      color: #a960c4;
+      border: none;
+      padding: 10px 16px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(169, 96, 196, 0.3);
+    }
+
+    .reply-box {
+      margin: 40px auto;
+      max-width: 600px;
+      padding: 20px;
+      background: #fff5fd;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .reply-box textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #e0c7ee;
+      font-size: 16px;
+      font-family: 'Handlee', cursive;
+      resize: vertical;
+      height: 100px;
+      background: #fffaff;
+    }
+
+    .reply-box button {
+      margin-top: 10px;
+      background: #d9a7f5;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .reply-box button:hover {
+      background: #c17fe5;
+    }
+  </style>
+</head>
+<body>
+<a href="index.html" class="back-btn">← back</a>
+<div class="floating-stars"></div>
+
+<div class="letter-container">
+  <h1>Dear Future Me,</h1>
+  <p>
+    I hope you’re still dreaming — wildly, freely, without fear.  
+    I hope you remember the softness in you, the fire too,  
+    and how you built this little world out of colors and courage.
+  </p>
+  <p>
+    I know things weren’t always easy.  
+    There were nights you questioned it all — the journey, the purpose, the dream.  
+    But look at you. You held on. And that matters more than anything.
+  </p>
+  <p>
+    Don’t let the world dim your sparkle.  
+    Wear your mess like moonlight — beautiful, chaotic, and radiant.  
+    Keep writing, loving, feeling deeply.
+  </p>
+  <p>
+    The girl writing this believed in you.  
+    Please don’t forget her.  
+  </p>
+  <div class="signature">With all the magic,<br>Lavannya 💫</div>
+</div>
+
+<div class="reply-box">
+  <label for="reply">Write back to yourself 💌</label>
+  <textarea id="reply" placehol…
