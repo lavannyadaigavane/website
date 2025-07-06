@@ -3,80 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>The Comrade Who Stayed</title>
+  <title>Comrade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(to bottom right, #f5e9ee, #d0e4ec);
-      font-family: 'Palatino Linotype', 'Book Antiqua', serif;
+      margin: 0;
+      background: #f0e6dc url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+      font-family: 'Courier Prime', monospace;
+      color: #3a2d20;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem;
-      color: #2a2a2a;
-      text-align: center;
       min-height: 100vh;
+      padding: 2rem;
     }
 
-    .poem-container {
-      background: rgba(255, 255, 255, 0.85);
-      padding: 2.5rem;
-      border-radius: 24px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.08);
-      max-width: 700px;
-      animation: fadeIn 1.5s ease;
+    .paper {
+      background: #fbf5e9 url('https://www.transparenttextures.com/patterns/rough-cloth-light.png');
+      border: 3px solid #8b5e3c;
+      border-radius: 8px;
+      padding: 3rem;
+      max-width: 680px;
+      width: 90%;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+      position: relative;
     }
 
-    .poem-title {
+    h1 {
       font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #4a3f65;
+      text-transform: uppercase;
+      color: #6e3e2e;
+      text-align: center;
+      letter-spacing: 1.5px;
+      margin-bottom: 1.5rem;
     }
 
-    .poem-text {
-      font-size: 1.3rem;
+    .poem {
+      font-size: 1.2rem;
       line-height: 2;
-      white-space: pre-line;
+      white-space: pre-wrap;
     }
 
-    .back-link {
-      margin-top: 2rem;
-      font-size: 1rem;
-      text-decoration: none;
-      color: #8844aa;
-      transition: color 0.3s ease;
+    .stamp {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 80px;
+      background: url(https://img.freepik.com/premium-photo/png-french-rose-postage-stamp-sticker-vintage-flower-transparent-background_53876-1001655.jpg) no-repeat center center;
+      background-size: cover;
+      opacity: 0.7;
+      transform: rotate(-5deg);
     }
 
-    .back-link:hover {
-      color: #5a296d;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .badge {
+      position: absolute;
+      top: -15px;
+      left: -15px;
+      background: #6b4f3b;
+      color: #f5efe7;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      border-radius: 4px;
+      transform: rotate(-5deg);
+      box-shadow: 1px 1px 4px rgba(0,0,0,0.2);
     }
   </style>
 </head>
 <body>
+  <div class="paper">
+    <div class="badge">comrade note</div>
+    <h1>comrade</h1>
+    <div class="poem">
+not by name, not by blood—  
+but shoulder to shoulder, in sweat and mud.  
+a shared glance, when skies turned black,  
+you never left, you had my back.  
 
-  <div class="poem-container">
-    <div class="poem-title">The Comrade Who Stayed</div>
-    <div class="poem-text">
-      Not in thunder, not in fame,  
-      But in silence, you came.  
-      A shoulder when the skyline bled,  
-      A fire when every spark had fled.
-
-      Through rusted dreams and rebel years,  
-      We drank hope and swallowed fears.  
-      Where others left with empty vows,  
-      You planted roots beneath my doubt.
-
-      
+not heroes loud, but hearts unsaid,  
+you were the fire when hope had fled.
     </div>
-    <a class="back-link" href="index.html">← Back to stamps</a>
+    <div class="stamp"></div>
   </div>
-
 </body>
 </html>
