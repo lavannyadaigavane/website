@@ -5,33 +5,30 @@
   <title>Dear Future Me</title>
   <link href="https://fonts.googleapis.com/css2?family=Handlee&family=Quicksand&display=swap" rel="stylesheet">
   <style>
-
-
-   .back-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  text-decoration: none;
-  font-family: 'Quicksand', sans-serif;
-  background: #fce6ff;
-  color: #b35ac3;
-  padding: 6px 14px;
-  font-size: 16px;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(179, 90, 195, 0.2);
-  transition: all 0.3s ease;
-  z-index: 1000;
-}
-.back-btn:hover {
-  background: #f5d9fc;
-  transform: scale(1.05);
-} body {
+    body {
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom, #fff7fb, #f0e7ff);
       font-family: 'Handlee', cursive;
       color: #5c4b72;
       overflow-x: hidden;
+    }
+
+    .floating-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+      opacity: 0.3;
+      animation: slowFade 10s infinite alternate;
+    }
+
+    @keyframes slowFade {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.4; }
     }
 
     .letter-container {
@@ -73,41 +70,9 @@
       margin-top: 40px;
     }
 
-    .floating-stars {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-      opacity: 0.3;
-      animation: slowFade 10s infinite alternate;
-    }
-
-    @keyframes slowFade {
-      0% { opacity: 0.2; }
-      100% { opacity: 0.4; }
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(40px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    .music-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #fbe3ff;
-      color: #a960c4;
-      border: none;
-      padding: 10px 16px;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 16px;
-      border-radius: 20px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(169, 96, 196, 0.3);
     }
 
     .reply-box {
@@ -146,9 +111,53 @@
     .reply-box button:hover {
       background: #c17fe5;
     }
+
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      text-decoration: none;
+      font-family: 'Quicksand', sans-serif;
+      background: #fce6ff;
+      color: #b35ac3;
+      padding: 6px 14px;
+      font-size: 16px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(179, 90, 195, 0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-btn:hover {
+      background: #f5d9fc;
+      transform: scale(1.05);
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #fbe3ff;
+      color: #a960c4;
+      border: none;
+      padding: 10px 16px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(169, 96, 196, 0.3);
+      transition: 0.3s ease;
+    }
+
+    .music-btn.playing {
+      background: #f1ccff;
+      box-shadow: 0 0 20px #dca6f7;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
+
 <a href="index.html" class="back-btn">← back</a>
 <div class="floating-stars"></div>
 
@@ -165,17 +174,51 @@
     But look at you. You held on. And that matters more than anything.
   </p>
   <p>
-    Don’t let the world dim your sparkle.  
-    Wear your mess like moonlight — beautiful, chaotic, and radiant.  
-    Keep writing, loving, feeling deeply.
-  </p>
-  <p>
     The girl writing this believed in you.  
     Please don’t forget her.  
   </p>
-  <div class="signature">With all the magic,<br>Lavannya 💫</div>
+  <div class="signature">With all the magic,<br>Lavanya 💫</div>
 </div>
 
 <div class="reply-box">
   <label for="reply">Write back to yourself 💌</label>
-  <textarea id="reply" placehol…
+  <textarea id="reply" placeholder="Dear past me..."></textarea>
+  <button onclick="saveReply()">Send (just for fun!)</button>
+</div>
+
+<button class="music-btn" onclick="toggleMusic()" id="music-btn">🎵 Music: On/Off</button>
+
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/11/16/audio_9b6f24524f.mp3?filename=soft-piano-ambient-126002.mp3" type="audio/mp3">
+</audio>
+
+<script>
+  const music = document.getElementById("bg-music");
+  const musicBtn = document.getElementById("music-btn");
+  let playing = false;
+
+  function toggleMusic() {
+    if (!playing) {
+      music.play();
+      musicBtn.classList.add("playing");
+      playing = true;
+    } else {
+      music.pause();
+      musicBtn.classList.remove("playing");
+      playing = false;
+    }
+  }
+
+  function saveReply() {
+    const reply = document.getElementById("reply").value;
+    if (reply.trim()) {
+      alert("✨ Saved in your heart. Your future self will read it. 💖");
+      document.getElementById("reply").value = "";
+    } else {
+      alert("Write something first, dreamer! 🌸");
+    }
+  }
+</script>
+
+</body>
+</html>
