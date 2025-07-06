@@ -4,142 +4,245 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>gallery</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Love+Ya+Like+A+Sister&display=swap" rel="stylesheet">
+  <!-- AOS Scroll Animation -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
-      font-family: 'Outfit', sans-serif;
-      background: #fdfcfb;
-      color: #3a2e2e;
-      padding: 2rem;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fffaf4;
+      font-family: 'Gloria Hallelujah', cursive;
+      margin: 0;
+      padding: 1.5rem;
+      overflow-x: hidden;
     }
 
     h1 {
       text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-      color: #5e4b44;
-      letter-spacing: 0.5px;
+      font-size: 2.5rem;
+      color: #333;
+      text-shadow: 2px 2px #ffdee9;
+      margin-bottom: 2rem;
     }
 
-    .back-button {
-      display: inline-block;
-      margin: 0 auto 2rem auto;
-      text-align: center;
-      padding: 0.6rem 1.2rem;
-      border: 1px solid #d1bfa4;
-      border-radius: 12px;
-      background-color: #f9f6f1;
-      color: #6e5e52;
-      text-decoration: none;
-      font-size: 0.9rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: all 0.3s ease;
-      display: block;
-      width: fit-content;
-    }
-
-    .back-button:hover {
-      background-color: #efe7dd;
-      transform: translateY(-2px);
-    }
-
-    .gallery-grid {
+    .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
+      gap: 1.8rem;
     }
 
-    .photo-card {
+    .photo-frame {
+      background: #fff;
+      border-radius: 16px;
+      padding: 0.8rem;
+      box-shadow: 4px 4px 0 #ffd6e0;
       position: relative;
-      padding: 6px;
-      background: #f8f5f0;
-      border: 2px solid #e4d6c5;
-      border-radius: 12px;
-      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
       transition: transform 0.3s ease;
     }
 
-    .photo-card:hover {
-      transform: scale(1.02);
+    .photo-frame:hover {
+      transform: scale(1.03) rotate(-1deg);
     }
 
-    .photo-card img {
+    .photo-frame img {
       width: 100%;
-      height: auto;
-      border-radius: 8px;
-      display: block;
-      filter: sepia(10%) contrast(102%) brightness(98%);
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #ffe4f0;
     }
 
     .caption {
-      margin-top: 0.4rem;
-      text-align: center;
-      font-weight: 500;
+      position: absolute;
+      bottom: -1.2rem;
+      right: 0.8rem;
+      background: #ffe1f1;
+      padding: 4px 10px;
+      border-radius: 8px;
       font-size: 0.9rem;
-      color: #7b6a60;
+      color: #d03e77;
+      box-shadow: 2px 2px #ffb6c1;
+      font-family: 'Love Ya Like A Sister', cursive;
     }
 
-    @media screen and (max-width: 600px) {
+    .tape {
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      background: #fceaff;
+      transform: rotate(-15deg);
+      box-shadow: 2px 2px #ffb6e6;
+      z-index: 10;
+    }
+
+    .tape.left {
+      top: -10px;
+      left: -8px;
+    }
+
+    .tape.right {
+      top: -10px;
+      right: -8px;
+      transform: rotate(15deg);
+    }
+
+    .scribble-doodle {
+      position: absolute;
+      font-size: 1.2rem;
+      color: #ff71a3;
+      font-family: 'Love Ya Like A Sister', cursive;
+      pointer-events: none;
+    }
+
+    .scribble-doodle.top {
+      top: -18px;
+      left: 10px;
+      transform: rotate(-10deg);
+    }
+
+    .scribble-doodle.bottom {
+      bottom: -18px;
+      right: 12px;
+      transform: rotate(10deg);
+    }
+
+    .back-button {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .back-button a {
+      text-decoration: none;
+      font-size: 1rem;
+      background: #ffeaf8;
+      padding: 8px 16px;
+      border-radius: 10px;
+      color: #000;
+      box-shadow: 3px 3px #ffc8dd;
+      transition: all 0.3s ease;
+    }
+
+    .back-button a:hover {
+      background: #ffd6ea;
+      box-shadow: 5px 5px #ffb5d8;
+    }
+
+    audio {
+      display: none;
+    }
+
+    @media (max-width: 480px) {
       h1 {
-        font-size: 1.6rem;
-      }
-      .caption {
-        font-size: 0.8rem;
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>moments I cherish</h1>
+  <audio autoplay loop>
+    <source src="your-music.mp3" type="audio/mp3">
+  </audio>
 
-  <a href="index.html" class="back-button">← Back to Home</a>
+  <h1>gallery</h1>
 
-  <div class="gallery-grid">
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.29 PM.jpeg" alt="Memory 1">
-      <div class="caption">golden hours</div>
+  <div class="gallery">
+
+    <!-- 10 photo frames -->
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.09 PM (1).jpeg" alt="1" />
+      <div class="scribble-doodle top">✨</div>
+      <div class="scribble-doodle bottom">🌸 </div>
+      
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.09 PM (1).jpeg" alt="Memory 2">
-      <div class="caption">urban eclipse</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.12 PM (1).jpeg" alt="2" />
+      <div class="scribble-doodle top">🎨 </div>
+      <div class="scribble-doodle bottom">💫 </div>
+      
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.12 PM (1).jpeg" alt="Memory 3">
-      <div class="caption">twilight solace</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.15 PM.jpeg" alt="3" />
+      <div class="scribble-doodle top">☁️ </div>
+      <div class="scribble-doodle bottom">🌷 </div>
+      
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.17 PM (1).jpeg" alt="Memory 4">
-      <div class="caption">rustic rounds</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.17 PM (1).jpeg" alt="4" />
+      <div class="scribble-doodle top">🎵 </div>
+      <div class="scribble-doodle bottom">🦋 </div>
+      
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.31 PM.jpeg" alt="Memory 5">
-      <div class="caption">petal overflow</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.29 PM.jpeg" alt="5" />
+      <div class="scribble-doodle top">💖 </div>
+      <div class="scribble-doodle bottom">🌼 </div>
+     
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.31 PM (1).jpeg" alt="Memory 6">
-      <div class="caption">brunna</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.31 PM (1).jpeg" alt="6" />
+      <div class="scribble-doodle top">🌙</div>
+      <div class="scribble-doodle bottom">🧸 </div>
+      
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.32 PM.jpeg" alt="Memory 7">
-      <div class="caption">ivory stillness</div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.31 PM.jpeg" alt="7" />
+      <div class="scribble-doodle top">🧁 </div>
+      <div class="scribble-doodle bottom">🐚 </div>
+          </div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.32 PM.jpeg" alt="8" />
+      <div class="scribble-doodle top">🌈</div>
+      <div class="scribble-doodle bottom">🍒</div>
+          </div>
+
+    <div class="photo-frame" data-aos="zoom-in">
+      <div class="tape left"></div>
+      <div class="tape right"></div>
+      <img src="C:\Users\mail\Desktop\hey\WhatsApp Image 2025-07-06 at 6.09.33 PM.jpeg" alt="9" />
+      <div class="scribble-doodle top">🫧</div>
+      <div class="scribble-doodle bottom">🎈 </div>
+     
     </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.33 PM.jpeg" alt="Memory 8">
-      <div class="caption">popcorn hours</div>
-    </div>
-    <div class="photo-card">
-      <img src="C:\Users\mail\Downloads\hey\WhatsApp Image 2025-07-06 at 6.09.15 PM.jpeg" alt="Memory 9">
-      <div class="caption">canopy calm</div>
+
     
+
   </div>
 
+  <div class="back-button">
+    <a href="index.html">← Back to Home</a>
+  </div>
+
+  <!-- Scroll animation script -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
