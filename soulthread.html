@@ -3,46 +3,146 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Poem 1</title>
+  <title>Soulthread</title>
+  <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&display=swap" rel="stylesheet">
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background: #fef6f9;
-      font-family: 'Georgia', serif;
+      font-family: 'La Belle Aurore', cursive;
+      background: linear-gradient(to bottom, #0d0c1d, #1c1b2f);
+      color: #e7dffc;
+      padding: 2rem 1rem;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      padding: 2rem;
-      color: #444;
-      text-align: center;
+      min-height: 100vh;
     }
-    .poem {
-      max-width: 600px;
-      font-size: 1.4rem;
-      line-height: 1.8;
-      background: rgba(255, 255, 255, 0.8);
-      padding: 2rem;
+
+    .wrapper {
+      width: 100%;
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.06);
+      position: relative;
     }
-    .back {
-      margin-top: 2rem;
-      text-decoration: none;
-      color: #cc6699;
-      font-weight: bold;
+
+    h1 {
+      font-size: 2.2rem;
+      color: #dfbaf8;
+      text-align: center;
+      margin-bottom: 1.8rem;
+      text-shadow: 0 0 6px #bb7ff788;
+      letter-spacing: 1px;
+    }
+
+    .poem {
+      font-size: 1.2rem;
+      line-height: 2.2;
+      color: #e3d4f8;
+      text-shadow: 0 0 2px #5e4a7b66;
+      white-space: pre-wrap;
+      text-align: left;
+      padding: 0 0.2rem;
+    }
+
+    .quote {
+      margin-top: 2.2rem;
+      font-size: 1rem;
+      text-align: center;
+      font-style: italic;
+      color: #cab6eb;
+      text-shadow: 0 0 4px #9a7dcf88;
+    }
+
+    .doodles {
+      font-size: 1.7rem;
+      text-align: center;
+      margin-top: 1.8rem;
+      animation: float 4s ease-in-out infinite;
+      color: #dcc5ff;
+      text-shadow: 0 0 6px #b589f5;
+    }
+
+    .stars {
+      position: absolute;
+      top: -20px;
+      right: 20px;
+      font-size: 1.7rem;
+      color: #fff1ff;
+      animation: shimmer 3s infinite;
+      text-shadow: 0 0 10px #d6a7f3;
+    }
+
+    .ribbon {
+      position: absolute;
+      bottom: -20px;
+      left: 20px;
+      font-size: 1rem;
+      color: #e6cfff;
+      transform: rotate(-6deg);
+      text-shadow: 0 0 4px #c17aff;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @media screen and (max-width: 480px) {
+      .wrapper {
+        padding: 2rem 1.2rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .poem {
+        font-size: 1.05rem;
+        line-height: 2;
+      }
+
+      .quote {
+        font-size: 0.95rem;
+      }
+
+      .doodles {
+        font-size: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="poem">
-    <p>
-      In petals soft, I hide my thought,<br>
-      A wish, a world that can't be bought.<br>
-      Through ink and dusk, I leave my mark,<br>
-      A light within the quiet dark.
-    </p>
+  <div class="wrapper">
+    <div class="stars">✦ ✧ ✦</div>
+    <h1>soulthread</h1>
+    <div class="poem">
+     i feel a string i cannot see,  
+     it ties the stars back into me.  
+     it’s quiet, soft, and always near,  
+     it pulls me close when i feel fear.  
+
+     it’s not a rope, it doesn’t hurt—  
+     just makes me feel i'm part of earth.  
+     it reminds me, when i forget—  
+     i still have light inside me yet.
+    </div>
+    <div class="quote">“the softest bond is often the strongest.”</div>
+    <div class="doodles">💫 🌙 ✨ 🧵</div>
+    
   </div>
-  <a href="index.html" class="back">← Back to stamps</a>
 </body>
 </html>
