@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lavannya's Blog Topics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), linear-gradient(135deg, #f5e6c8 0%, #e9d8b4 100%);
+      font-family: 'Special Elite', 'Gloria Hallelujah', cursive;
+      color: #3a2716;
+      background-blend-mode: multiply;
+      position: relative;
+      overflow-x: hidden;
+      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .scribble-corner {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      z-index: 10;
+      opacity: 0.7;
+    }
+    .scribble-corner.top-left { top: 0; left: 0; transform: rotate(-10deg); }
+    .scribble-corner.top-right { top: 0; right: 0; transform: rotate(10deg) scaleX(-1); }
+    .scribble-corner.bottom-left { bottom: 0; left: 0; transform: rotate(8deg) scaleY(-1); }
+    .scribble-corner.bottom-right { bottom: 0; right: 0; transform: rotate(-8deg) scale(-1,1); }
+    .blog-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-top: 3.5rem;
+      color: #bfa17d;
+      font-family: 'Gloria Hallelujah', cursive;
+      letter-spacing: 2px;
+      text-shadow: 1.5px 1.5px #e0d4c1, 0 2px 8px #fffbe7;
+    }
+    .topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      margin: 3rem auto 2rem auto;
+      max-width: 900px;
+      position: relative;
+      z-index: 2;
+    }
+    .topic-card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 18px;
+      border: 2.5px dashed #bfa17d;
+      box-shadow: 0 8px 32px rgba(74, 57, 37, 0.13);
+      padding: 2.2rem 2.5rem 1.5rem 2.5rem;
+      min-width: 220px;
+      max-width: 320px;
+      text-align: center;
+      font-family: 'Gloria Hallelujah', cursive;
+      font-size: 1.2rem;
+      color: #5c4326;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      animation: cardPop 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    .topic-card:hover {
+      transform: translateY(-8px) scale(1.04) rotate(-2deg);
+      box-shadow: 0 16px 40px #e2cfa7b0;
+      background: #fffbe7;
+    }
+    @keyframes cardPop {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .topic-card .scribble {
+      position: absolute;
+      width: 60px;
+      opacity: 0.3;
+      z-index: 1;
+    }
+    .topic-card .scribble.top { top: -18px; left: 10px; }
+    .topic-card .scribble.bottom { bottom: -18px; right: 10px; }
+    .topic-link {
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: #bfa17d;
+      color: #fffbe7;
+      border-radius: 8px;
+      padding: 8px 22px;
+      font-size: 1.1rem;
+      text-decoration: none;
+      font-family: 'Gloria Hallelujah', cursive;
+      box-shadow: 0 2px 8px #e2cfa7;
+      transition: background 0.2s;
+      z-index: 2;
+      position: relative;
+    }
+    .topic-link:hover {
+      background: #a88c5c;
+    }
+    .scribble {
+      position: absolute;
+      width: 90px;
+      opacity: 0.5;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .scribble.s1 { top: 18px; right: 60px; transform: rotate(-8deg); }
+    .scribble.s2 { bottom: 18px; left: 60px; transform: rotate(12deg); }
+    @media (max-width: 700px) {
+      .topics-list { flex-direction: column; align-items: center; gap: 1.5rem; }
+      .topic-card { min-width: 80vw; max-width: 97vw; padding: 1.2rem 1.2rem 1rem 1.2rem; font-size:1.01rem; }
+      .blog-title { font-size: 1.3rem; margin-top: 1.5rem; }
+    }
+    @media (max-width: 430px) {
+      .topic-card { min-width: 96vw; max-width: 99vw; padding: 0.7rem 0.5rem 0.7rem 0.5rem; }
+      .blog-title { font-size: 1.01rem; margin-top: 0.7rem; }
+    }
+    @keyframes bounce {
+      0% { transform: scale(0.95) translateY(18px); }
+      60% { transform: scale(1.04) translateY(-8px); }
+      100% { transform: scale(1) translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Scribble SVG Corners -->
+  <svg class="scribble-corner top-left" viewBox="0 0 60 60"><path d="M5,55 Q30,10 55,5" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
+  <svg class="scribble-corner top-right" viewBox="0 0 60 60"><path d="M5,5 Q30,50 55,55" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
+  <svg class="scribble-corner bottom-left" viewBox="0 0 60 60"><path d="M5,55 Q30,10 55,5" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
+  <svg class="scribble-corner bottom-right" viewBox="0 0 60 60"><path d="M5,5 Q30,50 55,55" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
+  <div class="blog-title" style="position:relative;">
+    <span style="background:linear-gradient(90deg,#ffeecb 60%,#ffd6e0 100%);padding:0 18px 4px 18px;border-radius:18px;box-shadow:0 2px 12px #ffd6e055;">Blog Topics</span>
+    <svg style="position:absolute;left:50%;top:100%;transform:translate(-50%,0);" width="120" height="18" viewBox="0 0 120 18"><rect x="0" y="8" width="120" height="10" rx="5" fill="#ffeecb"/><text x="50%" y="16" text-anchor="middle" fill="#bfa17d" font-size="1.1em" font-family='Gloria Hallelujah, Special Elite, cursive' opacity="0.7">★</text></svg>
+  </div>
+  <div class="topics-list">
+    <div class="topic-card" onclick="location.href='blog1.html'" style="background:linear-gradient(135deg,#fffbe7 70%,#ffe6fa 100%);box-shadow:0 8px 32px #ffd6e055;animation:bounce 1.2s cubic-bezier(.4,0,.2,1);">
+      <svg class="scribble top" viewBox="0 0 60 20"><path d="M5,10 Q30,2 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+      <div style="position:relative;z-index:2;font-size:1.25rem;font-family:'Gloria Hallelujah',cursive;">
+        Blurry Sunsets & Cookie Experiments
+      </div>
+      <svg class="scribble bottom" viewBox="0 0 60 20"><path d="M5,10 Q30,18 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+      <a class="topic-link" href="blog1.html" style="background:linear-gradient(90deg,#ffd6e0 60%,#ffeecb 100%);color:#5c4326;box-shadow:0 2px 8px #ffd6e055;">Read</a>
+      <svg style="position:absolute;right:10px;bottom:10px;width:32px;opacity:0.5;z-index:0;" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+      <svg style="position:absolute;left:10px;top:10px;width:22px;opacity:0.4;z-index:0;" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="5" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+    </div>
+    <div class="topic-card" style="opacity:0.7;cursor:default;background:linear-gradient(135deg,#ffeecb 70%,#e0f7fa 100%);">
+      <svg class="scribble top" viewBox="0 0 60 20"><path d="M5,10 Q30,2 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+      <div style="position:relative;z-index:2;">More coming soon...</div>
+      <svg class="scribble bottom" viewBox="0 0 60 20"><path d="M5,10 Q30,18 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
+    </div>
+  </div>
+  <svg class="scribble s1" viewBox="0 0 100 30"><path d="M10,20 Q50,5 90,20" stroke="#bfa17d" stroke-width="2.5" fill="none"/></svg>
+  <svg class="scribble s2" viewBox="0 0 100 30"><path d="M10,10 Q50,25 90,10" stroke="#bfa17d" stroke-width="2.5" fill="none"/></svg>
+</body>
+</html>
