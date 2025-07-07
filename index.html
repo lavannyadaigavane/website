@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-08PR3MTNPX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-08PR3MTNPX');
+</script>
 <link rel="icon" href="favicon.jpeg" type="image/jpeg" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -227,7 +236,7 @@
   pointer-events: none;
   z-index: 9999;
 }
-  </style
+  </style>
 </head>
 
 
@@ -254,7 +263,7 @@
         y: e.clientY,
         radius: Math.random() * 2 + 1,
         alpha: 1,
-        color: hsl(${Math.random() * 360}, 100%, 85%),
+        color: `hsl(${Math.random() * 360}, 100%, 85%)`,
         dx: (Math.random() - 0.5) * 1.5,
         dy: (Math.random() - 0.5) * 1.5,
       });
@@ -272,7 +281,7 @@
       else {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(255, 255, 255, ${p.alpha});
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.shadowColor = p.color;
         ctx.shadowBlur = 12;
         ctx.fill();
