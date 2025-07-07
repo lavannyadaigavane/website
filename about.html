@@ -9,10 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Pacifico&family=Shadows+Into+Light&display=swap" rel="stylesheet">
 
   <style>
-    * {
+    html, body {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      width: 100vw;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
     }
 
     body {
@@ -24,6 +30,8 @@
       align-items: center;
       padding: 3rem 1rem;
       color: #456;
+      width: 100vw;
+      overflow-x: hidden;
     }
 
     nav {

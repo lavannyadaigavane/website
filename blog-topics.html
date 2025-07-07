@@ -6,17 +6,22 @@
   <title>Lavannya's Blog Topics</title>
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
-      background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), linear-gradient(135deg, #f5e6c8 0%, #e9d8b4 100%);
+      width: 100vw;
+      background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), linear-gradient(135deg, #f7fafc 0%, #ffeecb 100%);
       font-family: 'Special Elite', 'Gloria Hallelujah', cursive;
       color: #3a2716;
       background-blend-mode: multiply;
       position: relative;
       overflow-x: hidden;
       animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
     }
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -35,12 +40,13 @@
     .scribble-corner.bottom-right { bottom: 0; right: 0; transform: rotate(-8deg) scale(-1,1); }
     .blog-title {
       text-align: center;
-      font-size: 2.5rem;
-      margin-top: 3.5rem;
-      color: #bfa17d;
+      font-size: 2.1rem;
+      margin-top: 2.5rem;
+      color: #3a2716;
       font-family: 'Gloria Hallelujah', cursive;
-      letter-spacing: 2px;
-      text-shadow: 1.5px 1.5px #e0d4c1, 0 2px 8px #fffbe7;
+      letter-spacing: 1.2px;
+      font-weight: 500;
+      text-shadow: none;
     }
     .topics-list {
       display: flex;
@@ -49,17 +55,20 @@
       gap: 2.5rem;
       margin: 3rem auto 2rem auto;
       max-width: 900px;
+      width: 100%;
       position: relative;
       z-index: 2;
+      box-sizing: border-box;
     }
     .topic-card {
-      background: rgba(255,255,255,0.97);
+      background: #f7fafc;
       border-radius: 18px;
       border: 2.5px dashed #bfa17d;
-      box-shadow: 0 8px 32px rgba(74, 57, 37, 0.13);
+      box-shadow: 0 4px 18px #e3eafc55;
       padding: 2.2rem 2.5rem 1.5rem 2.5rem;
       min-width: 220px;
       max-width: 320px;
+      width: 100%;
       text-align: center;
       font-family: 'Gloria Hallelujah', cursive;
       font-size: 1.2rem;
@@ -70,6 +79,7 @@
       overflow: hidden;
       margin-bottom: 1.5rem;
       animation: cardPop 1.2s cubic-bezier(.4,0,.2,1);
+      box-sizing: border-box;
     }
     .topic-card:hover {
       transform: translateY(-8px) scale(1.04) rotate(-2deg);
@@ -116,13 +126,37 @@
     .scribble.s1 { top: 18px; right: 60px; transform: rotate(-8deg); }
     .scribble.s2 { bottom: 18px; left: 60px; transform: rotate(12deg); }
     @media (max-width: 700px) {
-      .topics-list { flex-direction: column; align-items: center; gap: 1.5rem; }
-      .topic-card { min-width: 80vw; max-width: 97vw; padding: 1.2rem 1.2rem 1rem 1.2rem; font-size:1.01rem; }
-      .blog-title { font-size: 1.3rem; margin-top: 1.5rem; }
+      .topics-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0 0.5rem;
+      }
+      .topic-card {
+        min-width: 90vw;
+        max-width: 98vw;
+        width: 100%;
+        padding: 1.1rem 0.7rem 1rem 0.7rem;
+        font-size: 1.01rem;
+      }
+      .blog-title {
+        font-size: 1.3rem;
+        margin-top: 1.5rem;
+      }
     }
     @media (max-width: 430px) {
-      .topic-card { min-width: 96vw; max-width: 99vw; padding: 0.7rem 0.5rem 0.7rem 0.5rem; }
-      .blog-title { font-size: 1.01rem; margin-top: 0.7rem; }
+      .topic-card {
+        min-width: 98vw;
+        max-width: 99vw;
+        width: 100%;
+        padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+      }
+      .blog-title {
+        font-size: 1.01rem;
+        margin-top: 0.7rem;
+      }
     }
     @keyframes bounce {
       0% { transform: scale(0.95) translateY(18px); }
@@ -138,21 +172,20 @@
   <svg class="scribble-corner bottom-left" viewBox="0 0 60 60"><path d="M5,55 Q30,10 55,5" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
   <svg class="scribble-corner bottom-right" viewBox="0 0 60 60"><path d="M5,5 Q30,50 55,55" stroke="#bfa17d" stroke-width="3" fill="none"/></svg>
   <div class="blog-title" style="position:relative;">
-    <span style="background:linear-gradient(90deg,#ffeecb 60%,#ffd6e0 100%);padding:0 18px 4px 18px;border-radius:18px;box-shadow:0 2px 12px #ffd6e055;">Blog Topics</span>
+    <span style="background:#f7fafc;padding:0 18px 4px 18px;border-radius:18px;box-shadow:0 2px 8px #e3eafc55;">Blog Topics</span>
     <svg style="position:absolute;left:50%;top:100%;transform:translate(-50%,0);" width="120" height="18" viewBox="0 0 120 18"><rect x="0" y="8" width="120" height="10" rx="5" fill="#ffeecb"/><text x="50%" y="16" text-anchor="middle" fill="#bfa17d" font-size="1.1em" font-family='Gloria Hallelujah, Special Elite, cursive' opacity="0.7">★</text></svg>
   </div>
   <div class="topics-list">
-    <div class="topic-card" onclick="location.href='blog1.html'" style="background:linear-gradient(135deg,#fffbe7 70%,#ffe6fa 100%);box-shadow:0 8px 32px #ffd6e055;animation:bounce 1.2s cubic-bezier(.4,0,.2,1);">
+    <div class="topic-card" onclick="location.href='blog1.html'" style="background:#f7fafc;box-shadow:0 4px 18px #e3eafc55;animation:bounce 1.2s cubic-bezier(.4,0,.2,1);">
       <svg class="scribble top" viewBox="0 0 60 20"><path d="M5,10 Q30,2 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
       <div style="position:relative;z-index:2;font-size:1.25rem;font-family:'Gloria Hallelujah',cursive;">
-        Blurry Sunsets & Cookie Experiments
+        Beginnings
       </div>
       <svg class="scribble bottom" viewBox="0 0 60 20"><path d="M5,10 Q30,18 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
-      <a class="topic-link" href="blog1.html" style="background:linear-gradient(90deg,#ffd6e0 60%,#ffeecb 100%);color:#5c4326;box-shadow:0 2px 8px #ffd6e055;">Read</a>
       <svg style="position:absolute;right:10px;bottom:10px;width:32px;opacity:0.5;z-index:0;" viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
       <svg style="position:absolute;left:10px;top:10px;width:22px;opacity:0.4;z-index:0;" viewBox="0 0 22 22"><rect x="3" y="3" width="16" height="16" rx="5" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
     </div>
-    <div class="topic-card" style="opacity:0.7;cursor:default;background:linear-gradient(135deg,#ffeecb 70%,#e0f7fa 100%);">
+    <div class="topic-card" style="opacity:0.7;cursor:default;background:#f0f4fa;">
       <svg class="scribble top" viewBox="0 0 60 20"><path d="M5,10 Q30,2 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>
       <div style="position:relative;z-index:2;">More coming soon...</div>
       <svg class="scribble bottom" viewBox="0 0 60 20"><path d="M5,10 Q30,18 55,10" stroke="#bfa17d" stroke-width="2" fill="none"/></svg>

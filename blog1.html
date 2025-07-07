@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Poetic Blog</title>
+  <title>Beginnings</title>
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
   <style>
     /* Animated floating particles for magical effect */
@@ -148,10 +148,18 @@
       pointer-events: auto;
       transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
     }
-    body {
+    html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
+      width: 100vw;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body {
       background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), linear-gradient(135deg, #f5e6c8 0%, #e9d8b4 100%);
       font-family: 'Special Elite', 'Gloria Hallelujah', cursive;
       color: #3a2716;
@@ -159,7 +167,6 @@
       font-size: 18px;
       background-blend-mode: multiply;
       position: relative;
-      overflow-x: hidden;
     }
 
     .scribble-corner {
@@ -346,7 +353,6 @@
         width: 60px !important;
       }
     }
-    }
   </style>
 </head>
 <body>
@@ -394,7 +400,7 @@
   <a href="index.html" class="back-button">← Back Home</a>
   <!-- Cloud sticker removed as requested -->
   <div class="container">
-    <h1>Blurry Sunsets & Cookie Experiments</h1>
+    <h1>Beginnings</h1>
     <svg class="scribble s1" viewBox="0 0 100 30"><path d="M10,20 Q50,5 90,20" stroke="#bfa17d" stroke-width="2.5" fill="none"/></svg>
     <svg style="display:block;margin:0 auto 8px auto;" width="180" height="18" viewBox="0 0 180 18"><rect x="0" y="8" width="180" height="10" rx="5" fill="#ffeecb"/><text x="50%" y="16" text-anchor="middle" fill="#bfa17d" font-size="1.1em" font-family='Gloria Hallelujah, Special Elite, cursive' opacity="0.7">★</text></svg>
 
