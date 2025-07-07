@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-08PR3MTNPX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-08PR3MTNPX');
+</script>
 <link rel="icon" href="favicon.jpeg" type="image/jpeg" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,7 +40,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #f7fbff 0%, #e3f0fa 50%, #eaf6fb 100%);
+      background: linear-gradient(135deg, #fdf6f0, #e0f7f4, #ffe4ec);
       color: #444;
       display: flex;
       flex-direction: column;
@@ -254,7 +263,7 @@
         y: e.clientY,
         radius: Math.random() * 2 + 1,
         alpha: 1,
-        color: hsl(${Math.random() * 360}, 100%, 85%),
+        color: `hsl(${Math.random() * 360}, 100%, 85%)`,
         dx: (Math.random() - 0.5) * 1.5,
         dy: (Math.random() - 0.5) * 1.5,
       });
@@ -272,7 +281,7 @@
       else {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(255, 255, 255, ${p.alpha});
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         ctx.shadowColor = p.color;
         ctx.shadowBlur = 12;
         ctx.fill();
@@ -379,6 +388,7 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
   <div class="nav-links" id="navLinks">
     <a href="gallery.html">Gallery</a>
+    <a href="vibes.html">Vibes</a>
  </div>
  </div>
 
@@ -392,7 +402,7 @@
     <p class="bio">Just a student sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
     <nav>
       <a href="about.html">About</a>
-      <a href="blog-topics.html">Blog</a>
+      <a href="https://medium.com/@lavannyadaigavane/about" target="_blank">Blog</a>
       <a href="#contact">Contact</a>
      <p style="font-size: 0.9rem; color: #aaa;">
   </div>
@@ -490,7 +500,14 @@
 
 </section>
   <section class="posts-preview">
+    <div class="post-card"><div style="text-align: center; margin-top: 2rem;">
+ 
     
+</div>
+
+      <h2>✨ Coming Soon: My First Blog Post</h2>
+      <p>Stay tuned as I begin this journey of thoughts, stories, and discoveries!</p>
+    </div>
 
  <a href="loveletter.html" class="envelope-link">💌</a>
 
