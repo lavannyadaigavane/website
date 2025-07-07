@@ -3,184 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lavannya's Blog Topics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+  <title>blog index</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
   <style>
     html, body {
       margin: 0;
       padding: 0;
       min-height: 100vh;
       width: 100vw;
-      background: url('https://www.transparenttextures.com/patterns/old-mathematics.png'), linear-gradient(135deg, #f7fafc 0%, #ffeecb 100%);
-      font-family: 'Special Elite', 'Gloria Hallelujah', cursive;
-      color: #3a2716;
+      /* Realistic paper grid background using SVG for sharpness and subtle paper texture overlay */
+      background-color: #fdf6e3;
+      background-image:
+        /* grid lines */
+        url('data:image/svg+xml;utf8,<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" fill="none"/><path d="M0 0H40V40H0V0Z" fill="none"/><path d="M0 0H40M0 10H40M0 20H40M0 30H40M10 0V40M20 0V40M30 0V40" stroke="%23d6cfc2" stroke-width="1.1"/></svg>'),
+        /* subtle paper texture overlay */
+        url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-size: 40px 40px, 340px 340px;
       background-blend-mode: multiply;
-      position: relative;
+      font-family: 'Special Elite', 'Space Grotesk', 'Segoe UI', monospace, sans-serif;
+      color: #2d2d2d;
       overflow-x: hidden;
-      animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
       box-sizing: border-box;
     }
-    *, *:before, *:after {
-      box-sizing: inherit;
+    /* Pops of color as fixed SVG blobs */
+    body::before {
+      content: '';
+      position: fixed;
+      z-index: 0;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      background: url('data:image/svg+xml;utf8,<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="180" cy="120" rx="110" ry="38" fill="%23ffe3ec" fill-opacity="0.55"/><ellipse cx="1000" cy="180" rx="90" ry="32" fill="%23e0f7fa" fill-opacity="0.45"/><ellipse cx="600" cy="700" rx="140" ry="44" fill="%23fff9c4" fill-opacity="0.5"/><ellipse cx="300" cy="600" rx="60" ry="22" fill="%23e1bee7" fill-opacity="0.32"/></svg>');
+      background-repeat: no-repeat;
+      background-size: cover;
+      mix-blend-mode: lighten;
+      opacity: 0.85;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .blog-index-container {
+      max-width: 900px;
+      margin: 4.5rem auto 0 auto;
+      padding: 2.5rem 2rem 3rem 2rem;
+      background: rgba(255,255,255,0.82);
+      border-radius: 1.2rem;
+      box-shadow: 0 4px 32px #e2e2e2cc, 0 1.5px 0 #fff inset;
+      position: relative;
+      z-index: 2;
+      border: 1.5px solid #e0d7c3;
+      backdrop-filter: blur(0.5px);
     }
-    /* Subtle vine corners */
-    .vine-corner {
+    .blog-index-title {
+      font-family: 'Special Elite', 'Space Grotesk', monospace, sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      margin-bottom: 2.2rem;
+      color: #e86a92;
+      text-shadow: 0 2px 0 #fff, 0 1.5px 0 #e0d7c3, 0 0 8px #ffe7f0;
+      text-align: left;
+      text-transform: lowercase;
+      user-select: none;
+      border-bottom: 2.5px solid #e0d7c3;
+      padding-bottom: 0.5rem;
+      margin-left: 0.2rem;
+      position: relative;
+    }
+    .blog-index-title::after {
+      content: '';
       position: absolute;
-      width: 80px;
-      height: 80px;
-      z-index: 10;
-      opacity: 0.32;
+      left: -18px;
+      top: 50%;
+      transform: translateY(-50%) rotate(-8deg);
+      width: 32px;
+      height: 32px;
+      background: url('data:image/svg+xml;utf8,<svg width="32" height="32" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="14" fill="%23ffe7f0" stroke="%23e86a92" stroke-width="2"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="%23e86a92" font-family="Arial">✿</text></svg>') no-repeat center/contain;
+      opacity: 0.92;
       pointer-events: none;
     }
-    .vine-corner.top-left { top: 0; left: 0; transform: rotate(-6deg); }
-    .vine-corner.top-right { top: 0; right: 0; transform: rotate(6deg) scaleX(-1); }
-    .vine-corner.bottom-left { bottom: 0; left: 0; transform: rotate(4deg) scaleY(-1); }
-    .vine-corner.bottom-right { bottom: 0; right: 0; transform: rotate(-4deg) scale(-1,1); }
-    .blog-title {
-      text-align: center;
-      font-size: 2.1rem;
-      margin-top: 2.5rem;
-      color: #3a2716;
-      font-family: 'Gloria Hallelujah', cursive;
-      letter-spacing: 1.2px;
-      font-weight: 500;
-      text-shadow: none;
     }
-    .topics-list {
+    .blog-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 2.5rem;
-      margin: 3rem auto 2rem auto;
-      max-width: 900px;
-      width: 100%;
-      position: relative;
-      z-index: 2;
+      gap: 2.2rem 2.2rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      justify-content: flex-start;
+    }
+    .blog-list li {
+      background: rgba(255,255,255,0.92);
+      border-radius: 0.7rem;
+      box-shadow: 0 2px 12px #e0e0e0cc;
+      border: 1.2px solid #e0d7c3;
+      padding: 0.7em 1.2em 0.7em 1.2em;
+      margin: 0;
+      transition: box-shadow 0.18s, transform 0.18s;
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      min-width: 0;
+      min-height: 0;
+      width: auto;
+      height: auto;
+      max-width: 100%;
       box-sizing: border-box;
+      word-break: break-word;
     }
-    .topic-card {
-      background: #f7fafc;
-      border-radius: 18px;
-      border: 2.5px dashed #bfa17d;
-      box-shadow: 0 4px 18px #e3eafc55;
-      padding: 2.2rem 2.5rem 1.5rem 2.5rem;
-      min-width: 220px;
-      max-width: 320px;
-      width: 100%;
-      text-align: center;
-      font-family: 'Gloria Hallelujah', cursive;
-      font-size: 1.2rem;
-      color: #5c4326;
-      position: relative;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      animation: cardPop 1.2s cubic-bezier(.4,0,.2,1);
-      box-sizing: border-box;
+    .blog-list li:hover {
+      box-shadow: 0 8px 32px #e0d7c3cc;
+      transform: translateY(-4px) scale(1.025) rotate(-0.5deg);
     }
-    .topic-card:hover {
-      transform: translateY(-8px) scale(1.04) rotate(-2deg);
-      box-shadow: 0 16px 40px #e2cfa7b0;
-      background: #fffbe7;
-    }
-    @keyframes cardPop {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-    .topic-card .scribble {
-      /* scribble styles removed for rustic vine update */
-    }
-    /* scribble positions removed */
-    .topic-link {
-      display: inline-block;
-      margin-top: 1.2rem;
-      background: #bfa17d;
-      color: #fffbe7;
-      border-radius: 8px;
-      padding: 8px 22px;
-      font-size: 1.1rem;
+    .blog-link {
+      font-family: 'Space Grotesk', 'Space Mono', monospace, sans-serif;
+      font-size: 1.25rem;
+      color: #3a7ca5;
       text-decoration: none;
-      font-family: 'Gloria Hallelujah', cursive;
-      box-shadow: 0 2px 8px #e2cfa7;
-      transition: background 0.2s;
-      z-index: 2;
+      letter-spacing: 0.03em;
+      font-weight: 700;
+      text-shadow: 0 1.5px 0 #fff, 0 0 2px #e0d7c3;
+      transition: color 0.18s, text-shadow 0.18s;
+      text-transform: lowercase;
+      margin-bottom: 0.4rem;
+      border-left: 4px solid #ffe066;
+      padding-left: 0.5rem;
+      background: linear-gradient(90deg, #ffe06633 60%, transparent 100%);
+      border-radius: 0.2rem;
       position: relative;
     }
-    .topic-link:hover {
-      background: #a88c5c;
+    .blog-link::after {
+      content: '';
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-left: 0.5rem;
+      background: radial-gradient(circle at 50% 50%, #e86a92 60%, transparent 100%);
+      border-radius: 50%;
+      vertical-align: middle;
+      opacity: 0.7;
     }
-    /* Remove unnecessary scribbles */
+    }
+    .blog-link:hover {
+      color: #e86a92;
+      text-shadow: 0 0 18px #ffe066, 0 2px 18px #fff;
+      transform: scale(1.04) rotate(-1deg);
+    }
+    .blog-desc {
+      font-size: 1.01rem;
+      color: #6d5c3d;
+      margin-top: 0.1rem;
+      margin-left: 0.1rem;
+      font-family: 'Space Mono', monospace, sans-serif;
+      letter-spacing: 0.01em;
+      line-height: 1.6;
+      text-shadow: 0 1.5px 0 #fff, 0 0 2px #e0d7c3;
+      background: linear-gradient(90deg, #e0f7fa33 0%, #ffe06622 100%);
+      border-left: 3px solid #e86a92;
+      border-radius: 0.2rem;
+      padding-left: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
     @media (max-width: 700px) {
-      .topics-list {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.2rem;
-        width: 100vw;
-        max-width: 100vw;
-        padding: 0 0.5rem;
-      }
-      .topic-card {
-        min-width: 90vw;
+      .blog-index-container {
+        margin: 1.2rem 0 0 0;
+        padding: 0.7rem 0.2rem 1.2rem 0.2rem;
+        border-radius: 0.8rem;
         max-width: 98vw;
-        width: 100%;
-        padding: 1.1rem 0.7rem 1rem 0.7rem;
-        font-size: 1.01rem;
       }
-      .blog-title {
-        font-size: 1.3rem;
-        margin-top: 1.5rem;
+      .blog-index-title {
+        font-size: 1.15rem;
+        padding-bottom: 0.3rem;
+        margin-bottom: 1.1rem;
+      }
+      .blog-list {
+        gap: 1.1rem 0.7rem;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .blog-list li {
+        padding: 0.5em 0.7em 0.5em 0.7em;
+        font-size: 0.98rem;
+        min-width: 0;
+        width: 100%;
+        max-width: 100vw;
+        border-radius: 0.5rem;
+      }
+      .blog-link {
+        font-size: 0.98rem;
+        padding-left: 0.3rem;
+        margin-bottom: 0.2rem;
+        border-left-width: 3px;
+      }
+      .blog-link::after {
+        width: 8px;
+        height: 8px;
+        margin-left: 0.3rem;
       }
     }
-    @media (max-width: 430px) {
-      .topic-card {
-        min-width: 98vw;
-        max-width: 99vw;
-        width: 100%;
-        padding: 0.7rem 0.3rem 0.7rem 0.3rem;
-      }
-      .blog-title {
-        font-size: 1.01rem;
-        margin-top: 0.7rem;
-      }
-    }
-    @keyframes bounce {
-      0% { transform: scale(0.95) translateY(18px); }
-      60% { transform: scale(1.04) translateY(-8px); }
-      100% { transform: scale(1) translateY(0); }
+    /* Doodle accent in the corner for extra pop */
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      width: 64px;
+      height: 64px;
+      background: url('data:image/svg+xml;utf8,<svg width="64" height="64" xmlns="http://www.w3.org/2000/svg"><ellipse cx="32" cy="32" rx="28" ry="18" fill="%23ffe066" stroke="%23e86a92" stroke-width="2.5"/><text x="32" y="42" font-size="32" text-anchor="middle" fill="%23e86a92" font-family="Arial">★</text></svg>') no-repeat center/contain;
+      opacity: 0.85;
+      z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 8px #ffe06688);
     }
   </style>
 </head>
 <body>
-  <!-- Subtle vine SVG corners -->
-  <svg class="vine-corner top-left" viewBox="0 0 80 80"><path d="M10,70 Q40,10 70,10" stroke="#7d6b4f" stroke-width="2.2" fill="none"/><path d="M25,45 Q30,35 40,40" stroke="#a89c7d" stroke-width="1.2" fill="none"/><circle cx="18" cy="60" r="2.5" fill="#bfa17d" opacity="0.7"/></svg>
-  <svg class="vine-corner top-right" viewBox="0 0 80 80"><path d="M10,10 Q40,70 70,70" stroke="#7d6b4f" stroke-width="2.2" fill="none"/><path d="M55,35 Q50,45 40,40" stroke="#a89c7d" stroke-width="1.2" fill="none"/><circle cx="62" cy="20" r="2.5" fill="#bfa17d" opacity="0.7"/></svg>
-  <svg class="vine-corner bottom-left" viewBox="0 0 80 80"><path d="M10,70 Q40,10 70,10" stroke="#7d6b4f" stroke-width="2.2" fill="none"/><path d="M25,45 Q30,35 40,40" stroke="#a89c7d" stroke-width="1.2" fill="none"/><circle cx="18" cy="60" r="2.5" fill="#bfa17d" opacity="0.7"/></svg>
-  <svg class="vine-corner bottom-right" viewBox="0 0 80 80"><path d="M10,10 Q40,70 70,70" stroke="#7d6b4f" stroke-width="2.2" fill="none"/><path d="M55,35 Q50,45 40,40" stroke="#a89c7d" stroke-width="1.2" fill="none"/><circle cx="62" cy="20" r="2.5" fill="#bfa17d" opacity="0.7"/></svg>
-  <div class="blog-title" style="position:relative;">
-    <span style="background:#f7fafc;padding:0 18px 4px 18px;border-radius:18px;box-shadow:0 2px 8px #e3eafc55;">Blog Topics</span>
-    <svg style="position:absolute;left:50%;top:100%;transform:translate(-50%,0);" width="120" height="18" viewBox="0 0 120 18"><rect x="0" y="8" width="120" height="10" rx="5" fill="#ffeecb"/><text x="50%" y="16" text-anchor="middle" fill="#bfa17d" font-size="1.1em" font-family='Gloria Hallelujah, Special Elite, cursive' opacity="0.7">★</text></svg>
+  <a href="index.html" class="back-btn" aria-label="Back to home">← back</a>
+  <div class="blog-index-container">
+    <div class="blog-index-title">blog index</div>
+    <ul class="blog-list">
+      <li>
+        <a class="blog-link" href="blog1.html">beginnings</a>
+      </li>
+      <li>
+        <span class="blog-link" style="opacity:0.6;cursor:default;">more coming soon...</span>
+      </li>
+    </ul>
   </div>
-  <div class="topics-list">
-    <div class="topic-card" onclick="location.href='blog1.html'" style="background:#f7fafc;box-shadow:0 4px 18px #e3eafc55;animation:bounce 1.2s cubic-bezier(.4,0,.2,1);">
-      <!-- Subtle vine accent for card -->
-      <svg style="position:absolute;left:8px;top:8px;width:38px;opacity:0.38;z-index:1;" viewBox="0 0 38 38"><path d="M5,33 Q19,5 33,13 Q25,18 19,8 Q13,18 10,28" stroke="#8a7c5b" stroke-width="1.5" fill="none"/><circle cx="7" cy="31" r="1.5" fill="#bfa17d" opacity="0.6"/></svg>
-      <div style="position:relative;z-index:2;font-size:1.25rem;font-family:'Gloria Hallelujah',cursive;">
-        Beginnings
-      </div>
-      <svg style="position:absolute;right:10px;bottom:10px;width:28px;opacity:0.28;z-index:1;" viewBox="0 0 28 28"><path d="M5,23 Q14,5 23,13 Q18,16 14,8 Q10,16 8,21" stroke="#8a7c5b" stroke-width="1.2" fill="none"/><circle cx="7" cy="21" r="1.1" fill="#bfa17d" opacity="0.5"/></svg>
-    </div>
-    <div class="topic-card" style="opacity:0.7;cursor:default;background:#f0f4fa;">
-      <!-- Subtle vine accent for card -->
-      <svg style="position:absolute;left:8px;top:8px;width:38px;opacity:0.28;z-index:1;" viewBox="0 0 38 38"><path d="M5,33 Q19,5 33,13 Q25,18 19,8 Q13,18 10,28" stroke="#8a7c5b" stroke-width="1.5" fill="none"/><circle cx="7" cy="31" r="1.5" fill="#bfa17d" opacity="0.4"/></svg>
-      <div style="position:relative;z-index:2;">More coming soon...</div>
-      <svg style="position:absolute;right:10px;bottom:10px;width:28px;opacity:0.18;z-index:1;" viewBox="0 0 28 28"><path d="M5,23 Q14,5 23,13 Q18,16 14,8 Q10,16 8,21" stroke="#8a7c5b" stroke-width="1.2" fill="none"/><circle cx="7" cy="21" r="1.1" fill="#bfa17d" opacity="0.3"/></svg>
-    </div>
-  </div>
-
+  <!-- No animated background for paper theme -->
 </body>
 </html>
