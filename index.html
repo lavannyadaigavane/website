@@ -361,20 +361,64 @@
   }
 
   @media (max-width: 768px) {
+
     .nav-links {
       display: none;
       position: absolute;
       top: 60px;
       right: 20px;
-      background: #fffafc;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background: rgba(255,250,252,0.98);
+      border-radius: 16px;
+      box-shadow: 0 6px 24px 0 rgba(212,141,155,0.10), 0 1.5px 0 #ffeaea inset;
       flex-direction: column;
-      padding: 10px 20px;
+      padding: 14px 22px 14px 22px;
+      opacity: 0;
+      transform: translateY(-16px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.38s cubic-bezier(.6,0,.74,1), transform 0.38s cubic-bezier(.6,0,.74,1);
+      backdrop-filter: blur(8px);
     }
 
     .nav-links.active {
       display: flex;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      animation: navSubtlePop 0.48s cubic-bezier(.6,0,.74,1);
+    }
+
+    .nav-links a {
+      margin: 0.3em 0;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #ffe4ec 60%, #b5d8fe 100%);
+      box-shadow: 0 2px 8px 0 rgba(212,141,155,0.07);
+      padding: 0.7em 1.5em;
+      color: #a259c6;
+      font-weight: 600;
+      font-size: 1.08rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .nav-links a:hover {
+      background: linear-gradient(90deg, #b5d8fe 60%, #ffe4ec 100%);
+      color: #ff8fab;
+      box-shadow: 0 4px 18px 0 rgba(255,193,204,0.13);
+      transform: scale(1.06) rotate(-2deg);
+    }
+
+    @keyframes navSubtlePop {
+      0% {
+        opacity: 0;
+        transform: translateY(-24px) scale(0.92);
+      }
+      70% {
+        opacity: 1;
+        transform: translateY(6px) scale(1.04);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .hamburger {
@@ -388,8 +432,8 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
 
   <div class="nav-links" id="navLinks">
-    <a href="gallery.html">🖼️ Gallery</a>
-    <a href="heyeheyhey.html">💖 Socials</a>
+    <a href="gallery.html">gallery</a>
+    <a href="heyeheyhey.html">socials</a>
   </div>
 </div>
 
