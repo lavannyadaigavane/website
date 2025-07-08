@@ -182,20 +182,13 @@
   </style>
 </head>
 <body>
-  <!-- Fairy lights string -->
-  <svg id="fairy-lights" width="100%" height="80" viewBox="0 0 400 80" style="position:fixed;top:0;left:0;z-index:10;pointer-events:none;max-width:100vw;" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,30 Q50,10 100,30 T200,30 T300,50 T400,30" stroke="#e0b7ff" stroke-width="4" fill="none"/>
-    <!-- Bulbs -->
-    <g>
-      <circle cx="30" cy="28" r="8" fill="#ffe066" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="80" cy="32" r="8" fill="#ffb3c6" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="130" cy="28" r="8" fill="#b5ead7" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="180" cy="32" r="8" fill="#b5d8fe" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="230" cy="28" r="8" fill="#ffc1cc" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="280" cy="40" r="8" fill="#e0b7ff" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="330" cy="36" r="8" fill="#ffe066" stroke="#fffbe7" stroke-width="2"/>
-      <circle cx="380" cy="30" r="8" fill="#b5ead7" stroke="#fffbe7" stroke-width="2"/>
-    </g>
+  <!-- Pastel scribble header -->
+  <svg id="pastel-scribble" width="100%" height="60" viewBox="0 0 400 60" style="position:fixed;top:22px;left:0;z-index:10;pointer-events:none;max-width:100vw;" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10,40 Q60,10 120,30 T230,35 T340,25 Q380,20 390,40" stroke="#b5d8fe" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <path d="M30,50 Q80,20 160,40 T320,30 Q370,35 390,50" stroke="#ffc1cc" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    <path d="M60,35 Q110,55 200,20 T350,45" stroke="#e0b7ff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M80,25 Q140,10 220,30 T370,20" stroke="#b5ead7" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M100,45 Q180,55 260,25 T390,35" stroke="#ffe4ec" stroke-width="2.5" fill="none" stroke-linecap="round"/>
   </svg>
   <!-- Minimal Back Arrow at top left -->
   <a href="index.html" class="corner-back-arrow" title="Back to home">
@@ -262,8 +255,8 @@
         padding: 0.6rem 0.7rem;
         gap: 0.7rem;
       }
-      #fairy-lights {
-        height: 55px;
+      #pastel-scribble {
+        height: 40px;
         min-width: 100vw;
       }
       .corner-back-arrow {
