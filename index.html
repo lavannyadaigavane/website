@@ -338,32 +338,45 @@
   .nav-links {
     display: flex;
     gap: 20px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
-  .nav-links a {
+  .nav-links a.nav-btn {
     text-decoration: none;
-    color: #fff;
-    font-size: 1rem;
+    border-radius: 12px;
+    font-family: 'Dancing Script', cursive, sans-serif;
+    font-size: 1.25rem;
     font-weight: 600;
-    border-radius: 10px;
-    padding: 0.7em 1.5em;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
-    box-shadow: 0 2px 8px 0 rgba(212,141,155,0.07);
-  }
-  .nav-links a.gallery-link, .nav-links a.socials-link {
-    font-family: 'Dancing Script', cursive, sans-serif !important;
-    color: #fff !important;
-    font-size: 1.25rem !important;
+    padding: 0.6rem 1.4rem;
+    margin: 0.3em 0;
+    background: #ffa69e;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     letter-spacing: 0.02em;
-    font-weight: 500;
+    transition: 0.3s;
+    text-align: center;
+    min-width: 90px;
+    max-width: 150px;
+    text-shadow: 0 1px 6px #fff, 0 0px 1px #e1b7f7;
+    border: none;
+    display: block;
   }
+  .nav-links a.nav-btn:hover {
+    background: #ff6f61;
+    color: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px 0 rgba(255,193,204,0.18);
+  }
+  /* Removed old gallery-link/socials-link font/color overrides */
   .nav-links a[href="gallery.html"] {
-    background: #a5e8d7; /* pastel mint */
-    color: #3a4d39;
+    background: #a5e8d7 !important; /* pastel mint */
+    border: 1.5px solid #7ad7c1;
   }
   .nav-links a[href="heyeheyhey.html"] {
-    background: #ffd1e3; /* pastel pink */
-    color: #a259c6;
+    background: #ffd1e3 !important; /* pastel pink */
+    border: 1.5px solid #f7b7d7;
   }
   .nav-links a:hover {
     filter: brightness(1.08) saturate(1.1);
@@ -387,9 +400,10 @@
       position: absolute;
       top: 60px;
       right: 20px;
-      background: rgba(255,250,252,0.98);
+      background: transparent !important;
       border-radius: 16px;
-      box-shadow: 0 6px 24px 0 rgba(212,141,155,0.10), 0 1.5px 0 #ffeaea inset;
+      border: none !important;
+      box-shadow: none !important;
       flex-direction: column;
       padding: 14px 22px 14px 22px;
       opacity: 0;
@@ -411,9 +425,9 @@
       margin: 0.18em 0;
       border-radius: 10px;
       /* Contrasting solid pastel backgrounds for each link */
-      box-shadow: 0 2px 8px 0 rgba(212,141,155,0.07);
+      box-shadow: 0 2px 8px 0 rgba(212,141,155,0.13);
       padding: 0.48em 1.05em;
-      color: #fff;
+      color: #7a3e7a;
       font-weight: 600;
       font-size: 1.08rem;
       letter-spacing: 0.01em;
@@ -421,20 +435,15 @@
       min-width: 90px;
       max-width: 150px;
       text-align: center;
+      background: #fbeaff;
     }
     .nav-links a[href="gallery.html"] {
-      background: #a5e8d7; /* pastel mint */
-      font-family: 'Dancing Script', cursive, sans-serif;
-      color: #fff !important;
-      font-size: 1.25rem;
-      letter-spacing: 0.02em;
+      background: #a5e8d7 !important; /* pastel mint */
+      border: 1.5px solid #7ad7c1;
     }
     .nav-links a[href="heyeheyhey.html"] {
-      background: #ffd1e3; /* pastel pink */
-      font-family: 'Dancing Script', cursive, sans-serif;
-      color: #fff !important;
-      font-size: 1.25rem;
-      letter-spacing: 0.02em;
+      background: #ffd1e3 !important; /* pastel pink */
+      border: 1.5px solid #f7b7d7;
     }
     .nav-links a:hover {
       background: linear-gradient(90deg, #b5d8fe 60%, #ffe4ec 100%);
@@ -469,8 +478,8 @@
   <button class="hamburger" onclick="toggleMenu()">☰</button>
 
   <div class="nav-links" id="navLinks">
-    <a href="gallery.html" class="gallery-link">gallery</a>
-    <a href="heyeheyhey.html" class="socials-link">socials</a>
+    <a href="gallery.html" class="nav-btn">gallery</a>
+    <a href="heyeheyhey.html" class="nav-btn">socials</a>
   </div>
 </div>
 
