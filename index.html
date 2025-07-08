@@ -236,7 +236,7 @@
   pointer-events: none;
   z-index: 9999;
 }
-  </style>
+  </style
 </head>
 
 
@@ -263,7 +263,7 @@
         y: e.clientY,
         radius: Math.random() * 2 + 1,
         alpha: 1,
-        color: `hsl(${Math.random() * 360}, 100%, 85%)`,
+        color: hsl(${Math.random() * 360}, 100%, 85%),
         dx: (Math.random() - 0.5) * 1.5,
         dy: (Math.random() - 0.5) * 1.5,
       });
@@ -281,7 +281,7 @@
       else {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+        ctx.fillStyle = rgba(255, 255, 255, ${p.alpha});
         ctx.shadowColor = p.color;
         ctx.shadowBlur = 12;
         ctx.fill();
@@ -398,7 +398,7 @@
 </script>
   <header>
     <h1>Lavannya Daigavane</h1>
-    <p class="bio">Just a student sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
+    <p class="bio">Just a girl sharing her thoughts, learning through life, and exploring everything from books to the stars. Here to spread curiosity, creativity, and calm vibes.</p>
     <nav>
       <a href="about.html">About</a>
       <a href="blog-topics.html">Blog</a>
