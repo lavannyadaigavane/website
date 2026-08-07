@@ -1,133 +1,2194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum scale=1.0 user scalble=no"/>
-  <title>About Lavannya</title>
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Pacifico&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<title>About — Lavannya</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=DM+Mono:wght@300;400&family=Manrope:wght@400;500&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --cream:#f6f0e7;
+    --paper:#eee4d8;
+    --ink:#29242a;
+    --wine:#663b4f;
+    --pink:#dfa0aa;
+    --blue:#a7bfd5;
+    --yellow:#dfc477;
+    --sage:#b8c1a5;
+    --lilac:#c0aec9;
+    --line:rgba(41,36,42,.13);
+
+    --serif:"Bodoni Moda",serif;
+    --sans:"Manrope",sans-serif;
+    --mono:"DM Mono",monospace;
+    --hand:"Shadows Into Light",cursive;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1000;
+    opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.grid-bg{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.16;
+    background-image:
+        linear-gradient(rgba(102,59,79,.08) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(102,59,79,.08) 1px,transparent 1px);
+    background-size:55px 55px;
+    mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+
+.cursor{
+    position:fixed;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--wine);
+    pointer-events:none;
+    z-index:2000;
+    transform:translate(-50%,-50%);
+}
+
+.cursor-ring{
+    position:fixed;
+    width:30px;
+    height:30px;
+    border:1px solid rgba(102,59,79,.65);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:1999;
+    transform:translate(-50%,-50%);
+    transition:.35s ease;
+}
+
+.cursor-ring.large{
+    width:52px;
+    height:52px;
+    background:rgba(223,160,170,.12);
+}
+
+
+/* NAV */
+
+nav{
+    height:72px;
+    padding:0 6vw;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:absolute;
+    width:100%;
+    top:0;
+    z-index:50;
+}
+
+.logo{
+    color:var(--ink);
+    text-decoration:none;
+    font-family:var(--serif);
+    font-size:21px;
+}
+
+.logo span{
+    color:var(--pink);
+}
+
+.nav-links{
+    display:flex;
+    gap:28px;
+}
+
+.nav-links a{
+    color:var(--ink);
+    text-decoration:none;
+    font-family:var(--mono);
+    font-size:8px;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    position:relative;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    bottom:-6px;
+    left:0;
+    width:0;
+    height:1px;
+    background:var(--wine);
+    transition:.3s;
+}
+
+.nav-links a:hover::after,
+.nav-links .active::after{
+    width:100%;
+}
+
+
+/* DOODLES */
+
+.doodle{
+    position:absolute;
+    pointer-events:none;
+    z-index:5;
+    font-family:var(--hand);
+}
+
+.star{
+    color:var(--wine);
+    font-size:25px;
+    animation:twinkle 3s ease-in-out infinite;
+}
+
+.flower{
+    color:var(--pink);
+    font-size:34px;
+    animation:float 5s ease-in-out infinite;
+}
+
+
+/* HERO */
+
+.intro{
+    min-height:82vh;
+    padding:125px 7vw 60px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.intro-number{
+    position:absolute;
+    top:105px;
+    left:7vw;
+    font-family:var(--mono);
+    font-size:8px;
+    color:var(--wine);
+}
+
+.intro-title{
+    width:70%;
+    position:relative;
+    z-index:5;
+}
+
+.intro-title small{
+    display:block;
+    font-family:var(--hand);
+    color:var(--wine);
+    font-size:22px;
+    margin-left:4%;
+    margin-bottom:14px;
+    transform:rotate(-3deg);
+}
+
+.intro-title h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(65px,10vw,145px);
+    line-height:.8;
+    letter-spacing:-.07em;
+}
+
+.intro-title h1 span{
+    display:block;
+}
+
+.intro-title h1 .indent{
+    margin-left:13vw;
+    color:var(--wine);
+    font-style:italic;
+}
+
+.intro-caption{
+    margin:42px 0 0 22%;
+    width:310px;
+    font-size:11px;
+    line-height:1.9;
+    color:#6d666c;
+}
+
+
+/* HERO ART */
+
+.hero-art{
+    position:absolute;
+    width:350px;
+    height:350px;
+    right:7vw;
+    top:24%;
+    z-index:2;
+}
+
+.hero-circle{
+    position:absolute;
+    inset:15px;
+    border:1px dashed rgba(102,59,79,.25);
+    border-radius:50%;
+    animation:spin 24s linear infinite;
+}
+
+.hero-circle::after{
+    content:"✦";
+    position:absolute;
+    top:-14px;
+    left:50%;
+    font-size:18px;
+    color:var(--yellow);
+}
+
+.petal{
+    position:absolute;
+    width:105px;
+    height:145px;
+    left:50%;
+    top:50%;
+    transform-origin:50% 100%;
+    border-radius:70% 30% 70% 30%;
+    opacity:.72;
+}
+
+.petal:nth-child(2){
+    background:var(--pink);
+    transform:translate(-50%,-100%) rotate(0deg);
+}
+
+.petal:nth-child(3){
+    background:var(--blue);
+    transform:translate(-50%,-100%) rotate(72deg);
+}
+
+.petal:nth-child(4){
+    background:var(--yellow);
+    transform:translate(-50%,-100%) rotate(144deg);
+}
+
+.petal:nth-child(5){
+    background:var(--sage);
+    transform:translate(-50%,-100%) rotate(216deg);
+}
+
+.petal:nth-child(6){
+    background:var(--lilac);
+    transform:translate(-50%,-100%) rotate(288deg);
+}
+
+.flower-center{
+    position:absolute;
+    width:65px;
+    height:65px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:var(--cream);
+    border:1px solid var(--wine);
+}
+
+.flower-center::after{
+    content:"♡";
+    position:absolute;
+    inset:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--wine);
+    font-size:25px;
+}
+
+.hero-note{
+    position:absolute;
+    right:-10px;
+    bottom:20px;
+    color:var(--wine);
+    font-family:var(--hand);
+    font-size:18px;
+    transform:rotate(5deg);
+}
+
+.hero-star{
+    top:22%;
+    right:5%;
+}
+
+.hero-flower{
+    left:5%;
+    bottom:12%;
+}
+
+
+/* MANIFESTO */
+
+.manifesto{
+    position:relative;
+    padding:100px 7vw 115px;
+    display:grid;
+    grid-template-columns:20% 80%;
+    border-top:1px solid var(--line);
+}
+
+.label{
+    font-family:var(--mono);
+    font-size:8px;
+    letter-spacing:.12em;
+    color:var(--wine);
+    text-transform:uppercase;
+}
+
+.manifesto-text{
+    max-width:1000px;
+}
+
+.manifesto-text h2{
+    font-family:var(--serif);
+    font-size:clamp(42px,5.5vw,75px);
+    font-weight:400;
+    line-height:1;
+    letter-spacing:-.045em;
+}
+
+.manifesto-text h2 em{
+    color:var(--wine);
+}
+
+.manifesto-text p{
+    width:48%;
+    margin:42px 0 0 38%;
+    font-size:11px;
+    line-height:2;
+    color:#6c656a;
+}
+
+.color-key{
+    position:absolute;
+    bottom:30px;
+    left:7vw;
+    display:flex;
+    gap:8px;
+}
+
+.color-key span{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+}
+
+.color-key span:nth-child(1){background:var(--pink);}
+.color-key span:nth-child(2){background:var(--blue);}
+.color-key span:nth-child(3){background:var(--yellow);}
+.color-key span:nth-child(4){background:var(--sage);}
+
+
+/* POLAROIDS */
+
+.polaroid-section{
+    position:relative;
+    background:var(--paper);
+    padding:90px 6vw 100px;
+    overflow:hidden;
+}
+
+.polaroid-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    opacity:.25;
+    background-image:
+        linear-gradient(rgba(102,59,79,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(102,59,79,.055) 1px,transparent 1px);
+    background-size:42px 42px;
+}
+
+.polaroid-heading{
+    position:relative;
+    z-index:5;
+    margin-left:4vw;
+}
+
+.polaroid-heading .label{
+    margin-bottom:23px;
+}
+
+.polaroid-heading h2{
+    font-family:var(--serif);
+    font-size:clamp(58px,7vw,92px);
+    font-weight:400;
+    line-height:.82;
+    letter-spacing:-.06em;
+}
+
+.polaroid-heading h2 em{
+    color:var(--wine);
+}
+
+.polaroid-heading p{
+    width:290px;
+    margin:30px 0 0 11%;
+    font-size:10px;
+    line-height:1.9;
+    color:#716a70;
+}
+
+
+/* PHOTO WALL */
+
+.photo-wall{
+    width:100%;
+    max-width:1100px;
+    height:620px;
+    margin:5px auto 0;
+    position:relative;
+    z-index:5;
+}
+
+.photo-wall::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:1px;
+    background:rgba(41,36,42,.22);
+    top:42px;
+    left:0;
+    transform:rotate(-1deg);
+}
+
+.polaroid{
+    position:absolute;
+    width:205px;
+    padding:9px 9px 17px;
+    background:#fffdf8;
+    box-shadow:0 14px 28px rgba(45,38,42,.13);
+    transition:
+        transform .5s cubic-bezier(.2,.8,.2,1),
+        box-shadow .5s ease;
+}
+
+.polaroid::before{
+    content:"";
+    position:absolute;
+    top:-8px;
+    left:50%;
+    transform:translateX(-50%) rotate(-2deg);
+    width:53px;
+    height:16px;
+    background:rgba(223,196,119,.72);
+    z-index:5;
+}
+
+.photo{
+    width:100%;
+    height:205px;
+    overflow:hidden;
+    background:#d9d0c7;
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    filter:saturate(.84);
+    transition:.8s ease;
+}
+
+.polaroid-caption{
+    display:flex;
+    gap:9px;
+    padding:11px 3px 0;
+}
+
+.polaroid-caption span{
+    font-family:var(--mono);
+    font-size:6px;
+    color:var(--wine);
+    padding-top:4px;
+}
+
+.polaroid-caption p{
+    font-family:var(--hand);
+    font-size:15px;
+    line-height:1.1;
+}
+
+.p1{
+    left:4%;
+    top:70px;
+    transform:rotate(-5deg);
+}
+
+.p2{
+    left:30%;
+    top:18px;
+    transform:rotate(3deg);
+    z-index:8;
+}
+
+.p3{
+    right:4%;
+    top:75px;
+    transform:rotate(5deg);
+}
+
+.p4{
+    left:13%;
+    top:350px;
+    transform:rotate(3deg);
+    z-index:7;
+}
+
+.p5{
+    left:43%;
+    top:330px;
+    transform:rotate(-4deg);
+    z-index:9;
+}
+
+.p6{
+    right:8%;
+    top:360px;
+    transform:rotate(4deg);
+}
+
+.polaroid:hover{
+    transform:translateY(-17px) rotate(0deg) scale(1.035);
+    box-shadow:0 28px 42px rgba(45,38,42,.2);
+    z-index:20;
+}
+
+.polaroid:hover img{
+    transform:scale(1.07);
+    filter:saturate(1);
+}
+
+.wall-note{
+    position:absolute;
+    right:8%;
+    bottom:38px;
+    font-family:var(--hand);
+    color:var(--wine);
+    font-size:17px;
+    line-height:1.1;
+    transform:rotate(-4deg);
+}
+
+.photo-doodle{
+    position:absolute;
+    right:6%;
+    top:45px;
+    font-family:var(--hand);
+    color:var(--wine);
+    font-size:17px;
+    transform:rotate(5deg);
+}
+
+
+/* =========================================================
+   ARTISTIC "LITTLE THINGS" SECTION
+   ========================================================= */
+
+.little-section{
+    position:relative;
+    padding:95px 7vw 90px;
+    overflow:hidden;
+    background:var(--cream);
+}
+
+/* very faint architectural grid */
+
+.little-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(102,59,79,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(102,59,79,.045) 1px,transparent 1px);
+    background-size:34px 34px;
+    pointer-events:none;
+}
+
+/* little heading */
+
+.little-top{
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:42px;
+    z-index:3;
+}
+
+.little-top h2{
+    font-family:var(--serif);
+    font-size:clamp(50px,7vw,88px);
+    font-weight:400;
+    line-height:.82;
+    letter-spacing:-.065em;
+}
+
+.little-top h2 em{
+    color:var(--wine);
+}
+
+.little-note{
+    font-family:var(--hand);
+    color:var(--wine);
+    font-size:18px;
+    transform:rotate(-4deg);
+    margin-right:4%;
+}
+
+
+/* central artistic board */
+
+.life-board{
+    position:relative;
+    max-width:1050px;
+    height:360px;
+    margin:auto;
+    z-index:3;
+}
+
+
+/* central circle */
+
+.life-orbit{
+    position:absolute;
+    width:300px;
+    height:300px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border:1px solid rgba(102,59,79,.17);
+    border-radius:50%;
+}
+
+.life-orbit::before{
+    content:"";
+    position:absolute;
+    inset:27px;
+    border:1px dashed rgba(102,59,79,.14);
+    border-radius:50%;
+}
+
+.life-orbit::after{
+    content:"";
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:var(--pink);
+    border-radius:50%;
+    top:18px;
+    left:50%;
+    box-shadow:
+        105px 90px 0 var(--yellow),
+        -120px 110px 0 var(--blue);
+    animation:orbitDots 8s linear infinite;
+}
+
+
+/* center message */
+
+.center-note{
+    position:absolute;
+    width:160px;
+    height:160px;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%) rotate(-3deg);
+    background:#fffaf3;
+    border:1px solid rgba(41,36,42,.14);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    box-shadow:7px 9px 0 rgba(102,59,79,.07);
+}
+
+.center-note::before{
+    content:"";
+    position:absolute;
+    top:-7px;
+    left:50%;
+    width:48px;
+    height:13px;
+    transform:translateX(-50%) rotate(-2deg);
+    background:rgba(223,196,119,.65);
+}
+
+.center-note span{
+    font-family:var(--mono);
+    font-size:6px;
+    letter-spacing:.1em;
+    color:var(--wine);
+    margin-bottom:13px;
+}
+
+.center-note strong{
+    font-family:var(--serif);
+    font-size:26px;
+    font-weight:400;
+    line-height:1;
+}
+
+.center-note p{
+    font-family:var(--hand);
+    font-size:13px;
+    margin-top:9px;
+    color:#6c656a;
+}
+
+
+/* orbit lines */
+
+.orbit-line{
+    position:absolute;
+    width:120px;
+    height:1px;
+    background:rgba(102,59,79,.2);
+    left:50%;
+    top:50%;
+    transform-origin:left center;
+}
+
+.line-one{
+    transform:rotate(-27deg);
+}
+
+.line-two{
+    transform:rotate(153deg);
+}
+
+.line-three{
+    width:105px;
+    transform:rotate(27deg);
+}
+
+
+/* mini notes */
+
+.life-item{
+    position:absolute;
+    width:170px;
+    min-height:92px;
+    padding:17px 18px;
+    background:rgba(255,253,248,.78);
+    border:1px solid rgba(41,36,42,.11);
+    transition:.4s ease;
+}
+
+.life-item:hover{
+    transform:translateY(-8px) rotate(0deg);
+    box-shadow:0 14px 28px rgba(45,38,42,.1);
+}
+
+.life-item small{
+    font-family:var(--mono);
+    font-size:6px;
+    color:var(--wine);
+}
+
+.life-item h3{
+    font-family:var(--serif);
+    font-size:22px;
+    font-weight:400;
+    margin-top:12px;
+}
+
+.life-item p{
+    font-size:8px;
+    line-height:1.5;
+    margin-top:5px;
+    color:#6d666c;
+}
+
+
+/* individual colours */
+
+.item-one{
+    left:1%;
+    top:15px;
+    background:rgba(223,160,170,.35);
+    transform:rotate(-4deg);
+}
+
+.item-two{
+    right:1%;
+    top:5px;
+    background:rgba(167,191,213,.4);
+    transform:rotate(4deg);
+}
+
+.item-three{
+    left:7%;
+    bottom:8px;
+    background:rgba(184,193,165,.43);
+    transform:rotate(3deg);
+}
+
+.item-four{
+    right:7%;
+    bottom:3px;
+    background:rgba(192,174,201,.4);
+    transform:rotate(-3deg);
+}
+
+
+/* tiny hand-drawn arrows */
+
+.arrow-doodle{
+    position:absolute;
+    font-family:var(--hand);
+    color:var(--wine);
+    font-size:18px;
+}
+
+.arrow-one{
+    left:20%;
+    top:100px;
+    transform:rotate(-15deg);
+}
+
+.arrow-two{
+    right:21%;
+    top:100px;
+    transform:rotate(15deg) scaleX(-1);
+}
+
+
+/* tiny flower */
+
+.board-flower{
+    position:absolute;
+    left:50%;
+    bottom:-18px;
+    transform:translateX(-50%);
+    color:var(--pink);
+    font-family:var(--hand);
+    font-size:24px;
+    animation:float 4s ease-in-out infinite;
+}
+
+
+/* QUOTE */
+
+.quote{
+    min-height:53vh;
+    background:var(--wine);
+    color:var(--cream);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.quote::before{
+    content:"";
+    width:400px;
+    height:400px;
+    border:1px solid rgba(246,240,231,.17);
+    border-radius:50%;
+    position:absolute;
+    animation:spin 25s linear infinite;
+}
+
+.quote::after{
+    content:"✦";
+    position:absolute;
+    right:20%;
+    top:20%;
+    color:var(--yellow);
+    font-size:23px;
+}
+
+.quote-text{
+    width:72%;
+    text-align:center;
+    position:relative;
+    z-index:2;
+    font-family:var(--serif);
+    font-size:clamp(43px,6.5vw,88px);
+    line-height:.95;
+    letter-spacing:-.055em;
+}
+
+.quote-text em{
+    color:var(--pink);
+}
+
+
+/* END */
+
+.ending{
+    min-height:52vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.ending h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-style:italic;
+    font-size:clamp(68px,11vw,150px);
+    letter-spacing:-.08em;
+    text-align:center;
+}
+
+.ending-note{
+    position:absolute;
+    bottom:14%;
+    font-family:var(--hand);
+    font-size:19px;
+    color:var(--wine);
+    transform:rotate(-4deg);
+}
+
+.ending-star{
+    position:absolute;
+    right:18%;
+    top:20%;
+    color:var(--pink);
+    font-size:28px;
+    animation:twinkle 3s infinite;
+}
+
+
+/* FOOTER */
+
+footer{
+    border-top:1px solid var(--line);
+    padding:24px 7vw;
+    display:flex;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:7px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#716970;
+}
+
+
+/* REVEAL */
+
+.reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.2,.7,.2,1);
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+
+/* ANIMATIONS */
+
+@keyframes spin{
+    from{transform:rotate(0);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes twinkle{
+    0%,100%{
+        transform:scale(1) rotate(0);
+        opacity:.65;
     }
 
-    body {
-      font-family: 'Quicksand', sans-serif;
-      background: linear-gradient(135deg, #fcefee, #e9f8ff, #fef6ff);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 3rem 1rem;
-      color: #456;
+    50%{
+        transform:scale(1.25) rotate(12deg);
+        opacity:1;
+    }
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0) rotate(-4deg);
     }
 
-    nav {
-      width: 100%;
-      text-align: center;
-      margin-bottom: 2rem;
+    50%{
+        transform:translateY(-9px) rotate(3deg);
+    }
+}
+
+@keyframes orbitDots{
+    from{
+        transform:rotate(0deg);
     }
 
-    nav a {
-      text-decoration: none;
-      font-weight: bold;
-      color: #5a3bb3;
-      margin: 0 1rem;
-      transition: 0.3s;
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:800px){
+
+    .cursor,
+    .cursor-ring{
+        display:none;
     }
 
-    nav a:hover {
-      color: #7e5bef;
-    }
- h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 3rem;
-      color: #7e5bef;
-      margin-bottom: 0.5rem;
+    .nav-links{
+        gap:13px;
     }
 
-    .quote {
-      font-family: 'Shadows Into Light', cursive;
-      font-size: 1.2rem;
-      color: #555;
-      margin-bottom: 2rem;
+    .nav-links a{
+        font-size:7px;
     }
 
-    .about-box {
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(10px);
-      border-radius: 2rem;
-      padding: 2rem;
-      max-width: 700px;
-      box-shadow: 0 0 30px rgba(255, 200, 250, 0.2);
-      text-align: center;
-      animation: fadeIn 1.5s ease-in-out;
+
+    /* HERO */
+
+    .intro{
+        min-height:88vh;
+        padding:130px 7vw 55px;
     }
 
-    .about-box p {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
+    .intro-title{
+        width:100%;
     }
 
-    .sparkle {
-      animation: sparkle 2s infinite alternate;
-      display: inline-block;
-      color: #f8a5c2;
+    .intro-title h1{
+        font-size:18vw;
     }
 
-    @keyframes sparkle {
-      0% { transform: scale(1); opacity: 1; }
-      100% { transform: scale(1.3); opacity: 0.7; }
+    .intro-title h1 .indent{
+        margin-left:7vw;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+    .intro-caption{
+        margin-left:7%;
+        width:75%;
     }
 
-    .insta {
-      margin-top: 2rem;
+    .hero-art{
+        width:290px;
+        height:290px;
+        right:-90px;
+        top:54%;
+        opacity:.72;
     }
 
-    .insta a {
-      color: #c25353;
-      text-decoration: none;
-      font-weight: bold;
+
+    /* MANIFESTO */
+
+    .manifesto{
+        display:block;
+        padding:75px 7vw 85px;
     }
 
-    .insta a:hover {
-      color: #d14ba6;
+    .manifesto .label{
+        margin-bottom:40px;
     }
-  </style>
+
+    .manifesto-text h2{
+        font-size:12vw;
+    }
+
+    .manifesto-text p{
+        width:82%;
+        margin:32px 0 0 8%;
+    }
+
+
+    /* POLAROIDS */
+
+    .polaroid-section{
+        padding:75px 7vw 85px;
+    }
+
+    .polaroid-heading{
+        margin-left:0;
+    }
+
+    .polaroid-heading h2{
+        font-size:17vw;
+    }
+
+    .photo-wall{
+        height:auto;
+        margin-top:60px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:32px;
+    }
+
+    .photo-wall::before{
+        display:none;
+    }
+
+    .polaroid{
+        position:relative;
+        left:auto;
+        right:auto;
+        top:auto;
+        width:min(78vw,300px);
+    }
+
+    .photo{
+        height:300px;
+    }
+
+    .p1{transform:rotate(-4deg);}
+    .p2{transform:rotate(3deg);}
+    .p3{transform:rotate(-3deg);}
+    .p4{transform:rotate(4deg);}
+    .p5{transform:rotate(-3deg);}
+    .p6{transform:rotate(4deg);}
+
+    .wall-note{
+        position:relative;
+        right:auto;
+        bottom:auto;
+        margin:40px auto 0;
+        width:max-content;
+    }
+
+
+    /* =====================================================
+       NEW LITTLE THINGS SECTION — MOBILE
+       ===================================================== */
+
+    .little-section{
+        padding:65px 7vw 65px;
+    }
+
+    .little-top{
+        margin-bottom:22px;
+        align-items:flex-end;
+    }
+
+    .little-top h2{
+        font-size:14vw;
+    }
+
+    .little-note{
+        font-size:13px;
+        margin-right:0;
+        max-width:110px;
+        text-align:right;
+    }
+
+    .life-board{
+        height:420px;
+        width:100%;
+    }
+
+    .life-orbit{
+        width:230px;
+        height:230px;
+    }
+
+    .life-orbit::before{
+        inset:21px;
+    }
+
+    .center-note{
+        width:125px;
+        height:125px;
+    }
+
+    .center-note strong{
+        font-size:21px;
+    }
+
+    .center-note p{
+        font-size:11px;
+    }
+
+    .life-item{
+        width:125px;
+        min-height:78px;
+        padding:12px;
+    }
+
+    .life-item h3{
+        font-size:18px;
+        margin-top:8px;
+    }
+
+    .life-item p{
+        font-size:7px;
+        line-height:1.4;
+    }
+
+    .item-one{
+        left:0;
+        top:0;
+    }
+
+    .item-two{
+        right:0;
+        top:0;
+    }
+
+    .item-three{
+        left:0;
+        bottom:0;
+    }
+
+    .item-four{
+        right:0;
+        bottom:0;
+    }
+
+    .arrow-one{
+        left:28%;
+        top:90px;
+        font-size:14px;
+    }
+
+    .arrow-two{
+        right:28%;
+        top:90px;
+        font-size:14px;
+    }
+
+    .board-flower{
+        bottom:5px;
+        font-size:20px;
+    }
+
+
+    /* QUOTE */
+
+    .quote{
+        min-height:48vh;
+    }
+
+    .quote-text{
+        width:86%;
+        font-size:11vw;
+    }
+
+
+    /* END */
+
+    .ending{
+        min-height:45vh;
+    }
+
+    .ending h2{
+        font-size:18vw;
+    }
+
+
+    /* FOOTER */
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
+}
+
+
+@media(max-width:480px){
+
+    .nav-links a:nth-child(3){
+        display:none;
+    }
+
+    .intro-title h1{
+        font-size:20vw;
+    }
+
+    .little-section{
+        padding-left:6vw;
+        padding-right:6vw;
+    }
+
+    .life-item{
+        width:116px;
+    }
+
+    .life-orbit{
+        width:210px;
+        height:210px;
+    }
+
+    .center-note{
+        width:116px;
+        height:116px;
+    }
+
+    .center-note strong{
+        font-size:19px;
+    }
+
+    .center-note p{
+        font-size:10px;
+    }
+
+    .little-top h2{
+        font-size:15vw;
+    }
+
+    .little-note{
+        font-size:12px;
+        max-width:90px;
+    }
+
+}
+
+</style>
 </head>
+
+
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-  </nav>
+<div class="grid-bg"></div>
 
-  <h1>Lavannya </h1>
-  <div class="quote">"Made of dreams, and little sparkle ✨"</div>
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
 
-  <div class="about-box">
-    <p>
-Hey, I’m Lavannya — 18, curious, and always up for something a little unexpected. I love doing wild, spontaneous things and finding creativity in everything — whether it’s art, science, nature, or just life itself.
-</p>
 
-<p>
-This website is my personal space where all the pieces of my world come together. You’ll find moments, ideas, and things I create — from visuals to thoughts, random experiments to meaningful memories. It’s not polished or perfect, just real and evolving — like me.
-</p>
+<!-- NAVIGATION -->
 
-<div class="quote-box">“This site grows as I do.”</div>
+<nav>
 
-  </div>
+    <a href="index.html" class="logo">
+        Lavannya<span>.</span>
+    </a>
+
+    <div class="nav-links">
+
+        <a href="index.html">home</a>
+
+        <a href="about.html" class="active">
+            about
+        </a>
+
+        <a href="gallery.html">
+            gallery
+        </a>
+
+        <a href="vibes.html">
+            vibes
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+     ===================================================== -->
+
+<section class="intro">
+
+    <div class="intro-number">
+        01 / ABOUT
+    </div>
+
+    <div class="intro-title">
+
+        <small>
+            okay, hi. this is me.
+        </small>
+
+        <h1>
+
+            <span>just</span>
+
+            <span class="indent">
+                a little
+            </span>
+
+            <span>
+                about
+            </span>
+
+            <span>
+                me.
+            </span>
+
+        </h1>
+
+        <p class="intro-caption">
+
+            I never really know what to write in
+            these sections, so... here's the honest
+            version instead.
+
+        </p>
+
+    </div>
+
+
+    <div class="hero-art">
+
+        <div class="hero-circle"></div>
+
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+        <div class="petal"></div>
+
+        <div class="flower-center"></div>
+
+        <div class="hero-note">
+            figuring it out as I go.
+        </div>
+
+    </div>
+
+
+    <div class="doodle star hero-star">
+        ✦
+    </div>
+
+    <div class="doodle flower hero-flower">
+        ✿
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     REAL TALK
+     ===================================================== -->
+
+<section class="manifesto reveal">
+
+    <div class="label">
+        02 / honestly
+    </div>
+
+    <div class="manifesto-text">
+
+        <h2>
+            I'm still figuring
+            things out.
+            <em>aren't we all?</em>
+        </h2>
+
+        <p>
+
+            Some days I have everything planned.
+            Some days I really, really don't.
+            I like going places, trying random things,
+            taking too many pictures and keeping little
+            moments that probably don't mean much to
+            anyone else.
+
+            <br><br>
+
+            I think that's kind of the point though.
+
+        </p>
+
+    </div>
+
+
+    <div class="color-key">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     POLAROIDS
+     ===================================================== -->
+
+<section class="polaroid-section reveal">
+
+    <div class="photo-doodle">
+        these are the bits I kept ↓
+    </div>
+
+
+    <div class="polaroid-heading">
+
+        <div class="label">
+            03 / camera roll
+        </div>
+
+        <h2>
+            pieces of<br>
+            <em>my life.</em>
+        </h2>
+
+        <p>
+
+            Not the polished version.
+            Just random little moments
+            that I liked enough to save.
+
+        </p>
+
+    </div>
+
+
+    <div class="photo-wall">
+
+
+        <div class="polaroid p1">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo1.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>01</span>
+
+                <p>
+                    me, on a normal day.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="polaroid p2">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo2.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>02</span>
+
+                <p>
+                    this day was actually nice.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="polaroid p3">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo3.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>03</span>
+
+                <p>
+                    don't ask me what I was doing.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="polaroid p4">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo4.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>04</span>
+
+                <p>
+                    one I'd happily go back to.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="polaroid p5">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo5.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>05</span>
+
+                <p>
+                    life, lately.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="polaroid p6">
+
+            <div class="photo">
+
+                <img
+                    src="images/photo6.jpeg"
+                    alt="Lavannya"
+                >
+
+            </div>
+
+            <div class="polaroid-caption">
+
+                <span>06</span>
+
+                <p>
+                    yeah, I liked this one.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="wall-note">
+
+        some things are worth<br>
+        keeping for no reason at all.
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     NEW ARTISTIC SECTION
+     ===================================================== -->
+
+<section class="little-section reveal">
+
+    <div class="little-top">
+
+        <h2>
+            little<br>
+            <em>things.</em>
+        </h2>
+
+        <div class="little-note">
+            the stuff that<br>
+            somehow matters.
+        </div>
+
+    </div>
+
+
+    <div class="life-board">
+
+
+        <!-- orbit -->
+
+        <div class="life-orbit"></div>
+
+
+        <!-- central handwritten note -->
+
+        <div class="center-note">
+
+            <span>
+                A SMALL LIST
+            </span>
+
+            <strong>
+                me,<br>
+                basically.
+            </strong>
+
+            <p>
+                no particular order :)
+            </p>
+
+        </div>
+
+
+        <!-- connecting lines -->
+
+        <div class="orbit-line line-one"></div>
+
+        <div class="orbit-line line-two"></div>
+
+        <div class="orbit-line line-three"></div>
+
+
+        <!-- LITTLE NOTE 01 -->
+
+        <div class="life-item item-one">
+
+            <small>
+                01 / curiosity
+            </small>
+
+            <h3>
+                questions
+            </h3>
+
+            <p>
+                I ask one thing and somehow
+                end up down a rabbit hole.
+            </p>
+
+        </div>
+
+
+        <!-- LITTLE NOTE 02 -->
+
+        <div class="life-item item-two">
+
+            <small>
+                02 / places
+            </small>
+
+            <h3>
+                wandering
+            </h3>
+
+            <p>
+                New places make ordinary
+                days feel a little different.
+            </p>
+
+        </div>
+
+
+        <!-- LITTLE NOTE 03 -->
+
+        <div class="life-item item-three">
+
+            <small>
+                03 / food
+            </small>
+
+            <h3>
+                trying things
+            </h3>
+
+            <p>
+                "I'm not hungry" is usually
+                not completely true.
+            </p>
+
+        </div>
+
+
+        <!-- LITTLE NOTE 04 -->
+
+        <div class="life-item item-four">
+
+            <small>
+                04 / creating
+            </small>
+
+            <h3>
+                making stuff
+            </h3>
+
+            <p>
+                If an idea gets stuck in my
+                head, I need to make it.
+            </p>
+
+        </div>
+
+
+        <!-- hand-drawn arrows -->
+
+        <div class="arrow-doodle arrow-one">
+            ↘
+        </div>
+
+        <div class="arrow-doodle arrow-two">
+            ↘
+        </div>
+
+
+        <div class="board-flower">
+            ✿
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUOTE
+     ===================================================== -->
+
+<section class="quote reveal">
+
+    <div class="quote-text">
+
+        Maybe growing up is just
+        learning to be okay with
+        not having it all figured out.
+
+        <br>
+
+        <em>
+            And that's okay.
+        </em>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ENDING
+     ===================================================== -->
+
+<section class="ending reveal">
+
+    <div class="ending-star">
+        ✦
+    </div>
+
+
+    <div
+        class="doodle flower"
+        style="left:14%;top:22%;"
+    >
+        ✿
+    </div>
+
+
+    <div
+        class="doodle"
+        style="right:12%;bottom:25%;font-size:27px;color:var(--wine);"
+    >
+        ♡
+    </div>
+
+
+    <h2>
+        more to come.
+    </h2>
+
+
+    <div class="ending-note">
+        still figuring it out :)
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <span>
+        © 2026 Lavannya
+    </span>
+
+    <span>
+        made with a little bit of everything ✦
+    </span>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   CUSTOM CURSOR
+   ===================================================== */
+
+const cursor = document.querySelector(".cursor");
+const ring = document.querySelector(".cursor-ring");
+
+let mx = 0;
+let my = 0;
+
+let rx = 0;
+let ry = 0;
+
+document.addEventListener("mousemove", e => {
+
+    mx = e.clientX;
+    my = e.clientY;
+
+    cursor.style.left = mx + "px";
+    cursor.style.top = my + "px";
+
+});
+
+
+function moveRing(){
+
+    rx += (mx - rx) * .13;
+    ry += (my - ry) * .13;
+
+    ring.style.left = rx + "px";
+    ring.style.top = ry + "px";
+
+    requestAnimationFrame(moveRing);
+
+}
+
+moveRing();
+
+
+/* =====================================================
+   CURSOR HOVER
+   ===================================================== */
+
+document
+    .querySelectorAll("a,.polaroid,.life-item,.center-note")
+    .forEach(el => {
+
+        el.addEventListener("mouseenter", () => {
+
+            ring.classList.add("large");
+
+        });
+
+        el.addEventListener("mouseleave", () => {
+
+            ring.classList.remove("large");
+
+        });
+
+    });
+
+
+/* =====================================================
+   SCROLL REVEAL
+   ===================================================== */
+
+const revealElements =
+    document.querySelectorAll(".reveal");
+
+
+const observer =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add("show");
+
+                }
+
+            });
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+revealElements.forEach(el => {
+
+    observer.observe(el);
+
+});
+
+
+/* =====================================================
+   HERO PARALLAX
+   ===================================================== */
+
+const heroArt =
+    document.querySelector(".hero-art");
+
+
+document.addEventListener("mousemove", e => {
+
+    if(window.innerWidth <= 800) return;
+
+    const x =
+        e.clientX / window.innerWidth - .5;
+
+    const y =
+        e.clientY / window.innerHeight - .5;
+
+    heroArt.style.transform =
+        `translate(${x * 8}px,${y * 8}px)`;
+
+});
+
+
+/* =====================================================
+   POLAROID TILT
+   ===================================================== */
+
+document
+    .querySelectorAll(".polaroid")
+    .forEach(photo => {
+
+        photo.addEventListener("mousemove", e => {
+
+            if(window.innerWidth <= 800)
+                return;
+
+            const rect =
+                photo.getBoundingClientRect();
+
+            const x =
+                (e.clientX - rect.left)
+                / rect.width - .5;
+
+            const y =
+                (e.clientY - rect.top)
+                / rect.height - .5;
+
+            photo.style.transform =
+                `perspective(700px)
+                 rotateY(${x * 3}deg)
+                 rotateX(${y * -3}deg)
+                 translateY(-10px)`;
+
+        });
+
+
+        photo.addEventListener("mouseleave", () => {
+
+            if(photo.classList.contains("p1"))
+                photo.style.transform =
+                    "rotate(-5deg)";
+
+            if(photo.classList.contains("p2"))
+                photo.style.transform =
+                    "rotate(3deg)";
+
+            if(photo.classList.contains("p3"))
+                photo.style.transform =
+                    "rotate(5deg)";
+
+            if(photo.classList.contains("p4"))
+                photo.style.transform =
+                    "rotate(3deg)";
+
+            if(photo.classList.contains("p5"))
+                photo.style.transform =
+                    "rotate(-4deg)";
+
+            if(photo.classList.contains("p6"))
+                photo.style.transform =
+                    "rotate(4deg)";
+
+        });
+
+    });
+
+
+/* =====================================================
+   LITTLE THINGS — SUBTLE PARALLAX
+   ===================================================== */
+
+const board =
+    document.querySelector(".life-board");
+
+
+document.addEventListener("mousemove", e => {
+
+    if(window.innerWidth <= 800)
+        return;
+
+    if(!board)
+        return;
+
+    const rect =
+        board.getBoundingClientRect();
+
+    const x =
+        (e.clientX - rect.left)
+        / rect.width - .5;
+
+    const y =
+        (e.clientY - rect.top)
+        / rect.height - .5;
+
+    board.style.transform =
+        `translate(${x * 3}px,${y * 3}px)`;
+
+});
+
+</script>
 
 </body>
 </html>
