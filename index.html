@@ -85,6 +85,21 @@ body::before{
     mask-image:linear-gradient(to bottom,#000 62%,transparent 97%);
 }
 
+#sprinkles{
+    position:fixed;inset:0;
+    pointer-events:none;
+    z-index:1400;
+}
+
+/* the mark spins when you set it off */
+.mark.pop{animation:spinOff .9s cubic-bezier(.2,.8,.2,1)}
+
+@keyframes spinOff{
+    0%{rotate:0deg;scale:1}
+    22%{scale:.82}
+    100%{rotate:540deg;scale:1}
+}
+
 .scroll-line{
     position:fixed;top:0;left:0;height:2px;width:0;z-index:1500;
     background:linear-gradient(90deg,var(--pink),var(--lilac),var(--blue),var(--sage),var(--yellow));
@@ -181,8 +196,60 @@ nav{
     background:linear-gradient(var(--cream) 55%,transparent);
 }
 
-.logo{font-family:var(--serif);font-size:21px;color:var(--ink);text-decoration:none}
-.logo span{color:var(--pink)}
+/* a printer's asterisk, drawn arm by arm */
+.mark{
+    display:block;
+    width:46px;height:46px;
+    text-decoration:none;
+    transition:rotate .7s cubic-bezier(.2,.8,.2,1.25);
+}
+
+.mark svg{width:100%;height:100%;overflow:visible}
+
+.mark .arm{
+    fill:none;
+    stroke:var(--ink);
+    stroke-width:2.6;
+    stroke-linecap:round;
+    stroke-dasharray:26;
+    stroke-dashoffset:26;
+    transform-origin:30px 30px;
+    animation:armIn .5s cubic-bezier(.5,0,.2,1) calc(.35s + var(--i) * .11s) forwards;
+    transition:stroke .45s ease, scale .55s cubic-bezier(.2,.85,.3,1.6);
+}
+
+@keyframes armIn{to{stroke-dashoffset:0}}
+
+/* each arm a different ink */
+.mark .arm:nth-child(1){stroke:var(--ink)}
+.mark .arm:nth-child(2){stroke:var(--pink)}
+.mark .arm:nth-child(3){stroke:var(--ink)}
+.mark .arm:nth-child(4){stroke:var(--blue)}
+.mark .arm:nth-child(5){stroke:var(--ink)}
+.mark .arm:nth-child(6){stroke:var(--yellow)}
+
+.mark .hub{
+    fill:var(--wine);
+    stroke:none;
+    opacity:0;
+    transform-origin:30px 30px;
+    animation:hubIn .5s cubic-bezier(.2,.9,.3,1.7) 1.05s forwards;
+    transition:scale .5s cubic-bezier(.2,.85,.3,1.7), fill .45s;
+}
+
+@keyframes hubIn{
+    from{opacity:0;scale:.2}
+    60%{opacity:1;scale:1.8}
+    to{opacity:1;scale:1}
+}
+
+/* it turns a quarter and the arms flick out */
+.mark:hover{rotate:90deg}
+.mark:hover .arm{scale:1.16}
+.mark:hover .arm:nth-child(1),
+.mark:hover .arm:nth-child(3),
+.mark:hover .arm:nth-child(5){stroke:var(--wine)}
+.mark:hover .hub{scale:1.5;fill:var(--pink)}
 
 .nav-links{display:flex;gap:28px}
 
@@ -198,6 +265,24 @@ nav{
 }
 
 .nav-links a:hover::after{width:100%}
+
+.nav-links .mood-link{position:relative;padding-left:13px}
+
+.nav-links .mood-link::before{
+    content:"";
+    position:absolute;left:0;top:50%;
+    width:7px;height:7px;margin-top:-3.5px;
+    border-radius:50%;
+    background:var(--pink);
+    animation:moodShift 9s ease-in-out infinite;
+}
+
+@keyframes moodShift{
+    0%,100%{background:var(--pink);scale:1}
+    25%{background:var(--blue);scale:1.25}
+    50%{background:var(--yellow);scale:1}
+    75%{background:var(--sage);scale:1.25}
+}
 
 .label{
     font-family:var(--mono);font-size:8px;
@@ -1461,6 +1546,7 @@ footer{
 <body>
 
 <div class="scroll-line"></div>
+<canvas id="sprinkles" aria-hidden="true"></canvas>
 <div class="cursor"></div>
 <div class="cursor-ring"></div>
 
@@ -1477,8 +1563,19 @@ footer{
 
 
 <nav>
-    <a href="index.html" class="logo">Lavannya<span>.</span></a>
+    <a href="index.html" class="mark" aria-label="Home">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+            <path class="arm" style="--i:0" d="M30 30 L30 6"/>
+            <path class="arm" style="--i:1" d="M30 30 L50.8 18"/>
+            <path class="arm" style="--i:2" d="M30 30 L50.8 42"/>
+            <path class="arm" style="--i:3" d="M30 30 L30 54"/>
+            <path class="arm" style="--i:4" d="M30 30 L9.2 42"/>
+            <path class="arm" style="--i:5" d="M30 30 L9.2 18"/>
+            <circle class="hub" cx="30" cy="30" r="2.6"/>
+        </svg>
+    </a>
     <div class="nav-links">
+        <a href="mood.html" class="mood-link">mood?</a>
         <a href="#closing">say hi</a>
     </div>
 </nav>
@@ -1904,6 +2001,127 @@ window.addEventListener("scroll",()=>{
     const y=window.scrollY;
     if(orbit) orbit.style.rotate=(y*.03)+"deg";
 },{passive:true});
+
+
+/* ══════ SPRINKLES ══════ */
+
+(function(){
+
+    const canvas = document.getElementById("sprinkles");
+    const mark   = document.querySelector(".mark");
+    if(!canvas || !mark) return;
+
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+
+    const inks = ["#dfa0aa","#a7bfd5","#dfc477","#b8c1a5","#c0aec9","#663b4f","#e8899d"];
+
+    let bits = [], running = false;
+
+    function size(){
+        canvas.width  = innerWidth  * dpr;
+        canvas.height = innerHeight * dpr;
+        canvas.style.width  = innerWidth  + "px";
+        canvas.style.height = innerHeight + "px";
+        ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    size();
+    addEventListener("resize", size);
+
+    function make(x, y, spread, up){
+        const a = Math.random() * Math.PI * 2;
+        const v = Math.random() * spread + 2;
+        return {
+            x: x, y: y,
+            vx: Math.cos(a) * v,
+            vy: Math.sin(a) * v - up,
+            w: Math.random() * 7 + 4,
+            h: Math.random() * 4 + 3,
+            rot: Math.random() * Math.PI,
+            vr: (Math.random() - .5) * .3,
+            ink: inks[(Math.random() * inks.length) | 0],
+            round: Math.random() < .35,
+            life: 1
+        };
+    }
+
+    function burst(){
+
+        if(reduced) return;
+
+        const r = mark.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+
+        /* one lot fires out of the mark itself */
+        for(let i = 0; i < 70; i++) bits.push(make(cx, cy, 9, 4));
+
+        /* the rest rains down across the whole page */
+        for(let i = 0; i < 110; i++){
+            const b = make(Math.random() * innerWidth, -20 - Math.random() * 240, 2, 0);
+            b.vy = Math.random() * 2 + 1.5;
+            bits.push(b);
+        }
+
+        if(bits.length > 900) bits.splice(0, bits.length - 900);
+
+        mark.classList.remove("pop");
+        void mark.offsetWidth;
+        mark.classList.add("pop");
+
+        if(!running){ running = true; requestAnimationFrame(tick); }
+    }
+
+    function tick(){
+
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+        for(let i = bits.length - 1; i >= 0; i--){
+
+            const b = bits[i];
+
+            b.vy += 0.13;          /* gravity */
+            b.vx *= 0.995;         /* a little drag */
+            b.x  += b.vx;
+            b.y  += b.vy;
+            b.rot += b.vr;
+
+            if(b.y > innerHeight + 60){ bits.splice(i,1); continue; }
+
+            ctx.save();
+            ctx.translate(b.x, b.y);
+            ctx.rotate(b.rot);
+            ctx.fillStyle = b.ink;
+            ctx.globalAlpha = .92;
+
+            if(b.round){
+                ctx.beginPath();
+                ctx.arc(0, 0, b.h * .8, 0, Math.PI * 2);
+                ctx.fill();
+            }else{
+                ctx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h);
+            }
+
+            ctx.restore();
+        }
+
+        ctx.globalAlpha = 1;
+
+        if(bits.length){
+            requestAnimationFrame(tick);
+        }else{
+            running = false;
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+        }
+    }
+
+    mark.addEventListener("click", function(e){
+        e.preventDefault();
+        burst();
+    });
+
+})();
 
 </script>
 
