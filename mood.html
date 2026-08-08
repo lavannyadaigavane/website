@@ -48,6 +48,7 @@ body{
     font-family:var(--sans);
     overflow-x:hidden;
     min-height:100vh;
+    min-height:100svh;
 }
 
 body::before{
@@ -101,7 +102,7 @@ body.raining .sky{filter:brightness(.9) saturate(.8)}
 
 /* the sun, quietly there */
 .sun{
-    position:fixed;top:9vh;right:12vw;z-index:1;
+    position:fixed;top:9vh;top:9svh;right:12vw;z-index:1;
     width:120px;height:120px;border-radius:50%;
     background:radial-gradient(circle,rgba(255,246,214,.95),rgba(255,232,164,.5) 55%,transparent 72%);
     pointer-events:none;
@@ -152,7 +153,7 @@ body.raining #rain{opacity:1}
 
 .meadow{
     position:fixed;left:0;right:0;bottom:0;
-    height:34vh;min-height:190px;
+    height:34vh;height:34svh;min-height:190px;
     z-index:3;pointer-events:none;
 }
 
@@ -198,6 +199,7 @@ nav.top a:hover{color:var(--wine)}
 .leaf{
     position:relative;z-index:20;
     min-height:100vh;
+    min-height:100svh;
     padding:118px 6vw 40vh;
     display:flex;flex-direction:column;align-items:center;
 }
@@ -1068,8 +1070,54 @@ footer{
     .bee{width:70px}
     .fly{width:46px}
     .sun{width:84px;height:84px}
-    .meadow{height:28vh}
+    .meadow{height:26vh;height:26svh;min-height:150px}
+    .leaf{padding:104px 6vw 28vh}
+    .pow{font-size:26px}
 }
+
+/* ══════════════════════════════════════════
+   LIGHTER ON SMALL DEVICES
+   a phone draws all of this on a fraction of
+   the power, so the expensive bits come off
+   rather than the pretty ones
+   ══════════════════════════════════════════ */
+
+/* keep the moving things on their own layers so they slide
+   instead of being repainted */
+.cloud,.bee,.fly{will-change:transform,translate}
+.clouds,.meadow,.hive,.flutter,.scene{contain:layout paint}
+
+/* nothing needs to move while the tab is in the background */
+body.still *,body.still *::before,body.still *::after{animation-play-state:paused!important}
+
+/* the paper grain is invisible at this size and costs a full-screen layer */
+body.lite::before{display:none}
+
+body.lite .cloud{filter:none;box-shadow:none}
+
+body.lite .trip{
+    backdrop-filter:none;-webkit-backdrop-filter:none;
+    background:rgba(30,26,24,.66);
+}
+
+/* blur is the single most expensive thing on the page, and every one of
+   these is blurred *while it moves*, which re-blurs it every frame */
+body.lite .glint,
+body.lite .mist,
+body.lite .shaft,
+body.lite .telly-glow,
+body.lite .lamp-glow,
+body.lite .steam{filter:none}
+
+body.lite #beach .sand::before{filter:none;animation:none;opacity:.8}
+body.lite .spark{box-shadow:0 0 5px 1px rgba(246,231,154,.6)}
+
+/* softer shadows: large blur radii are re-rasterised on every move */
+body.lite .answer,
+body.lite .postcard-note,
+body.lite .trip-box,
+body.lite .paper{box-shadow:0 10px 22px rgba(45,38,42,.22)}
+
 
 @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
@@ -1527,33 +1575,69 @@ footer{
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/* ══════ how much this device can take ══════ */
+const LITE = matchMedia("(pointer:coarse)").matches
+          || innerWidth <= 820
+          || (navigator.hardwareConcurrency || 8) <= 4;
+
+if(LITE) document.body.classList.add("lite");
+
+/* and stop everything while nobody is looking */
+document.addEventListener("visibilitychange", function(){
+    document.body.classList.toggle("still", document.hidden);
+});
+
 /* ══════ cursor ══════ */
 const cursor=document.querySelector(".cursor");
 const ring=document.querySelector(".ring");
-let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
 
-document.addEventListener("mousemove",function(e){
-    mx=e.clientX;my=e.clientY;
-    cursor.style.left=mx+"px";cursor.style.top=my+"px";
-});
+if(LITE || reduced){
 
-(function loop(){
-    rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
-    ring.style.left=rx+"px";ring.style.top=ry+"px";
-    requestAnimationFrame(loop);
-})();
+    /* there is no cursor to follow, so do not spend a frame on chasing one */
+    cursor.remove();
+    ring.remove();
 
-document.querySelectorAll("a,button").forEach(function(el){
-    el.addEventListener("mouseenter",function(){ring.classList.add("big")});
-    el.addEventListener("mouseleave",function(){ring.classList.remove("big")});
-});
+}else{
+
+    let mx=innerWidth/2,my=innerHeight/2,rx=mx,ry=my;
+
+    document.addEventListener("mousemove",function(e){
+        mx=e.clientX;my=e.clientY;
+        cursor.style.left=mx+"px";cursor.style.top=my+"px";
+    });
+
+    (function loop(){
+        rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
+        ring.style.left=rx+"px";ring.style.top=ry+"px";
+        requestAnimationFrame(loop);
+    })();
+
+    document.querySelectorAll("a,button").forEach(function(el){
+        el.addEventListener("mouseenter",function(){ring.classList.add("big")});
+        el.addEventListener("mouseleave",function(){ring.classList.remove("big")});
+    });
+
+}
 
 
 /* ══════ grow the grass ══════ */
 
 const NS="http://www.w3.org/2000/svg";
 
-function sow(svg, count, colour, low, high, bend){
+/* On a phone the wind moves a whole layer at once instead of every single
+   blade, so the browser has three things to repaint each frame rather than
+   three hundred. On a laptop each blade still sways on its own. */
+function layer(svg, dur, bend){
+    if(!LITE) return svg;
+    const g = document.createElementNS(NS,"g");
+    g.setAttribute("class","blade");
+    g.style.setProperty("--dur", dur + "s");
+    g.style.setProperty("--bend", bend + "deg");
+    svg.appendChild(g);
+    return g;
+}
+
+function sow(host, count, colour, low, high, bend){
     for(let i=0;i<count;i++){
         const x = (i / count) * 1200 + (Math.random()*18 - 9);
         const h = low + Math.random() * (high - low);
@@ -1566,28 +1650,36 @@ function sow(svg, count, colour, low, high, bend){
         p.setAttribute("stroke-width",(1.6+Math.random()*2.2).toFixed(1));
         p.setAttribute("stroke-linecap","round");
         p.setAttribute("fill","none");
-        p.setAttribute("class","blade");
-        p.style.setProperty("--dur",(3 + Math.random()*3).toFixed(2)+"s");
-        p.style.setProperty("--lag",(Math.random()*4).toFixed(2)+"s");
-        p.style.setProperty("--bend",(bend * (0.6+Math.random()*0.8)).toFixed(1)+"deg");
-        svg.appendChild(p);
+        if(!LITE){
+            p.setAttribute("class","blade");
+            p.style.setProperty("--dur",(3 + Math.random()*3).toFixed(2)+"s");
+            p.style.setProperty("--lag",(Math.random()*4).toFixed(2)+"s");
+            p.style.setProperty("--bend",(bend * (0.6+Math.random()*0.8)).toFixed(1)+"deg");
+        }
+        host.appendChild(p);
     }
 }
 
-sow(document.querySelector(".grass.far"),  110, "#9ab07e", 60, 130, 4);
-sow(document.querySelector(".grass.mid"),   90, "#7d9a63", 90, 175, 6);
-sow(document.querySelector(".grass.near"),  70, "#5f8050", 120, 225, 8);
+const farBed  = layer(document.querySelector(".grass.far"),  6.4, 4);
+const midBed  = layer(document.querySelector(".grass.mid"),  5.1, 5.5);
+const nearBed = layer(document.querySelector(".grass.near"), 4.3, 7);
+
+sow(farBed,  LITE ? 46 : 110, "#9ab07e", 60, 130, 4);
+sow(midBed,  LITE ? 38 :  90, "#7d9a63", 90, 175, 6);
+sow(nearBed, LITE ? 30 :  70, "#5f8050", 120, 225, 8);
 
 /* a few flowers among it */
-function bloom(svg, count, petal){
+function bloom(host, count, petal){
     for(let i=0;i<count;i++){
         const x = Math.random()*1180 + 10;
         const h = 110 + Math.random()*90;
         const g = document.createElementNS(NS,"g");
-        g.setAttribute("class","blade");
-        g.style.setProperty("--dur",(3.4 + Math.random()*2.4).toFixed(2)+"s");
-        g.style.setProperty("--lag",(Math.random()*4).toFixed(2)+"s");
-        g.style.setProperty("--bend","5deg");
+        if(!LITE){
+            g.setAttribute("class","blade");
+            g.style.setProperty("--dur",(3.4 + Math.random()*2.4).toFixed(2)+"s");
+            g.style.setProperty("--lag",(Math.random()*4).toFixed(2)+"s");
+            g.style.setProperty("--bend","5deg");
+        }
 
         const stem = document.createElementNS(NS,"path");
         stem.setAttribute("d","M"+x+" 240 C"+(x+8)+" "+(240-h*0.5)+", "+(x-6)+" "+(240-h*0.8)+", "+x+" "+(240-h));
@@ -1610,20 +1702,25 @@ function bloom(svg, count, petal){
         mid.setAttribute("r",4); mid.setAttribute("fill","#e8b22e");
         g.appendChild(mid);
 
-        svg.appendChild(g);
+        host.appendChild(g);
     }
 }
 
-bloom(document.querySelector(".grass.mid"), 7, "#e9b7c6");
-bloom(document.querySelector(".grass.near"), 5, "#f0dca0");
-bloom(document.querySelector(".grass.far"), 6, "#c9b4dd");
+bloom(midBed,  LITE ? 4 : 7, "#e9b7c6");
+bloom(nearBed, LITE ? 3 : 5, "#f0dca0");
+bloom(farBed,  LITE ? 3 : 6, "#c9b4dd");
 
 
 /* ══════ rain, now and then ══════ */
 
 const rainCv = document.getElementById("rain");
 const rctx = rainCv.getContext("2d");
-let drops = [], raining = false, rdpr = Math.min(devicePixelRatio||1,2);
+let drops = [], raining = false, spinning = false;
+
+/* a phone does not need the rain drawn at twice its own resolution */
+const rdpr     = LITE ? 1 : Math.min(devicePixelRatio||1,2);
+const MAXDROPS = LITE ? 55 : 190;
+const PERFRAME = LITE ? 2 : 4;
 
 function rainSize(){
     rainCv.width = innerWidth*rdpr; rainCv.height = innerHeight*rdpr;
@@ -1631,13 +1728,21 @@ function rainSize(){
     rctx.setTransform(rdpr,0,0,rdpr,0,0);
 }
 rainSize();
-addEventListener("resize",rainSize);
+
+/* the address bar sliding away fires a resize on every scroll, and
+   reallocating a full screen canvas for that is what makes it stutter */
+let lastW = innerWidth, lastH = innerHeight;
+addEventListener("resize", function(){
+    if(innerWidth === lastW && Math.abs(innerHeight - lastH) < 140) return;
+    lastW = innerWidth; lastH = innerHeight;
+    rainSize();
+});
 
 function rainLoop(){
     rctx.clearRect(0,0,innerWidth,innerHeight);
 
-    if(raining && drops.length < 190){
-        for(let i=0;i<4;i++){
+    if(raining && drops.length < MAXDROPS){
+        for(let i=0;i<PERFRAME;i++){
             drops.push({
                 x:Math.random()*innerWidth,
                 y:-20,
@@ -1651,25 +1756,36 @@ function rainLoop(){
     rctx.lineWidth=1.2;
     rctx.lineCap="round";
 
+    /* every drop goes into one path and gets stroked once, instead of
+       fifty-odd separate strokes a frame */
+    rctx.beginPath();
+
     for(let i=drops.length-1;i>=0;i--){
         const d=drops[i];
         d.y+=d.v;
-        rctx.beginPath();
         rctx.moveTo(d.x,d.y);
         rctx.lineTo(d.x-1.6,d.y+d.l);
-        rctx.stroke();
         if(d.y>innerHeight+20) drops.splice(i,1);
     }
+
+    rctx.stroke();
+
+    /* when it is dry there is nothing to draw, so let the loop end */
+    if(!raining && !drops.length){ spinning = false; return; }
 
     requestAnimationFrame(rainLoop);
 }
 
+function startRain(){
+    if(!spinning){ spinning = true; rainLoop(); }
+}
+
 if(!reduced){
-    rainLoop();
     /* it rains for a while, then stops, then thinks about it again */
     setTimeout(function shower(){
         raining=true;
         document.body.classList.add("raining");
+        startRain();
         setTimeout(function(){
             raining=false;
             document.body.classList.remove("raining");
@@ -1978,7 +2094,7 @@ function seed(host, count, cls, style){
 }
 
 /* snow on the mountains */
-seed(document.getElementById("mountains"), 70, "flake", function(el){
+seed(document.getElementById("mountains"), LITE ? 24 : 70, "flake", function(el){
     const r = 1.5 + Math.random()*3;
     el.style.left = (Math.random()*100)+"%";
     el.style.width = r*2+"px";
@@ -1992,7 +2108,7 @@ seed(document.getElementById("mountains"), 70, "flake", function(el){
 /* leaves and fireflies in the forest */
 const forestEl = document.getElementById("forest");
 
-seed(forestEl, 26, "leaf-fall", function(el){
+seed(forestEl, LITE ? 10 : 26, "leaf-fall", function(el){
     const tones=["#c98a4a","#b06a35","#d8a95c","#8a7a3a","#a4522c"];
     el.style.left=(Math.random()*100)+"%";
     el.style.background=tones[(Math.random()*tones.length)|0];
@@ -2001,7 +2117,7 @@ seed(forestEl, 26, "leaf-fall", function(el){
     el.style.setProperty("--lx",((Math.random()*180)-70).toFixed(0)+"px");
 });
 
-seed(forestEl, 22, "spark", function(el){
+seed(forestEl, LITE ? 8 : 22, "spark", function(el){
     el.style.left=(6 + Math.random()*88)+"%";
     el.style.top=(38 + Math.random()*48)+"%";
     el.style.setProperty("--wd",(11 + Math.random()*10).toFixed(1)+"s");
@@ -2012,22 +2128,23 @@ seed(forestEl, 22, "spark", function(el){
 
 /* rain running down the window indoors */
 const win = document.getElementById("win");
-seed(win, 34, "streak", function(el){
+seed(win, LITE ? 12 : 34, "streak", function(el){
     el.style.left=(Math.random()*100)+"%";
     el.style.height=(18 + Math.random()*40)+"px";
     el.style.setProperty("--pd",(1.1 + Math.random()*1.4).toFixed(2)+"s");
     el.style.setProperty("--pl",(-Math.random()*2).toFixed(2)+"s");
 });
 
-/* the ridges shift a little as you move */
-const ridges = document.querySelectorAll("#mountains .ridge");
-document.addEventListener("mousemove", function(e){
-    if(innerWidth <= 760) return;
-    const x = e.clientX / innerWidth - .5;
-    ridges.forEach(function(r,i){
-        r.style.translate = (x * (5 + i*9)) + "px 0";
+/* the ridges shift a little as you move, on anything with a mouse */
+if(!LITE){
+    const ridges = document.querySelectorAll("#mountains .ridge");
+    document.addEventListener("mousemove", function(e){
+        const x = e.clientX / innerWidth - .5;
+        ridges.forEach(function(r,i){
+            r.style.translate = (x * (5 + i*9)) + "px 0";
+        });
     });
-});
+}
 
 </script>
 
