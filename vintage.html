@@ -1,87 +1,701 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vintage Poem</title>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      background: #eae0c8 ;
-      font-family: 'Special Elite', cursive;
-      color: #3e2f1c;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 2rem;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .postcard {
-      background: #f6f1e7 url();
-      border: 4px double #9e8d6d;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-      border-radius: 12px;
-      max-width: 700px;
-      padding: 2.5rem;
-      position: relative;
-      transform: rotate(-0.5deg);
-    }
+<title>vintage · Lavannya</title>
 
-    .postcard::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      
-      background-size: 120px;
-      opacity: 0.2;
-      pointer-events: none;
-    }
+<link rel="icon" href="favicon.jpeg" type="image/jpeg">
+<meta name="description" content="vintage, a poem by Lavannya Daigavane.">
 
-    h1 {
-      font-size: 2rem;
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #5d473a;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=DM+Mono:wght@300;400&family=Manrope:wght@400;500&family=Shadows+Into+Light&display=swap" rel="stylesheet">
 
-    .poem {
-      font-size: 1.15rem;
-      line-height: 2;
-      white-space: pre-wrap;
-    }
+<style>
 
-    
-    
+:root{
+    --cream:#faf1e2;
+    --paper:#f0e2cd;
+    --ink:#29242a;
+    --wine:#663b4f;
+    --pink:#dfa0aa;
+    --blue:#a7bfd5;
+    --yellow:#dfc477;
+    --sage:#b8c1a5;
+    --lilac:#c0aec9;
+    --rust:#b4714f;
+    --gold:#c0982f;
+    --line:rgba(41,36,42,.13);
 
-    .footer {
-      text-align: right;
-      margin-top: 2rem;
-      font-size: 1rem;
-      color: #927e6b;
-    }
-  </style>
+    --serif:"Bodoni Moda",serif;
+    --sans:"Manrope",sans-serif;
+    --mono:"DM Mono",monospace;
+    --hand:"Shadows Into Light",cursive;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:.03;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.cursor{
+    position:fixed;width:6px;height:6px;border-radius:50%;
+    background:var(--rust);pointer-events:none;z-index:2000;
+    transform:translate(-50%,-50%);
+}
+
+.cursor-ring{
+    position:fixed;width:30px;height:30px;
+    border:1px solid rgba(180,113,79,.7);border-radius:50%;
+    pointer-events:none;z-index:1999;
+    transform:translate(-50%,-50%);transition:.35s ease;
+}
+
+.cursor-ring.large{width:52px;height:52px;background:rgba(192,152,47,.14)}
+
+.drift{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+.drift b{position:absolute;top:-40px;font-size:11px;opacity:0;animation:fall linear infinite}
+
+@keyframes fall{
+    0%{opacity:0;transform:translateY(0) translateX(0) rotate(0)}
+    9%{opacity:.4}
+    88%{opacity:.4}
+    100%{opacity:0;transform:translateY(108vh) translateX(46px) rotate(210deg)}
+}
+
+
+/* ══════════ NAV ══════════ */
+
+nav.top{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    height:70px;padding:0 6vw;
+    display:flex;justify-content:space-between;align-items:center;
+    background:linear-gradient(var(--cream) 58%,transparent);
+}
+
+nav.top a{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);text-decoration:none;position:relative;
+}
+
+nav.top a::after{
+    content:"";position:absolute;left:0;bottom:-5px;
+    width:0;height:1px;background:var(--rust);transition:.3s;
+}
+
+nav.top a:hover::after{width:100%}
+
+
+/* ══════════ PAGE ══════════ */
+
+.leaf{
+    position:relative;z-index:4;
+    min-height:100vh;
+    padding:126px 7vw 90px;
+    display:flex;flex-direction:column;align-items:center;
+    overflow:hidden;
+}
+
+.head{position:relative;z-index:6;text-align:center;max-width:660px}
+
+.stamp-no{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--rust);
+    animation:softIn .9s ease .1s both;
+}
+
+h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(58px,11.6vw,142px);
+    line-height:.94;letter-spacing:-.06em;
+    margin:14px 0 2px;padding:.12em 0;
+    color:var(--wine);
+    animation:lineRise 1.3s cubic-bezier(.16,1,.3,1) .3s both;
+}
+
+/* a lace edge under the title */
+.lace{
+    display:block;width:min(320px,84%);margin:12px auto 0;overflow:visible;
+}
+
+.lace path{
+    fill:none;stroke:var(--rust);stroke-width:1.5;stroke-linecap:round;
+    opacity:.7;stroke-dasharray:520;stroke-dashoffset:520;
+    animation:draw 1.8s cubic-bezier(.6,.05,.25,1) 1s forwards;
+}
+
+.lace circle{
+    fill:var(--gold);stroke:none;opacity:0;
+    animation:pop .6s ease both;
+}
+
+.lace circle:nth-of-type(1){animation-delay:1.9s}
+.lace circle:nth-of-type(2){animation-delay:2.05s}
+.lace circle:nth-of-type(3){animation-delay:2.2s}
+.lace circle:nth-of-type(4){animation-delay:2.35s}
+.lace circle:nth-of-type(5){animation-delay:2.5s}
+
+@keyframes pop{
+    from{opacity:0;transform:scale(.2)}
+    60%{opacity:1;transform:scale(1.8)}
+    to{opacity:.85;transform:scale(1)}
+}
+
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.gloss{
+    font-size:11px;line-height:2;color:#6d666c;
+    max-width:400px;margin:24px auto 0;
+    animation:softIn 1s ease .9s both;
+}
+
+.gloss b{
+    font-family:var(--mono);font-weight:400;
+    font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--rust);display:block;margin-bottom:7px;
+}
+
+
+/* ══════════ THE POEM, ON AN OLD CARD ══════════ */
+
+.poem{
+    position:relative;z-index:6;
+    margin:70px auto 0;max-width:570px;width:100%;
+    padding:54px 46px 58px;
+    rotate:-.8deg;
+    /* aged paper: foxing spots and a sunned edge */
+    background-color:#f3e6cf;
+    background-image:
+        radial-gradient(circle at 12% 18%,rgba(180,113,79,.16) 0 6px,transparent 7px),
+        radial-gradient(circle at 84% 26%,rgba(180,113,79,.13) 0 9px,transparent 10px),
+        radial-gradient(circle at 22% 74%,rgba(180,113,79,.11) 0 7px,transparent 8px),
+        radial-gradient(circle at 72% 86%,rgba(180,113,79,.14) 0 5px,transparent 6px),
+        radial-gradient(circle at 54% 44%,rgba(180,113,79,.08) 0 12px,transparent 13px),
+        radial-gradient(130% 100% at 50% 50%,transparent 52%,rgba(140,92,60,.2));
+    box-shadow:
+        0 1px 0 rgba(255,255,255,.7) inset,
+        0 18px 36px rgba(74,52,60,.2);
+    /* the corners have gone soft with handling */
+    border-radius:3px 10px 4px 12px;
+}
+
+/* the lace trim running round the card */
+.poem::before{
+    content:"";position:absolute;inset:11px;
+    border:1px solid rgba(180,113,79,.4);
+    pointer-events:none;
+}
+
+.poem::after{
+    content:"";position:absolute;inset:5px;
+    pointer-events:none;
+    background:
+        radial-gradient(circle 5px at 5px 0,transparent 96%,rgba(180,113,79,.3)) 0 0/16px 16px repeat-x,
+        radial-gradient(circle 5px at 5px 100%,transparent 96%,rgba(180,113,79,.3)) 0 100%/16px 16px repeat-x;
+}
+
+.poem p{
+    position:relative;z-index:2;
+    font-family:var(--serif);
+    font-size:clamp(17px,2.3vw,22px);
+    line-height:2.1;letter-spacing:-.01em;
+    color:#3b2f30;text-align:center;
+}
+
+.poem p + p{margin-top:36px}
+
+.poem .ln{display:block;opacity:0;animation:lineUp 1s cubic-bezier(.2,.8,.2,1) both}
+
+@keyframes lineUp{
+    from{opacity:0;transform:translateY(14px);filter:blur(3px)}
+    to{opacity:1;transform:none;filter:blur(0)}
+}
+
+/* the loose button, hanging by two threads */
+.button-loose{
+    position:absolute;
+    right:34px;bottom:-22px;
+    width:52px;z-index:8;
+    transform-origin:50% -30px;
+    animation:swingBtn 5.5s ease-in-out 2.6s infinite;
+}
+
+.button-loose svg{width:100%;overflow:visible}
+
+.button-loose .disc{fill:#e3cfae;stroke:var(--rust);stroke-width:1.6}
+.button-loose .hole{fill:none;stroke:var(--rust);stroke-width:1.4}
+.button-loose .thread{
+    fill:none;stroke:var(--rust);stroke-width:1.4;stroke-linecap:round;
+    stroke-dasharray:90;stroke-dashoffset:90;
+    animation:draw 1.2s cubic-bezier(.6,.05,.25,1) 2.4s forwards;
+}
+
+@keyframes swingBtn{
+    0%,100%{rotate:-5deg}
+    50%{rotate:5deg}
+}
+
+/* a wax seal pressed into the corner */
+.seal{
+    position:absolute;
+    left:-18px;top:-18px;
+    width:62px;height:62px;z-index:8;
+    border-radius:48% 52% 46% 54% / 52% 46% 54% 48%;
+    background:radial-gradient(circle at 36% 30%,#c0505f,#8e3244 66%,#75253a);
+    box-shadow:0 6px 12px rgba(74,30,40,.34);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-size:22px;color:rgba(255,244,232,.9);
+    rotate:-9deg;
+    opacity:0;
+    animation:press .55s cubic-bezier(.2,.9,.3,1.5) 2s both;
+}
+
+@keyframes press{
+    0%{opacity:0;transform:scale(2.4)}
+    70%{opacity:1;transform:scale(.92)}
+    100%{opacity:1;transform:scale(1)}
+}
+
+
+/* ══════════ CLOSING ══════════ */
+
+.after{position:relative;z-index:6;margin:76px auto 0;text-align:center;max-width:520px}
+
+.after q{
+    quotes:none;display:block;
+    font-family:var(--hand);
+    font-size:clamp(21px,2.7vw,27px);
+    line-height:1.4;color:var(--wine);
+    rotate:-1.2deg;opacity:0;
+    animation:softIn 1.1s ease 3.7s both;
+}
+
+.after .sign{
+    display:block;margin-top:24px;
+    font-family:var(--mono);font-size:7.5px;
+    letter-spacing:.22em;text-transform:uppercase;color:#8b838a;
+    opacity:0;animation:softIn .9s ease 4.1s both;
+}
+
+.onward{
+    position:relative;z-index:6;margin:90px auto 0;
+    display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
+    opacity:0;animation:softIn 1s ease 4.4s both;
+}
+
+.onward a{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);text-decoration:none;
+    padding:12px 22px;border-radius:999px;
+    border:1px solid rgba(41,36,42,.26);
+    transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.onward a:nth-child(1):hover{background:var(--lilac);border-color:var(--lilac)}
+.onward a:nth-child(2):hover{background:var(--yellow);border-color:var(--yellow)}
+.onward a:hover{transform:translateY(-3px)}
+
+
+/* ══════════ DOODLES ══════════ */
+
+.doodle{position:absolute;z-index:5;pointer-events:none;font-family:var(--hand)}
+
+.dd-1{top:19%;left:6%;font-size:26px;color:var(--rust);animation:float 6.5s ease-in-out infinite}
+.dd-2{top:14%;right:8%;font-size:21px;color:var(--gold);animation:twinkle 3.8s ease-in-out infinite}
+.dd-3{bottom:25%;left:8%;font-size:24px;color:var(--sage);animation:twinkle 5s ease-in-out infinite 1s}
+.dd-4{bottom:16%;right:9%;font-size:25px;color:var(--pink);animation:float 8s ease-in-out infinite reverse}
+.dd-5{top:49%;right:3%;font-size:19px;color:var(--lilac);animation:twinkle 6s ease-in-out infinite .5s}
+
+.ink{position:absolute;z-index:5;pointer-events:none}
+
+.ink path,.ink circle{
+    fill:none;stroke:var(--wine);stroke-width:1.3;
+    stroke-linecap:round;stroke-linejoin:round;opacity:.55;
+    stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300);
+    animation:draw 1.9s cubic-bezier(.6,.05,.25,1) var(--wait,2s) forwards;
+}
+
+.ink-key{top:23%;right:5%;width:96px;--wait:2.2s;animation:float 12s ease-in-out infinite}
+.ink-pressed{bottom:23%;right:4%;width:80px;--wait:2.5s;animation:float 14s ease-in-out infinite reverse}
+.ink-ribbon{top:53%;left:4%;width:74px;--wait:2.8s;animation:float 10s ease-in-out infinite}
+
+@keyframes softIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes lineRise{
+    from{opacity:0;transform:translateY(.36em);clip-path:inset(0 0 100% 0)}
+    to{opacity:1;transform:none;clip-path:inset(0 0 0 0)}
+}
+@keyframes twinkle{
+    0%,100%{transform:scale(1) rotate(0);opacity:.65}
+    50%{transform:scale(1.25) rotate(12deg);opacity:1}
+}
+@keyframes float{
+    0%,100%{transform:translateY(0) rotate(-4deg)}
+    50%{transform:translateY(-9px) rotate(3deg)}
+}
+
+
+/* MORE COLOUR, MORE MOTION */
+
+.washes{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+
+.washes span{
+    position:absolute;border-radius:50%;
+    filter:blur(66px);
+    animation:swim 26s ease-in-out infinite;
+}
+
+.washes .w1{width:38vw;height:38vw;top:-6vw;left:-6vw;background:#b4714f;opacity:.30}
+.washes .w2{width:32vw;height:32vw;bottom:-8vw;right:-6vw;background:#c0982f;opacity:.26;animation-duration:33s;animation-direction:reverse}
+.washes .w3{width:26vw;height:26vw;top:44%;right:20%;background:#b8c1a5;opacity:.22;animation-duration:29s}
+
+@keyframes swim{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(5vw,-4vh) scale(1.14)}
+    66%{transform:translate(-4vw,4vh) scale(.92)}
+}
+
+.motes{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+
+.motes i{
+    position:absolute;width:3px;height:3px;border-radius:50%;
+    background:#b4714f;opacity:.2;
+    animation:blink var(--dur,4s) ease-in-out var(--lag,0s) infinite;
+}
+
+@keyframes blink{
+    0%,100%{opacity:.1;transform:scale(1)}
+    50%{opacity:.55;transform:scale(1.8)}
+}
+
+.progress{
+    position:fixed;top:0;left:0;height:2px;width:0;z-index:1500;
+    background:linear-gradient(90deg,#b4714f,#c0982f,#b8c1a5);
+}
+
+.corner{position:absolute;z-index:5;pointer-events:none;width:74px}
+
+.corner path{
+    fill:none;stroke:#b4714f;stroke-width:1.4;
+    stroke-linecap:round;stroke-linejoin:round;opacity:.5;
+    stroke-dasharray:200;stroke-dashoffset:200;
+    animation:draw 1.6s cubic-bezier(.6,.05,.25,1) var(--wait,1.2s) forwards;
+}
+
+.c-tl{top:96px;left:2.5vw}
+.c-tr{top:96px;right:2.5vw;transform:scaleX(-1);--wait:1.35s}
+.c-bl{bottom:120px;left:2.5vw;transform:scaleY(-1);--wait:1.5s}
+.c-br{bottom:120px;right:2.5vw;transform:scale(-1);--wait:1.65s}
+
+.extra{position:absolute;z-index:5;pointer-events:none;font-family:var(--hand)}
+
+.ex-1{top:33%;left:12%;font-size:17px;animation:twinkle 4.4s ease-in-out infinite .3s}
+.ex-2{top:29%;right:14%;font-size:20px;animation:float 7.5s ease-in-out infinite}
+.ex-3{bottom:37%;left:15%;font-size:19px;animation:float 9s ease-in-out infinite reverse .4s}
+.ex-4{bottom:32%;right:16%;font-size:16px;animation:twinkle 5.6s ease-in-out infinite .8s}
+
+.poem{transition:transform .6s cubic-bezier(.2,.8,.2,1),box-shadow .6s ease}
+.poem:hover{transform:rotate(0deg) translateY(-6px) scale(1.008)}
+
+.poem .ln{transition:color .35s ease,letter-spacing .35s ease}
+.poem .ln:hover{color:#b4714f;letter-spacing:.012em}
+
+.ornament{
+    display:block;width:150px;margin:64px auto 0;
+    overflow:visible;position:relative;z-index:6;
+}
+
+.ornament path{
+    fill:none;stroke:#b4714f;stroke-width:1.5;stroke-linecap:round;
+    opacity:.7;stroke-dasharray:260;stroke-dashoffset:260;
+    animation:draw 1.4s cubic-bezier(.6,.05,.25,1) 4.2s forwards;
+}
+
+.ornament circle{
+    fill:#b8c1a5;stroke:none;opacity:0;
+    animation:softIn .7s ease 5.1s both;
+}
+
+@media(max-width:820px){
+    .corner,.extra{display:none}
+    .washes span{filter:blur(48px)}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .washes span,.motes i{animation:none}
+    .corner path,.ornament path{stroke-dashoffset:0}
+    .ornament circle{opacity:1}
+}
+
+
+footer{
+    position:relative;z-index:6;
+    border-top:1px solid var(--line);
+    margin-top:90px;padding:22px 7vw;
+    display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:7px;
+    letter-spacing:.1em;text-transform:uppercase;color:#716970;
+}
+
+
+@media(max-width:820px){
+    .cursor,.cursor-ring{display:none}
+    .drift b{animation:none;opacity:0 !important}
+    .leaf{padding:112px 7vw 70px}
+    .dd-1,.dd-3,.dd-5,.ink-ribbon,.ink-pressed{display:none}
+    .ink-key{right:2%;width:62px;opacity:.7}
+    .poem{padding:40px 24px 46px}
+    .poem::before{inset:8px}
+    .seal{left:-8px;top:-14px;width:48px;height:48px;font-size:17px}
+    .button-loose{right:18px;width:42px}
+    .poem p{line-height:1.95}
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none !important;transition-duration:.01ms !important}
+    .poem .ln,.after q,.after .sign,.onward,h1,.gloss,.stamp-no,.seal{opacity:1;transform:none;filter:none;clip-path:none}
+    .lace circle{opacity:.85;transform:none}
+    .ink path,.ink circle,.lace path,.button-loose .thread{stroke-dashoffset:0}
+    .drift{display:none}
+}
+
+</style>
 </head>
-<body>
-  <div class="postcard">
-    <div class="stamp"></div>
-    <h1>vintage</h1>
-    <div class="poem">
-a torn old card, a button loose,  
-a scent of time, like faded spruce.  
-soft threads speak in quiet tone,  
-of days once warm, now overgrown.  
 
-not broken things, just stories old,  
-wrapped in rust and lace and gold.
+
+<body>
+
+<div class="progress"></div>
+
+<div class="washes" aria-hidden="true">
+    <span class="w1"></span><span class="w2"></span><span class="w3"></span>
+</div>
+
+<div class="motes" aria-hidden="true"></div>
+
+<div class="cursor"></div>
+<div class="cursor-ring"></div>
+
+<div class="drift" aria-hidden="true">
+    <b style="left:10%;animation-duration:32s;animation-delay:-7s; color:var(--rust)">&#10047;</b>
+    <b style="left:30%;animation-duration:40s;animation-delay:-21s;color:var(--gold);font-size:9px">&#10022;</b>
+    <b style="left:52%;animation-duration:35s;animation-delay:-27s;color:var(--sage)">&#10022;</b>
+    <b style="left:74%;animation-duration:30s;animation-delay:-13s;color:var(--pink)">&#9825;</b>
+    <b style="left:92%;animation-duration:38s;animation-delay:-4s; color:var(--lilac);font-size:9px">&#10047;</b>
+</div>
+
+
+<nav class="top">
+    <a href="index.html">&#8592; home</a>
+    <a href="index.html#collection">the collection</a>
+</nav>
+
+
+<main class="leaf">
+    <svg class="corner c-tl" viewBox="0 0 74 74" aria-hidden="true">
+        <path d="M4 70 C4 40, 18 16, 46 8"/>
+        <path d="M12 44 C24 44, 32 36, 32 24"/>
+        <path d="M30 20 C40 22, 48 18, 52 8"/>
+    </svg>
+    <svg class="corner c-tr" viewBox="0 0 74 74" aria-hidden="true">
+        <path d="M4 70 C4 40, 18 16, 46 8"/>
+        <path d="M12 44 C24 44, 32 36, 32 24"/>
+        <path d="M30 20 C40 22, 48 18, 52 8"/>
+    </svg>
+    <svg class="corner c-bl" viewBox="0 0 74 74" aria-hidden="true">
+        <path d="M4 70 C4 40, 18 16, 46 8"/>
+        <path d="M12 44 C24 44, 32 36, 32 24"/>
+        <path d="M30 20 C40 22, 48 18, 52 8"/>
+    </svg>
+    <svg class="corner c-br" viewBox="0 0 74 74" aria-hidden="true">
+        <path d="M4 70 C4 40, 18 16, 46 8"/>
+        <path d="M12 44 C24 44, 32 36, 32 24"/>
+        <path d="M30 20 C40 22, 48 18, 52 8"/>
+    </svg>
+
+    <div class="extra ex-1" style="color:#b4714f">&#10047;</div>
+    <div class="extra ex-2" style="color:#c0982f">&#10022;</div>
+    <div class="extra ex-3" style="color:#dfa0aa">&#9825;</div>
+    <div class="extra ex-4" style="color:#b8c1a5">&#10022;</div>
+
+    <div class="doodle dd-1">&#10047;</div>
+    <div class="doodle dd-2">&#10022;</div>
+    <div class="doodle dd-3">&#10022;</div>
+    <div class="doodle dd-4">&#9825;</div>
+    <div class="doodle dd-5">&#10047;</div>
+
+    <!-- an old key -->
+    <svg class="ink ink-key" viewBox="0 0 96 62" style="--len:220" aria-hidden="true">
+        <circle cx="20" cy="31" r="13"/>
+        <path style="--len:80" d="M33 31 H88"/>
+        <path style="--len:40" d="M76 31 V44"/>
+        <path style="--len:40" d="M86 31 V42"/>
+    </svg>
+
+    <!-- a pressed flower -->
+    <svg class="ink ink-pressed" viewBox="0 0 80 92" style="--len:200" aria-hidden="true">
+        <path d="M40 90 L40 48"/>
+        <path style="--len:70" d="M40 48 C24 46, 14 34, 16 20 C32 22, 42 34, 40 48 Z"/>
+        <path style="--len:70" d="M40 48 C56 46, 66 34, 64 20 C48 22, 38 34, 40 48 Z"/>
+        <path style="--len:50" d="M40 62 C28 62, 20 54, 20 44"/>
+    </svg>
+
+    <!-- a ribbon, tied -->
+    <svg class="ink ink-ribbon" viewBox="0 0 74 62" style="--len:200" aria-hidden="true">
+        <path d="M37 30 C24 14, 6 18, 10 32 C13 42, 30 40, 37 30 Z"/>
+        <path style="--len:110" d="M37 30 C50 14, 68 18, 64 32 C61 42, 44 40, 37 30 Z"/>
+        <path style="--len:80" d="M34 34 L24 58 M40 34 L50 58"/>
+    </svg>
+
+
+    <header class="head">
+
+        <div class="stamp-no">no. 06 &nbsp;&#183;&nbsp; from the collection</div>
+
+        <h1>vintage</h1>
+
+        <svg class="lace" viewBox="0 0 320 30" aria-hidden="true">
+            <path d="M6 12 C22 30, 44 30, 60 12 C76 30, 98 30, 114 12 C130 30, 152 30, 168 12
+                     C184 30, 206 30, 222 12 C238 30, 260 30, 276 12 C288 24, 304 24, 314 14"/>
+            <circle cx="33" cy="22" r="2.6"/>
+            <circle cx="87" cy="22" r="2.6"/>
+            <circle cx="141" cy="22" r="2.6"/>
+            <circle cx="195" cy="22" r="2.6"/>
+            <circle cx="249" cy="22" r="2.6"/>
+        </svg>
+
+        <p class="gloss">
+            <b>kept &#183; not discarded</b>
+            things that outlasted their usefulness and were held onto
+            anyway. worn soft at the edges, still carrying whoever
+            handled them last.
+        </p>
+
+    </header>
+
+
+    <section class="poem">
+
+        <div class="seal" aria-hidden="true">L</div>
+
+        <p>
+            <span class="ln">a torn old card, a button loose,</span>
+            <span class="ln">a scent of time, like faded spruce.</span>
+            <span class="ln">soft threads speak in quiet tone,</span>
+            <span class="ln">of days once warm, now overgrown.</span>
+        </p>
+
+        <p>
+            <span class="ln">not broken things, just stories old,</span>
+            <span class="ln">wrapped in rust and lace and gold.</span>
+        </p>
+
+        <div class="button-loose" aria-hidden="true">
+            <svg viewBox="0 0 52 74">
+                <path class="thread" d="M26 0 C22 12, 30 18, 26 26"/>
+                <circle class="disc" cx="26" cy="48" r="20"/>
+                <circle class="hole" cx="19" cy="41" r="2.6"/>
+                <circle class="hole" cx="33" cy="41" r="2.6"/>
+                <circle class="hole" cx="19" cy="55" r="2.6"/>
+                <circle class="hole" cx="33" cy="55" r="2.6"/>
+                <path class="hole" d="M19 41 L33 55 M33 41 L19 55"/>
+            </svg>
+        </div>
+
+    </section>
+
+
+    <div class="after">
+        <q>nothing here is broken. it is just been kept a long time.</q>
+        <span class="sign">lavannya daigavane</span>
     </div>
-    <div class="footer">✍️ sealed with soul</div>
-  </div>
+
+
+    <svg class="ornament" viewBox="0 0 150 26" aria-hidden="true">
+        <path d="M6 13 C30 13, 44 4, 60 13 C70 19, 80 19, 90 13 C106 4, 120 13, 144 13"/>
+        <circle cx="75" cy="13" r="3.6"/>
+    </svg>
+
+    <nav class="onward">
+        <a href="soulthread.html">&#8592; soulthread</a>
+        <a href="index.html#collection">all six</a>
+    </nav>
+
+</main>
+
+
+<footer>
+    <span>&copy; 2025 Lavannya Daigavane</span>
+    <span>vintage</span>
+    <span>lavannya.me</span>
+</footer>
+
+
+<script>
+
+const cursor=document.querySelector(".cursor");
+const ring=document.querySelector(".cursor-ring");
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener("mousemove",e=>{
+    mx=e.clientX;my=e.clientY;
+    cursor.style.left=mx+"px";cursor.style.top=my+"px";
+});
+
+(function loop(){
+    rx+=(mx-rx)*.13;ry+=(my-ry)*.13;
+    ring.style.left=rx+"px";ring.style.top=ry+"px";
+    requestAnimationFrame(loop);
+})();
+
+document.querySelectorAll("a").forEach(el=>{
+    el.addEventListener("mouseenter",()=>ring.classList.add("large"));
+    el.addEventListener("mouseleave",()=>ring.classList.remove("large"));
+});
+
+document.querySelectorAll(".poem .ln").forEach((l,i)=>{
+    l.style.animationDelay = (1.6 + i*0.3) + "s";
+});
+
+
+/* reading progress */
+const bar=document.querySelector(".progress");
+function prog(){
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.width=(max>0?(window.scrollY/max)*100:0)+"%";
+}
+window.addEventListener("scroll",prog,{passive:true});
+window.addEventListener("resize",prog);
+prog();
+
+/* scatter the motes */
+const motes=document.querySelector(".motes");
+[[7,14],[16,38],[11,66],[24,24],[31,58],[38,82],[44,12],[52,44],
+ [59,72],[66,26],[73,54],[79,88],[86,18],[92,48],[95,76],[21,90]]
+.forEach(function(pt,i){
+    var m=document.createElement("i");
+    m.style.left=pt[0]+"%";m.style.top=pt[1]+"%";
+    m.style.setProperty("--dur",(3.2+(i%5)*0.85)+"s");
+    m.style.setProperty("--lag",((i*0.41)%4)+"s");
+    motes.appendChild(m);
+});
+
+</script>
+
 </body>
 </html>
