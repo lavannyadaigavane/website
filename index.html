@@ -223,7 +223,7 @@ nav{
     font-family:var(--mono);font-size:8px;color:var(--wine);
 }
 
-.hero-type{position:relative;z-index:6;overflow:visible}
+.hero-type{position:relative;z-index:6;overflow:visible;min-width:0;max-width:100%}
 
 .hero-type > *{position:relative;z-index:2}
 
@@ -239,6 +239,7 @@ nav{
     line-height:.94;
     letter-spacing:-.045em;
     text-transform:lowercase;
+    max-width:100%;
 }
 
 .title .lay{
@@ -1410,10 +1411,14 @@ footer{
     .nav-links{gap:14px}
     .nav-links a{font-size:7px}
 
-    .hero{padding:112px 7vw 64px;min-height:auto}
+    .hero{display:block;padding:112px 7vw 64px;min-height:auto}
     .seal{display:none}
-    .title{font-size:13.5vw;letter-spacing:-.03em}
+    .title{font-size:11.6vw;letter-spacing:-.03em}
+    .title .row2{margin-left:4%}
+    .title .lay.b{animation:none;translate:4px 3px}
+    .title .lay.c{animation:none;translate:-4px -3px}
     .hero-note,.cta,.fine{margin-left:0;max-width:100%}
+    .hero-note{font-size:12px}
 
     .key{margin-top:34px}
 
@@ -1429,6 +1434,14 @@ footer{
     .mg-3,.rail{display:none}
     .stamp-grid{grid-template-columns:repeat(2,1fr);gap:24px 16px}
 
+}
+
+@media(max-width:420px){
+    .hero{padding:104px 6vw 56px}
+    .title{font-size:10.8vw;letter-spacing:-.025em}
+    .title .row2{margin-left:0}
+    .hero-note{font-size:11.5px;line-height:1.9}
+    .cta a{padding:13px 18px;font-size:8px}
 }
 
 @media(prefers-reduced-motion:reduce){
