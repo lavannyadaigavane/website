@@ -284,6 +284,27 @@ nav{
     75%{background:var(--sage);scale:1.25}
 }
 
+/* a little block that tumbles, the way a block does in an old game */
+.nav-links .play-link{position:relative;padding-left:14px}
+
+.nav-links .play-link::before{
+    content:"";
+    position:absolute;left:0;top:50%;
+    width:7px;height:7px;margin-top:-3.5px;
+    background:var(--wine);
+    animation:tumble 3.6s steps(1,end) infinite;
+}
+
+@keyframes tumble{
+    0%  {rotate:0deg;   background:var(--wine)}
+    25% {rotate:90deg;  background:var(--yellow)}
+    50% {rotate:180deg; background:var(--blue)}
+    75% {rotate:270deg; background:var(--pink)}
+    100%{rotate:360deg; background:var(--wine)}
+}
+
+.nav-links .play-link:hover::before{animation-duration:.9s}
+
 .label{
     font-family:var(--mono);font-size:8px;
     letter-spacing:.12em;color:var(--wine);text-transform:uppercase;
@@ -1576,6 +1597,7 @@ footer{
     </a>
     <div class="nav-links">
         <a href="mood.html" class="mood-link">mood?</a>
+        <a href="games.html" class="play-link">games</a>
         <a href="#closing">say hi</a>
     </div>
 </nav>

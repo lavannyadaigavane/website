@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>the arcade · Lavannya</title>
+
+<link rel="icon" href="favicon.jpeg" type="image/jpeg">
+<meta name="description" content="Five very small games. None of them take a minute. All of them are harder than they look.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=DM+Mono:wght@300;400&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500&family=Syne:wght@700;800&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --cream:#faf1e2;
+    --paper:#f0e2cd;
+    --ink:#29242a;
+    --wine:#663b4f;
+    --pink:#dfa0aa;
+    --blue:#a7bfd5;
+    --yellow:#dfc477;
+    --sage:#b8c1a5;
+    --lilac:#c0aec9;
+    --sting:#c0392b;
+    --line:rgba(41,36,42,.13);
+
+    --serif:"Bodoni Moda",serif;
+    --display:"Instrument Serif","Bodoni Moda",serif;
+    --graphic:"Syne","Manrope",sans-serif;
+    --sans:"Manrope",sans-serif;
+    --mono:"DM Mono",monospace;
+    --hand:"Shadows Into Light",cursive;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    overflow-x:hidden;
+    min-height:100vh;
+    min-height:100svh;
+}
+
+/* paper grain */
+body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:1000;opacity:.025;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* faint graph paper, because the whole thing is a scoreboard */
+body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+    background-image:
+        linear-gradient(var(--line) 1px,transparent 1px),
+        linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%);
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%);
+}
+
+
+/* ══════════ nav ══════════ */
+
+nav{
+    position:fixed;top:0;left:0;right:0;z-index:60;
+    height:72px;padding:0 6vw;
+    display:flex;justify-content:space-between;align-items:center;
+    background:linear-gradient(var(--cream) 55%,transparent);
+}
+
+.mark{display:block;width:46px;height:46px;text-decoration:none;
+    transition:rotate .7s cubic-bezier(.2,.8,.2,1.25)}
+.mark svg{width:100%;height:100%;overflow:visible}
+
+.mark .arm{
+    fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;
+    transform-origin:30px 30px;
+    transition:stroke .45s ease, scale .55s cubic-bezier(.2,.85,.3,1.6);
+}
+
+.mark .arm:nth-child(2){stroke:var(--pink)}
+.mark .arm:nth-child(4){stroke:var(--blue)}
+.mark .arm:nth-child(6){stroke:var(--yellow)}
+.mark .hub{fill:var(--wine);transform-origin:30px 30px;transition:scale .5s cubic-bezier(.2,.85,.3,1.7), fill .45s}
+
+.mark:hover{rotate:90deg}
+.mark:hover .arm{scale:1.16}
+.mark:hover .hub{scale:1.5;fill:var(--pink)}
+
+.nav-links{display:flex;gap:26px}
+
+.nav-links a{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink);text-decoration:none;position:relative;
+}
+
+.nav-links a::after{
+    content:"";position:absolute;bottom:-6px;left:0;
+    width:0;height:1px;background:var(--wine);transition:.3s;
+}
+
+.nav-links a:hover::after{width:100%}
+
+
+/* ══════════ the head of the page ══════════ */
+
+.top{
+    position:relative;z-index:2;
+    padding:150px 6vw 0;
+    max-width:1180px;margin:0 auto;
+}
+
+.eyebrow{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.24em;text-transform:uppercase;color:var(--wine);
+    display:flex;align-items:center;gap:10px;
+}
+
+.eyebrow::after{content:"";height:1px;flex:1;background:var(--line);max-width:190px}
+
+.title{
+    position:relative;display:inline-block;margin-top:14px;
+    font-family:var(--graphic);font-weight:800;
+    font-size:clamp(48px,10vw,132px);
+    line-height:.92;letter-spacing:-.05em;text-transform:lowercase;
+    max-width:100%;
+    animation:printOn 1.1s cubic-bezier(.16,1,.3,1) .1s both;
+}
+
+.title .lay{display:block;mix-blend-mode:multiply}
+.title .lay.b,.title .lay.c{position:absolute;inset:0;pointer-events:none}
+.title .lay.a{color:var(--ink)}
+.title .lay.b{color:var(--pink);animation:plateB 9s ease-in-out infinite}
+.title .lay.c{color:var(--blue);animation:plateC 11s ease-in-out infinite}
+
+@keyframes plateB{0%,100%{translate:6px 5px}50%{translate:10px 2px}}
+@keyframes plateC{0%,100%{translate:-6px -4px}50%{translate:-10px -1px}}
+
+.title:hover .lay.b{translate:16px 9px}
+.title:hover .lay.c{translate:-16px -8px}
+
+@keyframes printOn{
+    from{opacity:0;transform:translateY(.2em) scale(.97)}
+    to{opacity:1;transform:none}
+}
+
+.lede{
+    margin-top:30px;max-width:470px;
+    font-size:13px;line-height:1.95;color:#5f585e;
+    animation:up 1s ease .5s both;
+}
+
+.lede b{color:var(--ink);font-weight:500}
+
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* a scribbled token count, purely decorative */
+.credits{
+    position:absolute;top:150px;right:6vw;
+    font-family:var(--hand);font-size:19px;color:var(--wine);
+    rotate:5deg;text-align:right;line-height:1.25;
+    animation:up 1s ease .9s both;
+}
+
+.credits small{display:block;font-family:var(--mono);font-size:7px;
+    letter-spacing:.2em;text-transform:uppercase;color:#8b838a;margin-top:4px}
+
+
+/* ══════════ the rack of cabinets ══════════ */
+
+.rack{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;
+    padding:76px 6vw 140px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(258px,1fr));
+    gap:26px;
+}
+
+.cab{
+    position:relative;
+    display:block;width:100%;text-align:left;
+    background:#fffcf4;
+    border:2px solid var(--ink);
+    box-shadow:6px 7px 0 var(--ink);
+    padding:26px 24px 22px;
+    cursor:pointer;font:inherit;color:inherit;
+    rotate:var(--tip,-.6deg);
+    opacity:0;translate:0 26px;
+    transition:transform .3s cubic-bezier(.2,.9,.3,1.5),box-shadow .3s,opacity .7s ease,translate .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.cab.in{opacity:1;translate:0 0}
+
+.cab:hover{transform:translate(-4px,-5px);box-shadow:11px 13px 0 var(--ink)}
+.cab:active{transform:translate(3px,4px);box-shadow:2px 2px 0 var(--ink)}
+
+/* the coloured tab at the top corner */
+.cab::before{
+    content:"";position:absolute;top:-2px;left:22px;
+    width:64px;height:9px;background:var(--tint);
+    border:2px solid var(--ink);border-top:none;
+}
+
+.cab .art{
+    display:block;width:76px;height:70px;margin-bottom:16px;overflow:visible;
+}
+
+.cab .art *{
+    fill:none;stroke:var(--ink);stroke-width:2.2;
+    stroke-linecap:round;stroke-linejoin:round;
+}
+
+.cab .art .fill{fill:var(--tint);stroke:var(--ink)}
+.cab .art .solid{fill:var(--ink);stroke:none}
+.cab .art .tick{stroke:var(--tint);stroke-width:3}
+
+.cab .nm{
+    display:block;
+    font-family:var(--graphic);font-weight:800;
+    font-size:27px;letter-spacing:-.03em;text-transform:lowercase;
+    line-height:1;
+}
+
+.cab .blurb{
+    display:block;
+    margin-top:11px;font-size:11.5px;line-height:1.75;color:#5f585e;
+    min-height:60px;
+}
+
+.cab .strip{
+    margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+    display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+    font-family:var(--mono);font-size:7px;
+    letter-spacing:.16em;text-transform:uppercase;color:#8b838a;
+}
+
+.cab .strip b{font-size:12px;letter-spacing:.02em;color:var(--wine);font-weight:400;
+    font-family:var(--mono);text-transform:none}
+
+
+/* ══════════ the cabinet you are playing ══════════ */
+
+.stage{
+    position:fixed;inset:0;z-index:1400;
+    display:flex;align-items:center;justify-content:center;
+    padding:22px;
+    background:rgba(30,26,24,.5);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    opacity:0;pointer-events:none;
+    transition:opacity .4s ease;
+}
+
+.stage.open{opacity:1;pointer-events:auto}
+
+.cabinet{
+    position:relative;
+    width:min(620px,100%);
+    max-height:calc(100vh - 44px);
+    max-height:calc(100dvh - 44px);
+    overflow-y:auto;
+    background:#fffcf4;
+    border:2px solid var(--ink);
+    box-shadow:0 30px 60px rgba(30,20,16,.42);
+    padding:30px 28px 26px;
+    translate:0 26px;
+    transition:translate .5s cubic-bezier(.2,.8,.2,1);
+}
+
+.stage.open .cabinet{translate:0 0}
+
+.cabinet .quit{
+    position:absolute;top:12px;right:12px;
+    width:34px;height:34px;border-radius:50%;
+    border:2px solid var(--ink);background:#fffcf4;
+    font-family:var(--mono);font-size:12px;color:var(--ink);
+    cursor:pointer;box-shadow:3px 4px 0 var(--ink);
+    transition:transform .25s;
+}
+
+.cabinet .quit:hover{transform:rotate(90deg)}
+
+.cabinet h2{
+    font-family:var(--graphic);font-weight:800;
+    font-size:32px;letter-spacing:-.035em;text-transform:lowercase;line-height:1;
+}
+
+.cabinet .rule{
+    margin-top:9px;font-family:var(--hand);font-size:19px;color:var(--wine);
+}
+
+.scoreline{
+    display:flex;gap:26px;margin:18px 0 4px;
+    padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+
+.scoreline div{flex:1}
+
+.scoreline span{
+    display:block;font-family:var(--mono);font-size:6.5px;
+    letter-spacing:.2em;text-transform:uppercase;color:#8b838a;
+}
+
+.scoreline b{
+    display:block;margin-top:4px;
+    font-family:var(--graphic);font-weight:800;font-size:22px;letter-spacing:-.02em;
+}
+
+.board{
+    position:relative;
+    margin-top:20px;
+    min-height:280px;
+    display:flex;align-items:center;justify-content:center;
+    user-select:none;-webkit-user-select:none;
+}
+
+.tell{
+    margin-top:16px;text-align:center;
+    font-family:var(--mono);font-size:7.5px;
+    letter-spacing:.16em;text-transform:uppercase;color:#8b838a;
+    min-height:12px;
+}
+
+.again{
+    display:block;margin:16px auto 0;
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--ink);
+    background:var(--yellow);border:2px solid var(--ink);
+    box-shadow:4px 5px 0 var(--ink);
+    padding:12px 20px;cursor:pointer;
+    transition:transform .2s cubic-bezier(.2,.9,.3,1.4),box-shadow .2s;
+}
+
+.again:hover{transform:translate(-2px,-3px);box-shadow:7px 9px 0 var(--ink)}
+.again:active{transform:translate(3px,4px);box-shadow:1px 1px 0 var(--ink)}
+
+
+/* ─────── 1 · flatline ─────── */
+
+.ecg{
+    width:100%;height:190px;
+    background:#20232a;
+    border:2px solid var(--ink);
+    overflow:hidden;position:relative;cursor:pointer;
+    touch-action:manipulation;
+}
+
+.ecg .trace{position:absolute;inset:0;width:200%;height:100%}
+.ecg .trace path{fill:none;stroke:#7fe0a8;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;
+    vector-effect:non-scaling-stroke}
+
+.ecg.beating .trace{animation:scroll 2.6s linear infinite}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.ecg.flat{background:#3b1f22}
+.ecg.flat .trace path{stroke:#ff7a6a}
+.ecg.flat .trace{animation:none;transform:none}
+
+.ecg .word{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--graphic);font-weight:800;
+    font-size:clamp(26px,7vw,44px);letter-spacing:-.03em;text-transform:lowercase;
+    color:#fffcf4;text-align:center;padding:0 18px;
+    pointer-events:none;
+}
+
+.ecg.flat .word{color:#ffd9d2}
+.ecg.jumped{animation:shake .34s ease}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    25%{transform:translateX(-7px)}
+    60%{transform:translateX(6px)}
+}
+
+
+/* ─────── 2 · echo ─────── */
+
+.pads{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    width:min(330px,100%);
+}
+
+.pad{
+    aspect-ratio:1;
+    border:2px solid var(--ink);
+    background:var(--dim);
+    box-shadow:4px 5px 0 var(--ink);
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .12s ease,transform .12s ease;
+    touch-action:manipulation;
+}
+
+.pad svg{width:44%;overflow:visible}
+.pad svg *{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+.pad.lit{background:var(--bright);transform:scale(1.05)}
+.pad.wrong{background:var(--sting)}
+
+
+/* ─────── 3 · pairs ─────── */
+
+.deck{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:11px;
+    width:min(360px,100%);
+}
+
+.card{
+    aspect-ratio:3/4;
+    perspective:600px;
+    background:none;border:none;padding:0;cursor:pointer;
+    touch-action:manipulation;
+}
+
+.card .flip{
+    position:relative;width:100%;height:100%;
+    transition:transform .45s cubic-bezier(.3,.8,.3,1.2);
+    transform-style:preserve-3d;
+}
+
+.card.up .flip,.card.done .flip{transform:rotateY(180deg)}
+
+.card .face{
+    position:absolute;inset:0;
+    backface-visibility:hidden;-webkit-backface-visibility:hidden;
+    border:2px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+}
+
+.card .back{
+    background:var(--paper);
+    background-image:repeating-linear-gradient(45deg,rgba(41,36,42,.14) 0 2px,transparent 2px 7px);
+}
+
+.card .front{
+    transform:rotateY(180deg);
+    background:#fffcf4;
+}
+
+.card .front svg{width:58%;overflow:visible}
+.card .front svg *{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.card .front svg .solid{fill:var(--ink);stroke:none}
+
+.card.done{cursor:default}
+.card.done .front{background:var(--sage);opacity:.75}
+
+
+/* ─────── 4 · catch ─────── */
+
+.field{
+    position:relative;
+    width:100%;height:300px;
+    background:#f4efe0;
+    border:2px solid var(--ink);
+    overflow:hidden;
+    background-image:radial-gradient(circle 1.5px,rgba(41,36,42,.14) 1px,transparent 2px);
+    background-size:22px 22px;
+    touch-action:manipulation;
+}
+
+.quarry{
+    position:absolute;top:0;left:0;
+    width:60px;height:60px;
+    background:none;border:none;padding:0;cursor:pointer;
+    transition:translate .34s cubic-bezier(.3,.7,.3,1);
+}
+
+.quarry svg{width:100%;overflow:visible;display:block;animation:jig 1.5s ease-in-out infinite}
+@keyframes jig{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(8deg)}}
+
+.quarry .abdomen{fill:var(--yellow);stroke:var(--ink);stroke-width:2.4}
+.quarry .stripe{fill:var(--ink)}
+.quarry .head{fill:var(--ink)}
+.quarry .eye{fill:#fffcf4}
+.quarry .wing{fill:rgba(255,255,255,.8);stroke:rgba(41,36,42,.45);stroke-width:1.4;
+    transform-origin:24px 14px;animation:flap .1s linear infinite}
+.quarry .wing.two{transform-origin:34px 15px;animation-delay:.05s}
+
+@keyframes flap{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(14deg)}}
+
+.puff{
+    position:absolute;pointer-events:none;
+    font-family:var(--hand);font-size:20px;color:var(--wine);
+    animation:puffOut .7s ease forwards;
+}
+
+@keyframes puffOut{
+    from{opacity:1;transform:translate(-50%,0) scale(.8)}
+    to{opacity:0;transform:translate(-50%,-38px) scale(1.1)}
+}
+
+
+/* ─────── 5 · steady ─────── */
+
+.wirebox{
+    width:100%;
+    border:2px solid var(--ink);
+    background:#fffdf6;
+    touch-action:none;
+    cursor:crosshair;
+}
+
+.wirebox .corridor{fill:none;stroke:var(--paper);stroke-width:34;stroke-linecap:round;stroke-linejoin:round}
+.wirebox .edge{fill:none;stroke:var(--ink);stroke-width:38;stroke-linecap:round;stroke-linejoin:round;opacity:.16}
+.wirebox .hair{fill:none;stroke:rgba(41,36,42,.22);stroke-width:1.4;stroke-dasharray:5 7}
+
+.wirebox .gate{fill:var(--sage);stroke:var(--ink);stroke-width:2.4}
+.wirebox .gate.finish{fill:var(--pink)}
+.wirebox .cap{font-family:"DM Mono",monospace;font-size:9px;fill:var(--ink);text-anchor:middle}
+
+.wirebox .tip{fill:var(--wine);stroke:#fffcf4;stroke-width:2}
+
+.wirebox.live .corridor{stroke:#e9f0dd}
+.wirebox.bust .corridor{stroke:#f6dcd8}
+.wirebox.bust .edge{stroke:var(--sting);opacity:.4}
+
+
+/* ══════════ footer ══════════ */
+
+footer{
+    position:relative;z-index:2;
+    padding:0 6vw 46px;max-width:1180px;margin:0 auto;
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:7px;
+    letter-spacing:.12em;text-transform:uppercase;color:rgba(41,36,42,.45);
+}
+
+footer a{color:inherit}
+
+
+/* a blurred backdrop is expensive on a phone, and a flat one reads the same */
+@media(pointer:coarse){
+    .stage{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(30,26,24,.68)}
+    .cab{transition:opacity .7s ease,translate .7s cubic-bezier(.2,.8,.2,1)}
+}
+
+@media(max-width:760px){
+    .top{padding:128px 7vw 0}
+    .credits{position:static;text-align:left;rotate:-2deg;margin-top:26px}
+    .rack{padding:54px 7vw 110px;gap:20px;grid-template-columns:1fr}
+    .cabinet{padding:26px 20px 22px}
+    .cabinet h2{font-size:26px}
+    .board{min-height:240px}
+    .field{height:260px}
+    .deck{grid-template-columns:repeat(3,1fr)}
+    .stage{padding:12px}
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+    <a href="index.html" class="mark" aria-label="Home">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+            <path class="arm" d="M30 30 L30 6"/>
+            <path class="arm" d="M30 30 L50.8 18"/>
+            <path class="arm" d="M30 30 L50.8 42"/>
+            <path class="arm" d="M30 30 L30 54"/>
+            <path class="arm" d="M30 30 L9.2 42"/>
+            <path class="arm" d="M30 30 L9.2 18"/>
+            <circle class="hub" cx="30" cy="30" r="2.6"/>
+        </svg>
+    </a>
+    <div class="nav-links">
+        <a href="mood.html">mood?</a>
+        <a href="index.html#closing">say hi</a>
+    </div>
+</nav>
+
+
+<header class="top">
+
+    <span class="eyebrow">05 &#183; the arcade</span>
+
+    <h1 class="title">
+        <span class="lay a">the arcade</span>
+        <span class="lay b" aria-hidden="true">the arcade</span>
+        <span class="lay c" aria-hidden="true">the arcade</span>
+    </h1>
+
+    <p class="lede">
+        Five very small games. Not one of them takes a minute, and every single
+        one of them is harder than it looks, which I think is true of most things.
+        <b>Your best scores stay on this device</b>, so nobody has to know.
+    </p>
+
+    <p class="credits">
+        no coins needed
+        <small>unlimited plays</small>
+    </p>
+
+</header>
+
+
+<section class="rack" id="rack">
+
+    <!-- 1 -->
+    <button class="cab" data-game="flatline" style="--tint:#dfa0aa;--tip:-.7deg">
+        <svg class="art" viewBox="0 0 76 70">
+            <path d="M2 44 H16 L21 44 L26 22 L31 60 L37 44 H50"/>
+            <path class="tick" d="M50 44 H74"/>
+            <circle class="solid" cx="50" cy="44" r="4"/>
+        </svg>
+        <span class="nm">flatline</span>
+        <span class="blurb">
+            A heartbeat runs across the screen. The second it goes flat, tap.
+            We are timing you in milliseconds, and no, you cannot guess early.
+        </span>
+        <span class="strip">reaction <b data-best="flatline">not yet</b></span>
+    </button>
+
+    <!-- 2 -->
+    <button class="cab" data-game="echo" style="--tint:#a7bfd5;--tip:.5deg">
+        <svg class="art" viewBox="0 0 76 70">
+            <rect x="6" y="8" width="26" height="26" rx="3" class="fill"/>
+            <circle cx="57" cy="21" r="13"/>
+            <path d="M19 61 L6 39 H32 Z"/>
+            <path d="M44 48 C50 40, 56 56, 62 48 C66 42, 70 50, 72 46"/>
+        </svg>
+        <span class="nm">echo</span>
+        <span class="blurb">
+            Four shapes, four notes. She plays a sequence, you play it back,
+            then she adds one more. It gets away from you around round seven.
+        </span>
+        <span class="strip">rounds <b data-best="echo">not yet</b></span>
+    </button>
+
+    <!-- 3 -->
+    <button class="cab" data-game="pairs" style="--tint:#dfc477;--tip:-.4deg">
+        <svg class="art" viewBox="0 0 76 70">
+            <rect x="4" y="10" width="30" height="40" rx="3" class="fill"/>
+            <rect x="40" y="18" width="30" height="40" rx="3"/>
+            <path d="M48 32 L62 32 M48 40 L58 40"/>
+            <circle class="solid" cx="19" cy="30" r="5"/>
+        </svg>
+        <span class="nm">pairs</span>
+        <span class="blurb">
+            Twelve cards face down, six little doodles hiding under them.
+            Find both of each. The clock is running and it is not sympathetic.
+        </span>
+        <span class="strip">fastest <b data-best="pairs">not yet</b></span>
+    </button>
+
+    <!-- 4 -->
+    <button class="cab" data-game="catch" style="--tint:#b8c1a5;--tip:.6deg">
+        <svg class="art" viewBox="0 0 76 70">
+            <ellipse cx="40" cy="40" rx="17" ry="12" class="fill"/>
+            <path d="M34 30 L34 50 M42 29 L42 51"/>
+            <circle class="solid" cx="59" cy="36" r="6"/>
+            <path d="M32 27 C24 12, 12 14, 16 26 C19 34, 28 33, 32 27 Z"/>
+            <path d="M8 62 L20 54 M6 48 L16 48"/>
+        </svg>
+        <span class="nm">catch</span>
+        <span class="blurb">
+            One bee, twelve catches, and she will not sit still for any of it.
+            She gets smaller and quicker every time you land one.
+        </span>
+        <span class="strip">fastest <b data-best="catch">not yet</b></span>
+    </button>
+
+    <!-- 5 -->
+    <button class="cab" data-game="steady" style="--tint:#c0aec9;--tip:-.8deg">
+        <svg class="art" viewBox="0 0 76 70">
+            <path d="M8 52 C18 52, 18 20, 30 20 C42 20, 40 52, 52 52 C62 52, 62 26, 70 26"/>
+            <circle class="fill" cx="8" cy="52" r="6"/>
+            <circle cx="70" cy="26" r="6"/>
+            <path class="tick" d="M30 62 L36 68"/>
+        </svg>
+        <span class="nm">steady</span>
+        <span class="blurb">
+            Drag from one end of the wire to the other without touching the sides.
+            Surgeons do this for a living. I am told it takes practice.
+        </span>
+        <span class="strip">fastest <b data-best="steady">not yet</b></span>
+    </button>
+
+</section>
+
+
+<footer>
+    <span>&copy; 2025 Lavannya Daigavane</span>
+    <span>five games, no coins</span>
+    <span><a href="index.html">back to the front</a></span>
+</footer>
+
+
+<!-- the cabinet you are playing -->
+<div class="stage" id="stage" role="dialog" aria-modal="true" aria-label="game">
+    <div class="cabinet">
+        <button class="quit" id="quit" aria-label="close">&#10005;</button>
+        <h2 id="gname"></h2>
+        <p class="rule" id="grule"></p>
+
+        <div class="scoreline">
+            <div><span id="l1">score</span><b id="v1">ready</b></div>
+            <div><span id="l2">best</span><b id="v2">not yet</b></div>
+        </div>
+
+        <div class="board" id="board"></div>
+        <p class="tell" id="tell"></p>
+        <button class="again" id="again">play again</button>
+    </div>
+</div>
+
+
+<script>
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+
+/* ══════════ small shared things ══════════ */
+
+const NS = "http://www.w3.org/2000/svg";
+
+function rand(n){ return Math.floor(Math.random() * n); }
+
+function shuffle(a){
+    for(let i = a.length - 1; i > 0; i--){
+        const j = rand(i + 1);
+        const t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+}
+
+/* the sounds are made on the spot, there are no files to load */
+let ac;
+
+function tone(freq, dur, shape, vol){
+    if(reduced) return;
+    try{
+        ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+        if(ac.state === "suspended") ac.resume();
+    }catch(e){ return; }
+
+    const t = ac.currentTime;
+    const g = ac.createGain();
+    const o = ac.createOscillator();
+    o.type = shape || "sine";
+    o.frequency.setValueAtTime(freq, t);
+    o.connect(g); g.connect(ac.destination);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || 0.14, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (dur || 0.2));
+    o.start(t); o.stop(t + (dur || 0.2) + 0.04);
+}
+
+function slide(from, to, dur, shape, vol){
+    if(reduced) return;
+    try{
+        ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+        if(ac.state === "suspended") ac.resume();
+    }catch(e){ return; }
+
+    const t = ac.currentTime;
+    const g = ac.createGain();
+    const o = ac.createOscillator();
+    o.type = shape || "sawtooth";
+    o.frequency.setValueAtTime(from, t);
+    o.frequency.exponentialRampToValueAtTime(to, t + dur);
+    o.connect(g); g.connect(ac.destination);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || 0.13, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.start(t); o.stop(t + dur + 0.04);
+}
+
+
+/* ══════════ keeping score ══════════ */
+
+const KEY = "lav.arcade.";
+
+function readBest(game){
+    try{
+        const v = localStorage.getItem(KEY + game);
+        return v === null ? null : Number(v);
+    }catch(e){ return null; }
+}
+
+function writeBest(game, value){
+    try{ localStorage.setItem(KEY + game, String(value)); }catch(e){}
+}
+
+/* some games want the smallest number, some want the largest */
+function keepBest(game, value, lowerWins){
+    const had = readBest(game);
+    const better = had === null || (lowerWins ? value < had : value > had);
+    if(better){ writeBest(game, value); paintBest(game); }
+    return better;
+}
+
+function paintBest(game){
+    const cell = document.querySelector('[data-best="' + game + '"]');
+    if(cell) cell.textContent = pretty(game, readBest(game));
+    if(current === game) v2.textContent = pretty(game, readBest(game));
+}
+
+function pretty(game, v){
+    if(v === null || v === undefined) return "not yet";
+    if(game === "flatline") return v + "ms";
+    if(game === "echo")     return "round " + v;
+    return (v / 1000).toFixed(1) + "s";
+}
+
+
+/* ══════════ the cabinet ══════════ */
+
+const stage = document.getElementById("stage");
+const board = document.getElementById("board");
+const gname = document.getElementById("gname");
+const grule = document.getElementById("grule");
+const tell  = document.getElementById("tell");
+const again = document.getElementById("again");
+const l1 = document.getElementById("l1"), v1 = document.getElementById("v1");
+const l2 = document.getElementById("l2"), v2 = document.getElementById("v2");
+
+let current = null;
+let cleanup = null;
+
+["flatline","echo","pairs","catch","steady"].forEach(paintBest);
+
+function openGame(game){
+    const g = GAMES[game];
+    if(!g) return;
+
+    current = game;
+    gname.textContent = g.name;
+    grule.textContent = g.rule;
+    l1.textContent = g.unit;
+    l2.textContent = "your best";
+    v2.textContent = pretty(game, readBest(game));
+
+    stage.classList.add("open");
+    document.body.style.overflow = "hidden";
+    play();
+}
+
+function play(){
+    if(cleanup){ cleanup(); cleanup = null; }
+    board.innerHTML = "";
+    tell.textContent = "";
+    v1.textContent = "ready";
+    cleanup = GAMES[current].start() || null;
+}
+
+function shutGame(){
+    if(cleanup){ cleanup(); cleanup = null; }
+    stage.classList.remove("open");
+    document.body.style.overflow = "";
+    board.innerHTML = "";
+    current = null;
+}
+
+document.getElementById("quit").addEventListener("click", shutGame);
+again.addEventListener("click", play);
+
+stage.addEventListener("click", function(e){ if(e.target === stage) shutGame(); });
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && current) shutGame();
+});
+
+document.querySelectorAll(".cab").forEach(function(cab){
+    cab.addEventListener("click", function(){ openGame(cab.dataset.game); });
+});
+
+/* the cabinets arrive one after another */
+const seen = new IntersectionObserver(function(rows){
+    rows.forEach(function(row, i){
+        if(!row.isIntersecting) return;
+        setTimeout(function(){ row.target.classList.add("in"); }, i * 90);
+        seen.unobserve(row.target);
+    });
+}, {threshold:.2});
+
+document.querySelectorAll(".cab").forEach(function(c){ seen.observe(c); });
+
+
+/* ══════════════════════════════════════════
+   1 · FLATLINE
+   ══════════════════════════════════════════ */
+
+/* one heartbeat, laid down eight times so the strip scrolls without a seam */
+const BEAT = "M0 60 h34 l7 0 l6 -26 l7 46 l7 -20 h13 l6 -6 l5 6 h29";
+const STRIP = (function(){
+    let d = "";
+    for(let i = 0; i < 8; i++){
+        d += BEAT.replace("M0 60", "M" + (i * 114) + " 60") + " ";
+    }
+    return d;
+})();
+
+const GAMES_FLATLINE = function(){
+
+    const box = document.createElement("div");
+    box.className = "ecg beating";
+    box.innerHTML =
+        '<svg class="trace" viewBox="0 0 912 120" preserveAspectRatio="none">' +
+            '<path d="' + STRIP + '"/>' +
+        '</svg>' +
+        '<span class="word">wait for it</span>';
+
+    board.appendChild(box);
+
+    const word = box.querySelector(".word");
+    const flatPath = "M0 60 H912";
+    const livePath = box.querySelector("path").getAttribute("d");
+
+    let state = "waiting", at = 0, timer, resetter;
+
+    function arm(){
+        timer = setTimeout(function(){
+            state = "go";
+            at = performance.now();
+            box.classList.remove("beating");
+            box.classList.add("flat");
+            box.querySelector("path").setAttribute("d", flatPath);
+            word.textContent = "now";
+            tone(180, 1.1, "sine", 0.09);
+        }, 1700 + Math.random() * 3600);
+    }
+
+    arm();
+
+    function hit(){
+        if(state === "done") return;
+
+        if(state === "waiting"){
+            state = "done";
+            clearTimeout(timer);
+            box.classList.add("jumped");
+            word.textContent = "too soon";
+            tell.textContent = "that is not reflex, that is nerves";
+            slide(320, 90, 0.5, "sawtooth", 0.12);
+            resetter = setTimeout(reset, 1500);
+            return;
+        }
+
+        state = "done";
+        const ms = Math.round(performance.now() - at);
+        v1.textContent = ms + "ms";
+        word.textContent = ms + "ms";
+
+        if(keepBest("flatline", ms, true)){
+            tell.textContent = "a new best. do it again before it leaves you";
+            tone(880, 0.18, "triangle", 0.14);
+            setTimeout(function(){ tone(1320, 0.26, "triangle", 0.12); }, 130);
+        }else{
+            tell.textContent = ms < 260 ? "sharp" : ms < 400 ? "respectable" : "you were somewhere else";
+            tone(660, 0.2, "triangle", 0.12);
+        }
+
+        resetter = setTimeout(reset, 1600);
+    }
+
+    function reset(){
+        state = "waiting";
+        box.classList.remove("flat","jumped");
+        box.classList.add("beating");
+        box.querySelector("path").setAttribute("d", livePath);
+        word.textContent = "wait for it";
+        arm();
+    }
+
+    box.addEventListener("pointerdown", hit);
+
+    return function(){ clearTimeout(timer); clearTimeout(resetter); };
+};
+
+
+/* ══════════════════════════════════════════
+   2 · ECHO
+   ══════════════════════════════════════════ */
+
+const PADS = [
+    {dim:"#eddfe2", bright:"#dfa0aa", hz:262, art:'<circle cx="30" cy="30" r="20"/>'},
+    {dim:"#dee6ee", bright:"#a7bfd5", hz:330, art:'<rect x="11" y="11" width="38" height="38" rx="4"/>'},
+    {dim:"#efe7d3", bright:"#dfc477", hz:392, art:'<path d="M30 9 L52 48 H8 Z"/>'},
+    {dim:"#e3e6da", bright:"#b8c1a5", hz:494, art:'<path d="M8 34 C16 16, 24 46, 32 30 C38 18, 46 38, 52 26"/>'}
+];
+
+const GAMES_ECHO = function(){
+
+    const grid = document.createElement("div");
+    grid.className = "pads";
+
+    const pads = PADS.map(function(p, i){
+        const b = document.createElement("button");
+        b.className = "pad";
+        b.style.setProperty("--dim", p.dim);
+        b.style.setProperty("--bright", p.bright);
+        b.setAttribute("aria-label", "pad " + (i + 1));
+        b.innerHTML = '<svg viewBox="0 0 60 60">' + p.art + '</svg>';
+        grid.appendChild(b);
+        return b;
+    });
+
+    board.appendChild(grid);
+
+    let seq = [], step = 0, locked = true, over = false;
+    const timers = [];
+
+    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+
+    function light(i, ms){
+        pads[i].classList.add("lit");
+        tone(PADS[i].hz, (ms || 320) / 1000, "triangle", 0.13);
+        later(function(){ pads[i].classList.remove("lit"); }, ms || 320);
+    }
+
+    function grow(){
+        seq.push(rand(4));
+        step = 0;
+        locked = true;
+        v1.textContent = seq.length;
+        tell.textContent = "watch";
+
+        const gap = Math.max(260, 520 - seq.length * 18);
+        seq.forEach(function(n, k){
+            later(function(){ light(n, gap * 0.62); }, 620 + k * gap);
+        });
+
+        later(function(){
+            locked = false;
+            tell.textContent = "your turn";
+        }, 620 + seq.length * gap);
+    }
+
+    pads.forEach(function(b, i){
+        b.addEventListener("click", function(){
+            if(locked || over) return;
+
+            light(i, 220);
+
+            if(i !== seq[step]){
+                over = true; locked = true;
+                b.classList.add("wrong");
+                slide(300, 80, 0.55, "sawtooth", 0.13);
+                const got = seq.length - 1;
+                v1.textContent = got;
+                if(got > 0 && keepBest("echo", got, false)){
+                    tell.textContent = "round " + got + ", and that is your best yet";
+                }else{
+                    tell.textContent = got === 0 ? "the very first one. brutal." : "you made it to round " + got;
+                }
+                later(function(){ b.classList.remove("wrong"); }, 500);
+                return;
+            }
+
+            step++;
+
+            if(step === seq.length){
+                locked = true;
+                tell.textContent = "again, but longer";
+                later(grow, 700);
+            }
+        });
+    });
+
+    tell.textContent = "watch";
+    later(grow, 500);
+
+    return function(){ timers.forEach(clearTimeout); };
+};
+
+
+/* ══════════════════════════════════════════
+   3 · PAIRS
+   ══════════════════════════════════════════ */
+
+const DOODLES = [
+    '<path d="M30 8 L36 24 L53 25 L40 36 L45 52 L30 43 L15 52 L20 36 L7 25 L24 24 Z"/>',
+    '<path d="M44 38 A18 18 0 1 1 30 10 A14 14 0 0 0 44 38 Z"/>',
+    '<path d="M14 20 h26 v16 a13 13 0 0 1 -26 0 Z"/><path d="M40 24 c9 0, 9 12, 0 12"/><path d="M20 12 c2 -4, -2 -6, 0 -9"/><path d="M30 12 c2 -4, -2 -6, 0 -9"/>',
+    '<path d="M30 50 C6 34, 10 12, 22 12 C28 12, 30 18, 30 20 C30 18, 32 12, 38 12 C50 12, 54 34, 30 50 Z"/>',
+    '<path d="M30 52 C30 30, 34 14, 50 10 C52 30, 44 46, 30 52 Z"/><path d="M30 52 C30 40, 34 26, 46 18"/>',
+    '<path d="M18 46 C18 30, 42 30, 42 46"/><circle cx="30" cy="20" r="9"/><path d="M30 11 L30 4 M22 14 L16 8 M38 14 L44 8"/>'
+];
+
+const GAMES_PAIRS = function(){
+
+    const deck = document.createElement("div");
+    deck.className = "deck";
+
+    const faces = shuffle([0,1,2,3,4,5,0,1,2,3,4,5]);
+
+    faces.forEach(function(n){
+        const c = document.createElement("button");
+        c.className = "card";
+        c.dataset.face = n;
+        c.setAttribute("aria-label", "card");
+        c.innerHTML =
+            '<span class="flip">' +
+                '<span class="face back"></span>' +
+                '<span class="face front"><svg viewBox="0 0 60 60">' + DOODLES[n] + '</svg></span>' +
+            '</span>';
+        deck.appendChild(c);
+    });
+
+    board.appendChild(deck);
+
+    let first = null, locked = false, found = 0, started = 0, tick;
+
+    tell.textContent = "turn one over to start the clock";
+
+    deck.addEventListener("click", function(e){
+        const card = e.target.closest(".card");
+        if(!card || locked) return;
+        if(card.classList.contains("done") || card === first) return;
+
+        if(!started){
+            started = performance.now();
+            tick = setInterval(function(){
+                v1.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
+            }, 100);
+            tell.textContent = "six pairs, hidden badly";
+        }
+
+        card.classList.add("up");
+        tone(520 + Number(card.dataset.face) * 40, 0.13, "sine", 0.1);
+
+        if(!first){ first = card; return; }
+
+        if(first.dataset.face === card.dataset.face){
+            first.classList.add("done"); card.classList.add("done");
+            first.classList.remove("up"); card.classList.remove("up");
+            first = null;
+            found++;
+            tone(760, 0.16, "triangle", 0.12);
+
+            if(found === 6){
+                clearInterval(tick);
+                const ms = Math.round(performance.now() - started);
+                v1.textContent = (ms / 1000).toFixed(1) + "s";
+                if(keepBest("pairs", ms, true)){
+                    tell.textContent = "all six, and faster than you have ever done it";
+                }else{
+                    tell.textContent = "all six. the record still stands.";
+                }
+                setTimeout(function(){ tone(880, 0.2, "triangle", 0.13); }, 120);
+                setTimeout(function(){ tone(1180, 0.3, "triangle", 0.11); }, 260);
+            }
+            return;
+        }
+
+        locked = true;
+        const a = first; first = null;
+        slide(300, 200, 0.2, "sine", 0.07);
+        setTimeout(function(){
+            a.classList.remove("up");
+            card.classList.remove("up");
+            locked = false;
+        }, 640);
+    });
+
+    return function(){ clearInterval(tick); };
+};
+
+
+/* ══════════════════════════════════════════
+   4 · CATCH
+   ══════════════════════════════════════════ */
+
+const MISSES = ["missed","nope","too slow","she moved"];
+const HITS   = ["got her","caught","yes","gotcha"];
+
+const GAMES_CATCH = function(){
+
+    const field = document.createElement("div");
+    field.className = "field";
+
+    const bee = document.createElement("button");
+    bee.className = "quarry";
+    bee.setAttribute("aria-label", "catch the bee");
+    bee.innerHTML =
+        '<svg viewBox="0 0 60 46">' +
+            '<ellipse class="wing" cx="24" cy="14" rx="11" ry="6"/>' +
+            '<ellipse class="wing two" cx="34" cy="15" rx="10" ry="5.5"/>' +
+            '<ellipse class="abdomen" cx="30" cy="28" rx="17" ry="12"/>' +
+            '<path class="stripe" d="M25 17 h5 v22 h-5 Z"/>' +
+            '<path class="stripe" d="M35 18 h4 v20 h-4 Z"/>' +
+            '<circle class="head" cx="49" cy="25" r="8"/>' +
+            '<circle class="eye" cx="52" cy="23" r="2.4"/>' +
+        '</svg>';
+
+    field.appendChild(bee);
+    board.appendChild(field);
+
+    const TARGET = 12;
+    let caught = 0, started = 0, tick, hop, done = false;
+
+    v1.textContent = "0 / " + TARGET;
+    tell.textContent = "catch her twelve times. tap to start.";
+
+    function place(){
+        const size = 60 - caught * 2.4;
+        bee.style.width = size + "px";
+        bee.style.height = size + "px";
+        const x = Math.random() * (field.clientWidth  - size - 8) + 4;
+        const y = Math.random() * (field.clientHeight - size - 8) + 4;
+        bee.style.translate = x + "px " + y + "px";
+    }
+
+    function schedule(){
+        clearTimeout(hop);
+        const wait = Math.max(420, 1250 - caught * 70);
+        hop = setTimeout(function(){ place(); schedule(); }, wait);
+    }
+
+    function puff(text, x, y){
+        const s = document.createElement("span");
+        s.className = "puff";
+        s.textContent = text;
+        s.style.left = x + "px";
+        s.style.top  = y + "px";
+        field.appendChild(s);
+        setTimeout(function(){ s.remove(); }, 720);
+    }
+
+    bee.addEventListener("click", function(e){
+        if(done) return;
+        e.stopPropagation();
+
+        if(!started){
+            started = performance.now();
+            tick = setInterval(function(){
+                v1.textContent = caught + " / " + TARGET +
+                    "  " + ((performance.now() - started) / 1000).toFixed(1) + "s";
+            }, 100);
+            schedule();
+        }
+
+        caught++;
+        tone(420 + caught * 45, 0.1, "triangle", 0.12);
+
+        const box = field.getBoundingClientRect();
+        puff(HITS[rand(HITS.length)], e.clientX - box.left, e.clientY - box.top);
+
+        if(caught === TARGET){
+            done = true;
+            clearInterval(tick); clearTimeout(hop);
+            const ms = Math.round(performance.now() - started);
+            v1.textContent = (ms / 1000).toFixed(1) + "s";
+            bee.style.opacity = ".25";
+            if(keepBest("catch", ms, true)){
+                tell.textContent = "twelve out of twelve, and a new record";
+            }else{
+                tell.textContent = "twelve out of twelve. she has been quicker.";
+            }
+            setTimeout(function(){ tone(920, 0.22, "triangle", 0.13); }, 100);
+            return;
+        }
+
+        place();
+        schedule();
+    });
+
+    field.addEventListener("click", function(e){
+        if(done || !started) return;
+        const box = field.getBoundingClientRect();
+        puff(MISSES[rand(MISSES.length)], e.clientX - box.left, e.clientY - box.top);
+        slide(220, 150, 0.16, "sine", 0.06);
+    });
+
+    /* wait a frame so the field has a measurable size */
+    requestAnimationFrame(place);
+
+    return function(){ clearInterval(tick); clearTimeout(hop); };
+};
+
+
+/* ══════════════════════════════════════════
+   5 · STEADY
+   ══════════════════════════════════════════ */
+
+const WIRE = "M40 190 C40 100, 105 60, 150 118 C196 178, 214 46, 268 74 C318 100, 300 190, 360 166 C412 145, 400 66, 452 66";
+
+const GAMES_STEADY = function(){
+
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "wirebox");
+    svg.setAttribute("viewBox", "0 0 492 240");
+    svg.innerHTML =
+        '<path class="edge" d="' + WIRE + '"/>' +
+        '<path class="corridor" d="' + WIRE + '"/>' +
+        '<path class="hair" d="' + WIRE + '"/>' +
+        '<circle class="gate" cx="40" cy="190" r="17"/>' +
+        '<circle class="gate finish" cx="452" cy="66" r="17"/>' +
+        '<text class="cap" x="40" y="224">start</text>' +
+        '<text class="cap" x="452" y="102">end</text>' +
+        '<circle class="tip" cx="40" cy="190" r="7" style="opacity:0"/>';
+
+    board.appendChild(svg);
+
+    const corridor = svg.querySelector(".corridor");
+    const tip = svg.querySelector(".tip");
+
+    let live = false, started = 0, tick, done = false, last = null;
+
+    v1.textContent = "ready";
+    tell.textContent = "press on the green dot and drag, without letting go";
+
+    function at(e){
+        const m = svg.getScreenCTM();
+        if(!m) return null;
+        const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+        return pt;
+    }
+
+    function near(p, cx, cy, r){
+        return (p.x - cx) * (p.x - cx) + (p.y - cy) * (p.y - cy) < r * r;
+    }
+
+    function begin(e){
+        if(done) return;
+        const p = at(e); if(!p) return;
+        if(!near(p, 40, 190, 26)) return;
+
+        svg.setPointerCapture(e.pointerId);
+        live = true;
+        last = p;
+        started = performance.now();
+        svg.classList.add("live");
+        svg.classList.remove("bust");
+        tip.style.opacity = 1;
+        tell.textContent = "do not touch the sides";
+        tick = setInterval(function(){
+            v1.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
+        }, 100);
+    }
+
+    /* the corridor is a stroke, so the browser itself can tell us
+       whether a point is still inside it */
+    function inside(p){
+        return corridor.isPointInStroke(p) || near(p, 40, 190, 26);
+    }
+
+    function move(e){
+        if(!live || done) return;
+        const p = at(e); if(!p) return;
+
+        tip.setAttribute("cx", p.x);
+        tip.setAttribute("cy", p.y);
+
+        if(near(p, 452, 66, 20)){ win(); return; }
+
+        /* a fast flick can jump clean over a bend between two events,
+           so check a few points along the way as well as the one we got */
+        if(last){
+            for(let k = 1; k <= 4; k++){
+                const q = new DOMPoint(
+                    last.x + (p.x - last.x) * k / 4,
+                    last.y + (p.y - last.y) * k / 4
+                );
+                if(!inside(q)){ bust(); return; }
+            }
+        }else if(!inside(p)){
+            bust(); return;
+        }
+
+        last = p;
+    }
+
+    function bust(){
+        live = false;
+        last = null;
+        clearInterval(tick);
+        svg.classList.remove("live");
+        svg.classList.add("bust");
+        tip.style.opacity = 0;
+        v1.textContent = "ready";
+        tell.textContent = "off the wire. back to the green dot.";
+        slide(340, 90, 0.42, "square", 0.1);
+    }
+
+    function win(){
+        live = false; done = true;
+        last = null;
+        clearInterval(tick);
+        svg.classList.remove("live");
+        tip.style.opacity = 0;
+        const ms = Math.round(performance.now() - started);
+        v1.textContent = (ms / 1000).toFixed(1) + "s";
+        if(keepBest("steady", ms, true)){
+            tell.textContent = "clean run, and the fastest you have managed";
+        }else{
+            tell.textContent = "clean run. you have been steadier, though.";
+        }
+        tone(760, 0.18, "triangle", 0.13);
+        setTimeout(function(){ tone(1140, 0.28, "triangle", 0.11); }, 140);
+    }
+
+    function letGo(){
+        if(!live || done) return;
+        bust();
+        tell.textContent = "you let go halfway. start again.";
+    }
+
+    svg.addEventListener("pointerdown", begin);
+    svg.addEventListener("pointermove", move);
+    svg.addEventListener("pointerup", letGo);
+    svg.addEventListener("pointercancel", letGo);
+
+    return function(){ clearInterval(tick); };
+};
+
+
+/* ══════════ the register ══════════ */
+
+const GAMES = {
+    flatline:{
+        name:"flatline",
+        rule:"wait for the line to go flat, then tap. not a moment before.",
+        unit:"this go",
+        start:GAMES_FLATLINE
+    },
+    echo:{
+        name:"echo",
+        rule:"she plays a sequence. you play it back. she adds one.",
+        unit:"round",
+        start:GAMES_ECHO
+    },
+    pairs:{
+        name:"pairs",
+        rule:"six doodles, twelve cards, one increasingly short memory.",
+        unit:"time",
+        start:GAMES_PAIRS
+    },
+    catch:{
+        name:"catch",
+        rule:"twelve catches. she gets smaller and faster with every one.",
+        unit:"caught",
+        start:GAMES_CATCH
+    },
+    steady:{
+        name:"steady",
+        rule:"drag along the wire without touching the sides.",
+        unit:"time",
+        start:GAMES_STEADY
+    }
+};
+
+</script>
+
+</body>
+</html>
