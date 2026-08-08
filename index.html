@@ -275,20 +275,10 @@ nav{
 .hero-note{
     position:relative;
     margin:44px 0 0 9%;
-    max-width:396px;
-    font-size:13px;
-    line-height:1.95;
+    max-width:452px;
+    font-size:12.5px;
+    line-height:1.92;
     color:#5f585e;
-}
-
-.hero-note em{
-    font-family:var(--display);
-    font-style:italic;
-    font-weight:500;
-    font-size:1.34em;
-    line-height:1.2;
-    letter-spacing:-.02em;
-    color:var(--wine);
 }
 
 .hero-note .underline{
@@ -301,7 +291,7 @@ nav{
 .hero-note .underline path{
     fill:none;stroke:var(--pink);stroke-width:2.2;stroke-linecap:round;opacity:.75;
     stroke-dasharray:290;stroke-dashoffset:290;
-    animation:inkDraw 1.1s cubic-bezier(.6,.05,.25,1) 2.4s forwards;
+    animation:inkDraw 1.1s cubic-bezier(.6,.05,.25,1) 2.9s forwards;
 }
 
 .wd{
@@ -1477,11 +1467,14 @@ footer{
         <h1 class="title">Lavannya<span class="row2">Daigavane</span></h1>
 
             <p class="hero-note">
-                <span class="wd">I’m</span> <span class="wd">a</span> <span class="wd">med</span> <span class="wd">student</span> <span class="wd">who</span> <span class="wd">has</span> <span class="wd">never</span> <span class="wd">once</span> <span class="wd">managed</span> <span class="wd">to</span> <span class="wd">stick</span> <span class="wd">to</span> <span class="wd">one</span>
-                <span class="wd">interest.</span> <span class="wd">This</span> <span class="wd">is</span> <span class="wd">where</span> <span class="wd">all</span> <span class="wd">of</span> <span class="wd">them</span> <span class="wd">end</span> <span class="wd">up</span> <span class="wd">—</span> <span class="wd">the</span> <span class="wd">writing,</span> <span class="wd">the</span>
-                <span class="wd">photographs,</span> <span class="wd">and</span> <span class="wd">a</span> <span class="wd">few</span> <span class="wd">pages</span> <span class="wd">that</span> <span class="wd">exist</span> <span class="wd">only</span> <span class="wd">because</span> <span class="wd">I</span> <span class="wd">wanted</span>
-                <span class="wd">to</span> <span class="wd">see</span> <span class="wd">whether</span> <span class="wd">I</span> <span class="wd">could</span> <span class="wd">make</span> <span class="wd">them.</span> <em><span class="wd">Nothing</span> <span class="wd">here</span> <span class="wd">is</span> <span class="wd">in</span> <span class="wd">order.</span></em>
-                <span class="wd">That</span> <span class="wd">was</span> <span class="wd">never</span> <span class="wd">really</span> <span class="wd">the</span> <span class="wd">plan.</span>
+                <span class="wd">Okay,</span> <span class="wd">so…</span> <span class="wd">hi.</span> <span class="wd">I</span> <span class="wd">made</span> <span class="wd">a</span> <span class="wd">website.</span> <span class="wd">Why?</span> <span class="wd">Good</span>
+                <span class="wd">question.</span> <span class="wd">I</span> <span class="wd">wanted</span> <span class="wd">somewhere</span> <span class="wd">to</span> <span class="wd">put</span> <span class="wd">all</span> <span class="wd">the</span> <span class="wd">random</span>
+                <span class="wd">things</span> <span class="wd">that</span> <span class="wd">live</span> <span class="wd">in</span> <span class="wd">my</span> <span class="wd">head,</span> <span class="wd">camera</span> <span class="wd">roll,</span> <span class="wd">notes</span>
+                <span class="wd">app,</span> <span class="wd">and</span> <span class="wd">37</span> <span class="wd">open</span> <span class="wd">tabs.</span> <span class="wd">So</span> <span class="wd">this</span> <span class="wd">is</span> <span class="wd">that</span>
+                <span class="wd">place.</span> <span class="wd">You’ll</span> <span class="wd">find</span> <span class="wd">things</span> <span class="wd">I</span> <span class="wd">love,</span> <span class="wd">things</span> <span class="wd">I’m</span> <span class="wd">obsessed</span>
+                <span class="wd">with</span> <span class="wd">for</span> <span class="wd">five</span> <span class="wd">business</span> <span class="wd">days,</span> <span class="wd">things</span> <span class="wd">I’m</span> <span class="wd">still</span> <span class="wd">figuring</span>
+                <span class="wd">out,</span> <span class="wd">and</span> <span class="wd">probably</span> <span class="wd">a</span> <span class="wd">few</span> <span class="wd">questionable</span> <span class="wd">decisions</span> <span class="wd">along</span> <span class="wd">the</span>
+                <span class="wd">way.</span> <span class="wd">Anyway,</span> <span class="wd">welcome.</span> <span class="wd">Make</span> <span class="wd">yourself</span> <span class="wd">comfortable.</span>
                 <svg class="underline" viewBox="0 0 240 14" aria-hidden="true"><path d="M5 9 C52 3, 94 13, 142 6 C180 1, 214 11, 235 5"/></svg>
             </p>
 
@@ -1852,7 +1845,7 @@ document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 /* ══════ THE INTRO ARRIVES WORD BY WORD ══════ */
 
 document.querySelectorAll(".hero-note .wd").forEach((w,i)=>{
-    w.style.animationDelay = (0.75 + i*0.033) + "s";
+    w.style.animationDelay = (0.7 + i*0.018) + "s";
 });
 
 
