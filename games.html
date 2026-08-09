@@ -343,6 +343,95 @@ nav{
 .again:active{transform:translate(3px,4px);box-shadow:1px 1px 0 var(--ink)}
 
 
+/* ─────── shared game furniture ─────── */
+
+.stack{display:flex;flex-direction:column;align-items:center;width:100%}
+
+.pips{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+
+.pips i{
+    width:10px;height:10px;border-radius:50%;
+    border:1.8px solid var(--ink);font-style:normal;
+    transition:background .25s ease,scale .25s cubic-bezier(.2,.9,.3,1.6);
+}
+
+.pips i.won{background:var(--sage)}
+.pips i.lost{background:var(--sting)}
+.pips i.now{background:var(--yellow);scale:1.4}
+
+.meter{
+    width:100%;height:6px;margin-top:14px;
+    background:var(--paper);
+    border:1.6px solid var(--ink);
+    overflow:hidden;
+}
+
+.meter i{display:block;height:100%;width:100%;background:var(--wine);font-style:normal}
+.meter.low i{background:var(--sting)}
+
+/* the card that lands when a run ends */
+.verdict{
+    position:absolute;inset:-8px;z-index:6;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:rgba(255,252,244,.96);
+    text-align:center;padding:18px;
+    animation:pop .4s cubic-bezier(.2,.9,.3,1.5) both;
+}
+
+@keyframes pop{from{opacity:0;scale:.94}to{opacity:1;scale:1}}
+
+.verdict .big{
+    font-family:var(--graphic);font-weight:800;
+    font-size:clamp(32px,8.5vw,50px);letter-spacing:-.04em;line-height:.95;
+}
+
+.verdict .cap{
+    margin-top:10px;max-width:340px;
+    font-family:var(--hand);font-size:20px;line-height:1.35;color:var(--wine);
+}
+
+.verdict .row{display:flex;gap:22px;margin-top:18px;flex-wrap:wrap;justify-content:center}
+.verdict .row div{min-width:70px}
+
+.verdict .row span{
+    display:block;font-family:var(--mono);font-size:6.5px;
+    letter-spacing:.2em;text-transform:uppercase;color:#8b838a;
+}
+
+.verdict .row b{
+    display:block;margin-top:4px;
+    font-family:var(--mono);font-size:15px;font-weight:400;color:var(--ink);
+}
+
+.verdict .rec{
+    margin-top:18px;
+    font-family:var(--mono);font-size:7px;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--ink);
+    background:var(--yellow);border:1.6px solid var(--ink);
+    padding:7px 11px;
+}
+
+/* confetti, for the moments that deserve it */
+.bit{
+    position:absolute;width:8px;height:8px;border-radius:50%;
+    pointer-events:none;z-index:7;
+    animation:fling .85s cubic-bezier(.2,.7,.4,1) forwards;
+}
+
+@keyframes fling{
+    from{opacity:1;transform:translate(-50%,-50%) scale(1)}
+    to{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.35)}
+}
+
+/* things rearranging themselves behind your back */
+.mixing{animation:mix .52s ease}
+
+@keyframes mix{
+    0%{opacity:1;scale:1;rotate:0deg}
+    45%{opacity:.12;scale:.9;rotate:-4deg}
+    100%{opacity:1;scale:1;rotate:0deg}
+}
+
 /* ─────── 1 · flatline ─────── */
 
 .ecg{
@@ -375,6 +464,10 @@ nav{
 
 .ecg.flat .word{color:#ffd9d2}
 .ecg.jumped{animation:shake .34s ease}
+
+/* the stutter that is not the flatline */
+.ecg.blip{background:#2b3038}
+.ecg.blip .trace path{stroke:#cfe9d8}
 
 @keyframes shake{
     0%,100%{transform:translateX(0)}
@@ -423,6 +516,7 @@ nav{
 }
 
 .card .flip{
+    display:block;
     position:relative;width:100%;height:100%;
     transition:transform .45s cubic-bezier(.3,.8,.3,1.2);
     transform-style:preserve-3d;
@@ -468,14 +562,13 @@ nav{
     touch-action:manipulation;
 }
 
-.quarry{
+.quarry,.wasp{
     position:absolute;top:0;left:0;
-    width:60px;height:60px;
     background:none;border:none;padding:0;cursor:pointer;
-    transition:translate .34s cubic-bezier(.3,.7,.3,1);
+    will-change:translate;
 }
 
-.quarry svg{width:100%;overflow:visible;display:block;animation:jig 1.5s ease-in-out infinite}
+.quarry svg,.wasp svg{width:100%;overflow:visible;display:block;animation:jig 1.5s ease-in-out infinite}
 @keyframes jig{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(8deg)}}
 
 .quarry .abdomen{fill:var(--yellow);stroke:var(--ink);stroke-width:2.4}
@@ -484,7 +577,22 @@ nav{
 .quarry .eye{fill:#fffcf4}
 .quarry .wing{fill:rgba(255,255,255,.8);stroke:rgba(41,36,42,.45);stroke-width:1.4;
     transform-origin:24px 14px;animation:flap .1s linear infinite}
-.quarry .wing.two{transform-origin:34px 15px;animation-delay:.05s}
+.quarry .wing.two,.wasp .wing.two{transform-origin:34px 15px;animation-delay:.05s}
+
+/* the two impostors */
+.wasp .abdomen{fill:#9a9ba3;stroke:var(--ink);stroke-width:2.4}
+.wasp .stripe{fill:var(--ink)}
+.wasp .head{fill:var(--ink)}
+.wasp .eye{fill:#fffcf4}
+.wasp .wing{fill:rgba(255,255,255,.78);stroke:rgba(41,36,42,.4);stroke-width:1.4;
+    transform-origin:24px 14px;animation:flap .11s linear infinite}
+
+.field.oops{animation:redFlash .42s ease}
+
+@keyframes redFlash{
+    0%,100%{background-color:#f4efe0}
+    45%{background-color:#f8dad4}
+}
 
 @keyframes flap{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(14deg)}}
 
@@ -519,6 +627,18 @@ nav{
 .wirebox .cap{font-family:"DM Mono",monospace;font-size:9px;fill:var(--ink);text-anchor:middle}
 
 .wirebox .tip{fill:var(--wine);stroke:#fffcf4;stroke-width:2}
+
+/* the line you actually took, wobble and all */
+.wirebox .trail{
+    fill:none;stroke:var(--wine);stroke-width:3;
+    stroke-linecap:round;stroke-linejoin:round;opacity:.5;
+}
+
+.wirebox .gate{animation:gatePulse 1.7s ease-in-out infinite}
+.wirebox .gate.finish,.wirebox.live .gate{animation:none}
+.wirebox.live .gate{opacity:.55}
+
+@keyframes gatePulse{0%,100%{opacity:1}50%{opacity:.5}}
 
 .wirebox.live .corridor{stroke:#e9f0dd}
 .wirebox.bust .corridor{stroke:#f6dcd8}
@@ -620,7 +740,8 @@ footer a{color:inherit}
         <span class="nm">flatline</span>
         <span class="blurb">
             A heartbeat runs across the screen. The second it goes flat, tap.
-            We are timing you in milliseconds, and no, you cannot guess early.
+            Five rounds, averaged in milliseconds, and the trace stutters on
+            purpose to see if it can make you jump early.
         </span>
         <span class="strip">reaction <b data-best="flatline">not yet</b></span>
     </button>
@@ -636,7 +757,8 @@ footer a{color:inherit}
         <span class="nm">echo</span>
         <span class="blurb">
             Four shapes, four notes. She plays a sequence, you play it back,
-            then she adds one more. It gets away from you around round seven.
+            then she adds one. She also speeds up, gives you four seconds to
+            think, and from round six she starts moving the pads around.
         </span>
         <span class="strip">rounds <b data-best="echo">not yet</b></span>
     </button>
@@ -651,8 +773,9 @@ footer a{color:inherit}
         </svg>
         <span class="nm">pairs</span>
         <span class="blurb">
-            Twelve cards face down, six little doodles hiding under them.
-            Find both of each. The clock is running and it is not sympathetic.
+            You get one look at all twelve, then they turn over. Find the six
+            pairs, and be quick, because halfway through she quietly rearranges
+            everything you have not found yet.
         </span>
         <span class="strip">fastest <b data-best="pairs">not yet</b></span>
     </button>
@@ -668,8 +791,9 @@ footer a{color:inherit}
         </svg>
         <span class="nm">catch</span>
         <span class="blurb">
-            One bee, twelve catches, and she will not sit still for any of it.
-            She gets smaller and quicker every time you land one.
+            One bee, twelve catches, and she can feel your finger coming and
+            leans away from it. She shrinks and speeds up each time. Two wasps
+            are in there looking almost exactly like her.
         </span>
         <span class="strip">fastest <b data-best="catch">not yet</b></span>
     </button>
@@ -684,8 +808,9 @@ footer a{color:inherit}
         </svg>
         <span class="nm">steady</span>
         <span class="blurb">
-            Drag from one end of the wire to the other without touching the sides.
-            Surgeons do this for a living. I am told it takes practice.
+            Drag from one end of the wire to the other without touching the
+            sides. Three wires, each narrower and more badly behaved than the
+            last. Surgeons do this for a living.
         </span>
         <span class="strip">fastest <b data-best="steady">not yet</b></span>
     </button>
@@ -891,8 +1016,74 @@ const seen = new IntersectionObserver(function(rows){
 document.querySelectorAll(".cab").forEach(function(c){ seen.observe(c); });
 
 
+/* ══════════ furniture the games share ══════════ */
+
+function el(tag, cls, html){
+    const n = document.createElement(tag);
+    if(cls) n.className = cls;
+    if(html !== undefined) n.innerHTML = html;
+    return n;
+}
+
+function pipRow(n){
+    const p = el("div", "pips");
+    for(let i = 0; i < n; i++) p.appendChild(el("i"));
+    return p;
+}
+
+const CONFETTI = ["#dfa0aa","#a7bfd5","#dfc477","#b8c1a5","#c0aec9","#663b4f"];
+
+function burst(x, y, n){
+    for(let i = 0; i < (n || 14); i++){
+        const b = el("span", "bit");
+        const a = Math.random() * 6.284;
+        const d = 30 + Math.random() * 80;
+        b.style.left = x + "px";
+        b.style.top  = y + "px";
+        b.style.background = CONFETTI[rand(CONFETTI.length)];
+        b.style.setProperty("--dx", (Math.cos(a) * d).toFixed(0) + "px");
+        b.style.setProperty("--dy", (Math.sin(a) * d).toFixed(0) + "px");
+        board.appendChild(b);
+        setTimeout(function(){ b.remove(); }, 900);
+    }
+}
+
+function verdict(big, cap, rows, record){
+    const v = el("div", "verdict");
+    v.innerHTML =
+        '<span class="big">' + big + '</span>' +
+        '<span class="cap">' + cap + '</span>' +
+        '<div class="row">' + rows.map(function(r){
+            return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+        }).join("") + '</div>' +
+        (record ? '<span class="rec">a new personal best</span>' : '');
+    board.appendChild(v);
+    tell.textContent = "";
+
+    if(record){
+        const box = board.getBoundingClientRect();
+        setTimeout(function(){ burst(box.width / 2, box.height / 2, 26); }, 140);
+        setTimeout(function(){ tone(880, .2, "triangle", .13); }, 120);
+        setTimeout(function(){ tone(1320, .3, "triangle", .11); }, 270);
+    }
+}
+
+/* a bin for every timer a game sets, so nothing survives the cabinet closing */
+function timerBin(){
+    const outs = [], ins = [];
+    return {
+        wait: function(fn, ms){ const t = setTimeout(fn, ms); outs.push(t); return t; },
+        every: function(fn, ms){ const t = setInterval(fn, ms); ins.push(t); return t; },
+        stop: function(t){ clearInterval(t); clearTimeout(t); },
+        all: function(){ outs.forEach(clearTimeout); ins.forEach(clearInterval); }
+    };
+}
+
+
 /* ══════════════════════════════════════════
    1 · FLATLINE
+   five rounds, an average, and a trace that
+   stutters on purpose to draw you out early
    ══════════════════════════════════════════ */
 
 /* one heartbeat, laid down eight times so the strip scrolls without a seam */
@@ -905,86 +1096,159 @@ const STRIP = (function(){
     return d;
 })();
 
+const READS = [
+    [185, "quicker than a blink. that is genuinely fast."],
+    [235, "about the speed of a blink"],
+    [300, "solid. a normal, well slept human."],
+    [380, "a beat behind the room"],
+    [500, "you were thinking about something else"],
+    [9e9, "were you asleep"]
+];
+
 const GAMES_FLATLINE = function(){
 
-    const box = document.createElement("div");
-    box.className = "ecg beating";
-    box.innerHTML =
+    const T = timerBin();
+    const ROUNDS = 5;
+
+    const stack = el("div", "stack");
+    const row = pipRow(ROUNDS);
+    const box = el("div", "ecg beating",
         '<svg class="trace" viewBox="0 0 912 120" preserveAspectRatio="none">' +
             '<path d="' + STRIP + '"/>' +
         '</svg>' +
-        '<span class="word">wait for it</span>';
+        '<span class="word">wait for it</span>');
 
-    board.appendChild(box);
+    stack.appendChild(row);
+    stack.appendChild(box);
+    board.appendChild(stack);
 
+    const dots = row.querySelectorAll("i");
     const word = box.querySelector(".word");
+    const line = box.querySelector("path");
     const flatPath = "M0 60 H912";
-    const livePath = box.querySelector("path").getAttribute("d");
+    const livePath = line.getAttribute("d");
 
-    let state = "waiting", at = 0, timer, resetter;
+    let round = 0, state = "idle", at = 0;
+    const got = [];
 
-    function arm(){
-        timer = setTimeout(function(){
+    l1.textContent = "last go";
+    v1.textContent = "ready";
+
+    function nextRound(){
+
+        if(round >= ROUNDS){ done(); return; }
+
+        dots.forEach(function(d, i){ d.classList.toggle("now", i === round); });
+
+        state = "waiting";
+        box.classList.remove("flat", "jumped");
+        box.classList.add("beating");
+        line.setAttribute("d", livePath);
+        word.textContent = "wait for it";
+        tell.textContent = "round " + (round + 1) + " of " + ROUNDS;
+
+        const wait = 1500 + Math.random() * 3400;
+
+        /* the bait: the trace stutters once, and it is not the flatline */
+        if(Math.random() < .6){
+            T.wait(function(){
+                if(state !== "waiting") return;
+                box.classList.add("blip");
+                T.wait(function(){ box.classList.remove("blip"); }, 130);
+            }, 700 + Math.random() * (wait - 1100));
+        }
+
+        T.wait(function(){
+            if(state !== "waiting") return;
             state = "go";
             at = performance.now();
             box.classList.remove("beating");
             box.classList.add("flat");
-            box.querySelector("path").setAttribute("d", flatPath);
+            line.setAttribute("d", flatPath);
             word.textContent = "now";
-            tone(180, 1.1, "sine", 0.09);
-        }, 1700 + Math.random() * 3600);
+            tone(180, 1.1, "sine", .09);
+        }, wait);
     }
 
-    arm();
-
     function hit(){
-        if(state === "done") return;
 
         if(state === "waiting"){
-            state = "done";
-            clearTimeout(timer);
+            state = "spent";
+            dots[round].classList.remove("now");
+            dots[round].classList.add("lost");
             box.classList.add("jumped");
             word.textContent = "too soon";
-            tell.textContent = "that is not reflex, that is nerves";
-            slide(320, 90, 0.5, "sawtooth", 0.12);
-            resetter = setTimeout(reset, 1500);
+            v1.textContent = "false start";
+            tell.textContent = "that was the stutter, not the flatline";
+            slide(320, 90, .5, "sawtooth", .12);
+            got.push(null);
+            round++;
+            T.wait(nextRound, 1400);
             return;
         }
 
-        state = "done";
+        if(state !== "go") return;
+
+        state = "spent";
         const ms = Math.round(performance.now() - at);
+        got.push(ms);
+
+        dots[round].classList.remove("now");
+        dots[round].classList.add("won");
         v1.textContent = ms + "ms";
         word.textContent = ms + "ms";
+        tone(560 + Math.max(0, 460 - ms), .17, "triangle", .12);
 
-        if(keepBest("flatline", ms, true)){
-            tell.textContent = "a new best. do it again before it leaves you";
-            tone(880, 0.18, "triangle", 0.14);
-            setTimeout(function(){ tone(1320, 0.26, "triangle", 0.12); }, 130);
-        }else{
-            tell.textContent = ms < 260 ? "sharp" : ms < 400 ? "respectable" : "you were somewhere else";
-            tone(660, 0.2, "triangle", 0.12);
-        }
-
-        resetter = setTimeout(reset, 1600);
+        round++;
+        T.wait(nextRound, 1250);
     }
 
-    function reset(){
-        state = "waiting";
-        box.classList.remove("flat","jumped");
-        box.classList.add("beating");
-        box.querySelector("path").setAttribute("d", livePath);
-        word.textContent = "wait for it";
-        arm();
+    function done(){
+
+        dots.forEach(function(d){ d.classList.remove("now"); });
+
+        const hits = got.filter(function(x){ return x !== null; });
+        const misses = got.length - hits.length;
+
+        if(!hits.length){
+            v1.textContent = "none";
+            verdict("0 / 5", "every single one was a false start. sit still.",
+                    [["false starts", misses]], false);
+            return;
+        }
+
+        let sum = 0;
+        hits.forEach(function(x){ sum += x; });
+        const avg = Math.round(sum / hits.length);
+        const fast = Math.min.apply(null, hits);
+
+        let read = READS[READS.length - 1][1];
+        for(let i = 0; i < READS.length; i++){
+            if(avg <= READS[i][0]){ read = READS[i][1]; break; }
+        }
+
+        const rec = keepBest("flatline", avg, true);
+        v1.textContent = avg + "ms";
+
+        verdict(avg + "ms", read, [
+            ["average", avg + "ms"],
+            ["fastest", fast + "ms"],
+            ["false starts", misses]
+        ], rec);
     }
 
     box.addEventListener("pointerdown", hit);
+    T.wait(nextRound, 650);
 
-    return function(){ clearTimeout(timer); clearTimeout(resetter); };
+    return T.all;
 };
 
 
 /* ══════════════════════════════════════════
    2 · ECHO
+   she speeds up, and past round six she
+   starts moving the pads around between
+   turns so position stops helping you
    ══════════════════════════════════════════ */
 
 const PADS = [
@@ -996,91 +1260,179 @@ const PADS = [
 
 const GAMES_ECHO = function(){
 
-    const grid = document.createElement("div");
-    grid.className = "pads";
+    const T = timerBin();
+
+    const stack = el("div", "stack");
+    const row = el("div", "pips");
+    const grid = el("div", "pads");
+    const meter = el("div", "meter", "<i></i>");
+    const fill = meter.querySelector("i");
+    meter.style.maxWidth = "min(330px,100%)";   /* line it up under the pads */
 
     const pads = PADS.map(function(p, i){
-        const b = document.createElement("button");
-        b.className = "pad";
+        const b = el("button", "pad", '<svg viewBox="0 0 60 60">' + p.art + '</svg>');
         b.style.setProperty("--dim", p.dim);
         b.style.setProperty("--bright", p.bright);
         b.setAttribute("aria-label", "pad " + (i + 1));
-        b.innerHTML = '<svg viewBox="0 0 60 60">' + p.art + '</svg>';
         grid.appendChild(b);
         return b;
     });
 
-    board.appendChild(grid);
+    stack.appendChild(row);
+    stack.appendChild(grid);
+    stack.appendChild(meter);
+    board.appendChild(stack);
 
-    let seq = [], step = 0, locked = true, over = false;
-    const timers = [];
+    const THINK = 4200;
 
-    function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+    let seq = [], step = 0, round = 0;
+    let locked = true, over = false, clock = 0, deadline = 0;
+
+    l1.textContent = "round";
+    v1.textContent = "ready";
+
+    function drawPips(){
+        row.innerHTML = "";
+        for(let i = 0; i < seq.length; i++){
+            const d = el("i");
+            if(i < step) d.classList.add("won");
+            row.appendChild(d);
+        }
+    }
 
     function light(i, ms){
         pads[i].classList.add("lit");
-        tone(PADS[i].hz, (ms || 320) / 1000, "triangle", 0.13);
-        later(function(){ pads[i].classList.remove("lit"); }, ms || 320);
+        tone(PADS[i].hz, (ms || 320) / 1000, "triangle", .13);
+        T.wait(function(){ pads[i].classList.remove("lit"); }, ms || 320);
+    }
+
+    function startClock(){
+        deadline = performance.now() + THINK;
+        clock = T.every(function(){
+            const left = Math.max(0, deadline - performance.now());
+            fill.style.width = (left / THINK * 100) + "%";
+            meter.classList.toggle("low", left < 1400);
+            if(left <= 0){ stopClock(); miss(null, "you froze"); }
+        }, 60);
+    }
+
+    function stopClock(){
+        T.stop(clock);
+        fill.style.width = "100%";
+        meter.classList.remove("low");
     }
 
     function grow(){
+
+        round++;
         seq.push(rand(4));
         step = 0;
         locked = true;
-        v1.textContent = seq.length;
-        tell.textContent = "watch";
+        v1.textContent = round;
+        drawPips();
+        stopClock();
 
-        const gap = Math.max(260, 520 - seq.length * 18);
+        /* from round six she shuffles the pads between turns, so you have to
+           remember the shapes and the notes rather than the corners */
+        if(round >= 6){
+            grid.classList.add("mixing");
+            tell.textContent = "she is moving them around";
+            T.wait(function(){
+                shuffle(Array.prototype.slice.call(grid.children)).forEach(function(p){
+                    grid.appendChild(p);
+                });
+            }, 230);
+            T.wait(function(){ grid.classList.remove("mixing"); }, 540);
+        }else{
+            tell.textContent = "watch";
+        }
+
+        const lead = round >= 6 ? 800 : 560;
+        const gap  = Math.max(230, 520 - round * 22);
+
         seq.forEach(function(n, k){
-            later(function(){ light(n, gap * 0.62); }, 620 + k * gap);
+            T.wait(function(){ light(n, gap * .58); }, lead + k * gap);
         });
 
-        later(function(){
+        T.wait(function(){
+            if(over) return;
             locked = false;
             tell.textContent = "your turn";
-        }, 620 + seq.length * gap);
+            startClock();
+        }, lead + seq.length * gap + 140);
+    }
+
+    function miss(pressed, why){
+
+        over = true; locked = true;
+        stopClock();
+        slide(300, 80, .55, "sawtooth", .13);
+
+        if(pressed) pressed.classList.add("wrong");
+
+        const reached = round - 1;
+        v1.textContent = reached;
+
+        /* show the one it wanted, so you know what you lost to */
+        const right = pads[seq[step]];
+        let n = 0;
+        const show = T.every(function(){
+            right.classList.toggle("lit");
+            if(++n > 5){
+                T.stop(show);
+                right.classList.remove("lit");
+                if(pressed) pressed.classList.remove("wrong");
+
+                const rec = reached > 0 && keepBest("echo", reached, false);
+                const cap = reached === 0 ? "the very first one. brutal."
+                          : reached < 4   ? "she got you early"
+                          : reached < 7   ? "respectable. the shuffle is at six."
+                          : reached < 10  ? "you are properly good at this"
+                          : "that is an unusual memory you have there";
+
+                verdict("round " + reached, why === "you froze"
+                        ? "you had it and you hesitated"
+                        : cap,
+                        [["reached", reached], ["notes", seq.length], ["ended on", why === "you froze" ? "a freeze" : "a wrong pad"]],
+                        rec);
+            }
+        }, 220);
     }
 
     pads.forEach(function(b, i){
         b.addEventListener("click", function(){
+
             if(locked || over) return;
 
-            light(i, 220);
+            light(i, 210);
 
-            if(i !== seq[step]){
-                over = true; locked = true;
-                b.classList.add("wrong");
-                slide(300, 80, 0.55, "sawtooth", 0.13);
-                const got = seq.length - 1;
-                v1.textContent = got;
-                if(got > 0 && keepBest("echo", got, false)){
-                    tell.textContent = "round " + got + ", and that is your best yet";
-                }else{
-                    tell.textContent = got === 0 ? "the very first one. brutal." : "you made it to round " + got;
-                }
-                later(function(){ b.classList.remove("wrong"); }, 500);
-                return;
-            }
+            if(i !== seq[step]){ miss(b, "wrong pad"); return; }
 
             step++;
+            drawPips();
+            deadline = performance.now() + THINK;
 
             if(step === seq.length){
                 locked = true;
-                tell.textContent = "again, but longer";
-                later(grow, 700);
+                stopClock();
+                tell.textContent = round >= 5 ? "again, and longer" : "again";
+                T.wait(grow, 680);
             }
         });
     });
 
     tell.textContent = "watch";
-    later(grow, 500);
+    T.wait(grow, 520);
 
-    return function(){ timers.forEach(clearTimeout); };
+    return T.all;
 };
 
 
 /* ══════════════════════════════════════════
    3 · PAIRS
+   you get one look at everything, and she
+   rearranges what is left when you are
+   halfway through
    ══════════════════════════════════════════ */
 
 const DOODLES = [
@@ -1094,319 +1446,581 @@ const DOODLES = [
 
 const GAMES_PAIRS = function(){
 
-    const deck = document.createElement("div");
-    deck.className = "deck";
+    const T = timerBin();
 
+    const stack = el("div", "stack");
+    const deck  = el("div", "deck");
     const faces = shuffle([0,1,2,3,4,5,0,1,2,3,4,5]);
 
-    faces.forEach(function(n){
-        const c = document.createElement("button");
-        c.className = "card";
-        c.dataset.face = n;
-        c.setAttribute("aria-label", "card");
-        c.innerHTML =
+    const cards = faces.map(function(n){
+        const c = el("button", "card up",
             '<span class="flip">' +
                 '<span class="face back"></span>' +
                 '<span class="face front"><svg viewBox="0 0 60 60">' + DOODLES[n] + '</svg></span>' +
-            '</span>';
+            '</span>');
+        c.dataset.face = n;
+        c.setAttribute("aria-label", "card");
         deck.appendChild(c);
+        return c;
     });
 
-    board.appendChild(deck);
+    stack.appendChild(deck);
+    board.appendChild(stack);
 
-    let first = null, locked = false, found = 0, started = 0, tick;
+    let first = null, locked = true, found = 0, moves = 0, streak = 0;
+    let started = 0, tick = 0, mixed = false;
 
-    tell.textContent = "turn one over to start the clock";
+    l1.textContent = "time";
+    v1.textContent = "look";
+    tell.textContent = "one look at all of them. make it count.";
+
+    /* the peek */
+    T.wait(function(){
+        cards.forEach(function(c){ c.classList.remove("up"); });
+        tone(420, .18, "sine", .1);
+        T.wait(function(){
+            locked = false;
+            started = performance.now();
+            tell.textContent = "six pairs. go.";
+            tick = T.every(function(){
+                v1.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
+            }, 100);
+        }, 480);
+    }, 2100);
+
+    /* she moves the remaining cards around once, halfway through */
+    function reshuffle(){
+        mixed = true;
+        const left = cards.filter(function(c){ return !c.classList.contains("done"); });
+        const vals = shuffle(left.map(function(c){ return c.dataset.face; }));
+
+        if(first){ first.classList.remove("up"); first = null; }
+
+        locked = true;
+        deck.classList.add("mixing");
+        slide(520, 300, .32, "sine", .08);
+        tell.textContent = "she moved the rest around. sorry.";
+
+        T.wait(function(){
+            left.forEach(function(c, i){
+                c.dataset.face = vals[i];
+                c.querySelector(".front svg").innerHTML = DOODLES[Number(vals[i])];
+            });
+        }, 230);
+
+        T.wait(function(){
+            deck.classList.remove("mixing");
+            locked = false;
+        }, 560);
+    }
+
+    function land(){
+
+        const ms = Math.round(performance.now() - started);
+        T.stop(tick);
+        v1.textContent = (ms / 1000).toFixed(1) + "s";
+
+        const rec = keepBest("pairs", ms, true);
+        const sharp = Math.round(6 / moves * 100);
+
+        const cap = moves <= 8  ? "you barely guessed at all"
+                  : moves <= 12 ? "clean. the reshuffle did not touch you."
+                  : moves <= 18 ? "you got there"
+                  : "found by persistence rather than memory";
+
+        verdict((ms / 1000).toFixed(1) + "s", cap, [
+            ["time", (ms / 1000).toFixed(1) + "s"],
+            ["turns", moves],
+            ["sharpness", sharp + "%"]
+        ], rec);
+    }
 
     deck.addEventListener("click", function(e){
+
         const card = e.target.closest(".card");
         if(!card || locked) return;
         if(card.classList.contains("done") || card === first) return;
 
-        if(!started){
-            started = performance.now();
-            tick = setInterval(function(){
-                v1.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
-            }, 100);
-            tell.textContent = "six pairs, hidden badly";
-        }
-
         card.classList.add("up");
-        tone(520 + Number(card.dataset.face) * 40, 0.13, "sine", 0.1);
+        tone(520 + Number(card.dataset.face) * 40, .13, "sine", .1);
 
         if(!first){ first = card; return; }
 
-        if(first.dataset.face === card.dataset.face){
-            first.classList.add("done"); card.classList.add("done");
-            first.classList.remove("up"); card.classList.remove("up");
-            first = null;
-            found++;
-            tone(760, 0.16, "triangle", 0.12);
+        moves++;
 
-            if(found === 6){
-                clearInterval(tick);
-                const ms = Math.round(performance.now() - started);
-                v1.textContent = (ms / 1000).toFixed(1) + "s";
-                if(keepBest("pairs", ms, true)){
-                    tell.textContent = "all six, and faster than you have ever done it";
-                }else{
-                    tell.textContent = "all six. the record still stands.";
-                }
-                setTimeout(function(){ tone(880, 0.2, "triangle", 0.13); }, 120);
-                setTimeout(function(){ tone(1180, 0.3, "triangle", 0.11); }, 260);
-            }
+        if(first.dataset.face === card.dataset.face){
+
+            const a = first; first = null;
+            a.classList.add("done"); card.classList.add("done");
+            a.classList.remove("up"); card.classList.remove("up");
+            found++; streak++;
+
+            tone(700 + streak * 70, .16, "triangle", .12);
+
+            const box = card.getBoundingClientRect();
+            const bb = board.getBoundingClientRect();
+            burst(box.left - bb.left + box.width / 2, box.top - bb.top + box.height / 2, 8);
+
+            if(found === 6){ land(); return; }
+
+            if(streak > 1) tell.textContent = streak + " in a row";
+            else tell.textContent = found + " of 6 found";
+
+            if(found === 3 && !mixed) T.wait(reshuffle, 520);
             return;
         }
 
+        streak = 0;
         locked = true;
         const a = first; first = null;
-        slide(300, 200, 0.2, "sine", 0.07);
-        setTimeout(function(){
+        slide(300, 200, .2, "sine", .07);
+        tell.textContent = "no. " + (6 - found) + " left.";
+
+        T.wait(function(){
             a.classList.remove("up");
             card.classList.remove("up");
             locked = false;
-        }, 640);
+        }, 620);
     });
 
-    return function(){ clearInterval(tick); };
+    return T.all;
 };
 
 
 /* ══════════════════════════════════════════
    4 · CATCH
+   she flies properly now, she can feel where
+   your finger is, and two wasps are in there
+   pretending to be her
    ══════════════════════════════════════════ */
 
-const MISSES = ["missed","nope","too slow","she moved"];
-const HITS   = ["got her","caught","yes","gotcha"];
+const BEE_ART =
+    '<svg viewBox="0 0 60 46">' +
+        '<ellipse class="wing" cx="24" cy="14" rx="11" ry="6"/>' +
+        '<ellipse class="wing two" cx="34" cy="15" rx="10" ry="5.5"/>' +
+        '<ellipse class="abdomen" cx="30" cy="28" rx="17" ry="12"/>' +
+        '<path class="stripe" d="M25 17 h5 v22 h-5 Z"/>' +
+        '<path class="stripe" d="M35 18 h4 v20 h-4 Z"/>' +
+        '<circle class="head" cx="49" cy="25" r="8"/>' +
+        '<circle class="eye" cx="52" cy="23" r="2.4"/>' +
+    '</svg>';
+
+const CAUGHT = ["got her","caught","yes","gotcha","hers"];
+const MISSED = ["missed","nope","too slow","she moved","air"];
 
 const GAMES_CATCH = function(){
 
-    const field = document.createElement("div");
-    field.className = "field";
+    const T = timerBin();
+    const TARGET = 12;
 
-    const bee = document.createElement("button");
-    bee.className = "quarry";
-    bee.setAttribute("aria-label", "catch the bee");
-    bee.innerHTML =
-        '<svg viewBox="0 0 60 46">' +
-            '<ellipse class="wing" cx="24" cy="14" rx="11" ry="6"/>' +
-            '<ellipse class="wing two" cx="34" cy="15" rx="10" ry="5.5"/>' +
-            '<ellipse class="abdomen" cx="30" cy="28" rx="17" ry="12"/>' +
-            '<path class="stripe" d="M25 17 h5 v22 h-5 Z"/>' +
-            '<path class="stripe" d="M35 18 h4 v20 h-4 Z"/>' +
-            '<circle class="head" cx="49" cy="25" r="8"/>' +
-            '<circle class="eye" cx="52" cy="23" r="2.4"/>' +
-        '</svg>';
-
-    field.appendChild(bee);
+    const field = el("div", "field");
     board.appendChild(field);
 
-    const TARGET = 12;
-    let caught = 0, started = 0, tick, hop, done = false;
+    function bug(cls, size){
+        const b = el("button", cls, BEE_ART);
+        b.setAttribute("aria-label", cls === "quarry" ? "the bee" : "a wasp");
+        b.style.width = size + "px";
+        field.appendChild(b);
+        return {
+            el:b, x:0, y:0, vx:0, vy:0, size:size,
+            max:2.6, jit:.34, fear:78, push:.5, flip:1
+        };
+    }
 
+    const bee = bug("quarry", 60);
+    const wasps = [bug("wasp", 50), bug("wasp", 46)];
+    const all = [bee].concat(wasps);
+
+    wasps.forEach(function(w){ w.max = 2.1; w.fear = 0; w.jit = .3; });
+
+    let caught = 0, started = 0, penalty = 0, done = false;
+    let px = null, py = null, raf = 0, tick = 0;
+
+    l1.textContent = "caught";
     v1.textContent = "0 / " + TARGET;
-    tell.textContent = "catch her twelve times. tap to start.";
+    tell.textContent = "catch her twelve times. the grey ones are wasps.";
 
-    function place(){
-        const size = 60 - caught * 2.4;
-        bee.style.width = size + "px";
-        bee.style.height = size + "px";
-        const x = Math.random() * (field.clientWidth  - size - 8) + 4;
-        const y = Math.random() * (field.clientHeight - size - 8) + 4;
-        bee.style.translate = x + "px " + y + "px";
+    /* scatter them to begin with */
+    T.wait(function(){
+        all.forEach(function(b){
+            b.x = Math.random() * Math.max(1, field.clientWidth  - b.size);
+            b.y = Math.random() * Math.max(1, field.clientHeight - b.size);
+            b.vx = (Math.random() - .5) * 3;
+            b.vy = (Math.random() - .5) * 3;
+        });
+    }, 0);
+
+    function fly(){
+
+        raf = requestAnimationFrame(fly);
+
+        const w = field.clientWidth, h = field.clientHeight;
+        if(!w || !h) return;
+
+        all.forEach(function(b){
+
+            b.vx += (Math.random() - .5) * b.jit;
+            b.vy += (Math.random() - .5) * b.jit;
+
+            /* she can feel your finger coming and leans away from it */
+            if(px !== null && b.fear){
+                const dx = b.x + b.size / 2 - px;
+                const dy = b.y + b.size / 2 - py;
+                const d2 = dx * dx + dy * dy;
+                if(d2 < b.fear * b.fear && d2 > 4){
+                    const d = Math.sqrt(d2);
+                    b.vx += (dx / d) * b.push;
+                    b.vy += (dy / d) * b.push;
+                }
+            }
+
+            const sp = Math.hypot(b.vx, b.vy);
+            if(sp > b.max){ b.vx = b.vx / sp * b.max; b.vy = b.vy / sp * b.max; }
+
+            b.vx *= .988; b.vy *= .988;
+            b.x += b.vx; b.y += b.vy;
+
+            if(b.x < 0){ b.x = 0; b.vx = Math.abs(b.vx); }
+            if(b.y < 0){ b.y = 0; b.vy = Math.abs(b.vy); }
+            if(b.x > w - b.size){ b.x = w - b.size; b.vx = -Math.abs(b.vx); }
+            if(b.y > h - b.size){ b.y = h - b.size; b.vy = -Math.abs(b.vy); }
+
+            const face = b.vx < -.25 ? -1 : b.vx > .25 ? 1 : b.flip;
+            if(face !== b.flip){ b.flip = face; b.el.style.scale = face + " 1"; }
+
+            b.el.style.translate = b.x.toFixed(1) + "px " + b.y.toFixed(1) + "px";
+        });
     }
 
-    function schedule(){
-        clearTimeout(hop);
-        const wait = Math.max(420, 1250 - caught * 70);
-        hop = setTimeout(function(){ place(); schedule(); }, wait);
-    }
+    fly();
+
+    field.addEventListener("pointermove", function(e){
+        const r = field.getBoundingClientRect();
+        px = e.clientX - r.left;
+        py = e.clientY - r.top;
+    });
+
+    field.addEventListener("pointerleave", function(){ px = null; py = null; });
 
     function puff(text, x, y){
-        const s = document.createElement("span");
-        s.className = "puff";
+        const s = el("span", "puff");
         s.textContent = text;
         s.style.left = x + "px";
         s.style.top  = y + "px";
         field.appendChild(s);
-        setTimeout(function(){ s.remove(); }, 720);
+        T.wait(function(){ s.remove(); }, 720);
     }
 
-    bee.addEventListener("click", function(e){
+    function spot(e){
+        const r = field.getBoundingClientRect();
+        return [e.clientX - r.left, e.clientY - r.top];
+    }
+
+    function running(){
+        return Math.round(performance.now() - started + penalty);
+    }
+
+    bee.el.addEventListener("pointerdown", function(e){
+
         if(done) return;
         e.stopPropagation();
 
         if(!started){
             started = performance.now();
-            tick = setInterval(function(){
-                v1.textContent = caught + " / " + TARGET +
-                    "  " + ((performance.now() - started) / 1000).toFixed(1) + "s";
+            tick = T.every(function(){
+                v1.textContent = caught + " / " + TARGET + "   " + (running() / 1000).toFixed(1) + "s";
             }, 100);
-            schedule();
         }
 
         caught++;
-        tone(420 + caught * 45, 0.1, "triangle", 0.12);
+        tone(400 + caught * 46, .1, "triangle", .12);
 
-        const box = field.getBoundingClientRect();
-        puff(HITS[rand(HITS.length)], e.clientX - box.left, e.clientY - box.top);
+        const p = spot(e);
+        puff(CAUGHT[rand(CAUGHT.length)], p[0], p[1]);
+
+        const bb = board.getBoundingClientRect();
+        burst(e.clientX - bb.left, e.clientY - bb.top, 9);
 
         if(caught === TARGET){
             done = true;
-            clearInterval(tick); clearTimeout(hop);
-            const ms = Math.round(performance.now() - started);
+            cancelAnimationFrame(raf);
+            T.stop(tick);
+
+            const ms = running();
             v1.textContent = (ms / 1000).toFixed(1) + "s";
-            bee.style.opacity = ".25";
-            if(keepBest("catch", ms, true)){
-                tell.textContent = "twelve out of twelve, and a new record";
-            }else{
-                tell.textContent = "twelve out of twelve. she has been quicker.";
-            }
-            setTimeout(function(){ tone(920, 0.22, "triangle", 0.13); }, 100);
+            bee.el.style.opacity = ".22";
+
+            const rec = keepBest("catch", ms, true);
+            const cap = ms < 16000 ? "she never stood a chance"
+                      : ms < 26000 ? "quick hands"
+                      : ms < 40000 ? "you got there in the end"
+                      : "she enjoyed that far more than you did";
+
+            verdict((ms / 1000).toFixed(1) + "s", cap, [
+                ["time", (ms / 1000).toFixed(1) + "s"],
+                ["penalties", (penalty / 1000).toFixed(1) + "s"],
+                ["caught", TARGET]
+            ], rec);
             return;
         }
 
-        place();
-        schedule();
+        /* she gets smaller, faster, and more nervous of you every time */
+        bee.size = Math.max(30, bee.size - 2.3);
+        bee.el.style.width = bee.size + "px";
+        bee.max  += .5;
+        bee.jit  += .05;
+        bee.fear += 7;
+        bee.push += .11;
+
+        tell.textContent = caught + " down. she is quicker now.";
     });
 
-    field.addEventListener("click", function(e){
+    wasps.forEach(function(w){
+        w.el.addEventListener("pointerdown", function(e){
+            if(done || !started) return;
+            e.stopPropagation();
+            penalty += 1500;
+            field.classList.remove("oops");
+            void field.offsetWidth;
+            field.classList.add("oops");
+            slide(260, 70, .34, "sawtooth", .12);
+            const p = spot(e);
+            puff("wasp!", p[0], p[1]);
+            tell.textContent = "that was a wasp. one and a half seconds.";
+        });
+    });
+
+    field.addEventListener("pointerdown", function(e){
         if(done || !started) return;
-        const box = field.getBoundingClientRect();
-        puff(MISSES[rand(MISSES.length)], e.clientX - box.left, e.clientY - box.top);
-        slide(220, 150, 0.16, "sine", 0.06);
+        penalty += 300;
+        const p = spot(e);
+        puff(MISSED[rand(MISSED.length)], p[0], p[1]);
+        slide(220, 150, .16, "sine", .06);
     });
 
-    /* wait a frame so the field has a measurable size */
-    requestAnimationFrame(place);
-
-    return function(){ clearInterval(tick); clearTimeout(hop); };
+    return function(){ cancelAnimationFrame(raf); T.all(); };
 };
 
 
 /* ══════════════════════════════════════════
    5 · STEADY
+   three wires, each narrower and worse
+   tempered than the one before it
    ══════════════════════════════════════════ */
 
-const WIRE = "M40 190 C40 100, 105 60, 150 118 C196 178, 214 46, 268 74 C318 100, 300 190, 360 166 C412 145, 400 66, 452 66";
+const WIRES = [
+    {w:36, d:"M40 190 C40 100, 105 60, 150 118 C196 178, 214 46, 268 74 C318 100, 300 190, 360 166 C412 145, 400 66, 452 66"},
+    {w:27, d:"M40 60 C86 176, 120 20, 168 132 C206 220, 236 40, 280 130 C312 196, 340 44, 380 120 C404 166, 428 96, 452 176"},
+    {w:20, d:"M40 200 C70 60, 96 210, 126 70 C152 200, 180 40, 208 170 C232 220, 258 30, 286 150 C310 210, 336 40, 364 140 C388 200, 424 60, 452 50"}
+];
+
+/* a finger needs more room than a mouse pointer does */
+const FAT = matchMedia("(pointer:coarse)").matches ? 11 : 0;
 
 const GAMES_STEADY = function(){
 
+    const T = timerBin();
+
+    const stack = el("div", "stack");
+    const row = pipRow(3);
     const svg = document.createElementNS(NS, "svg");
+    const meter = el("div", "meter", "<i style='width:0'></i>");
+    const fill = meter.querySelector("i");
+
     svg.setAttribute("class", "wirebox");
     svg.setAttribute("viewBox", "0 0 492 240");
-    svg.innerHTML =
-        '<path class="edge" d="' + WIRE + '"/>' +
-        '<path class="corridor" d="' + WIRE + '"/>' +
-        '<path class="hair" d="' + WIRE + '"/>' +
-        '<circle class="gate" cx="40" cy="190" r="17"/>' +
-        '<circle class="gate finish" cx="452" cy="66" r="17"/>' +
-        '<text class="cap" x="40" y="224">start</text>' +
-        '<text class="cap" x="452" y="102">end</text>' +
-        '<circle class="tip" cx="40" cy="190" r="7" style="opacity:0"/>';
 
-    board.appendChild(svg);
+    stack.appendChild(row);
+    stack.appendChild(svg);
+    stack.appendChild(meter);
+    board.appendChild(stack);
 
-    const corridor = svg.querySelector(".corridor");
-    const tip = svg.querySelector(".tip");
+    const dots = row.querySelectorAll("i");
 
-    let live = false, started = 0, tick, done = false, last = null;
+    let level = 0, times = [], live = false, from = 0, tick = 0, over = false;
+    let corridor, trail, tip, samples = [], A = null, B = null, pts = [], last = null;
 
+    l1.textContent = "total";
     v1.textContent = "ready";
-    tell.textContent = "press on the green dot and drag, without letting go";
+
+    function build(){
+
+        const wire = WIRES[level];
+        const wide = wire.w + FAT;
+
+        svg.innerHTML =
+            '<path class="edge" d="' + wire.d + '" style="stroke-width:' + (wide + 5) + '"/>' +
+            '<path class="corridor" d="' + wire.d + '" style="stroke-width:' + wide + '"/>' +
+            '<path class="hair" d="' + wire.d + '"/>' +
+            '<path class="trail" d=""/>' +
+            '<circle class="gate" r="13"/>' +
+            '<circle class="gate finish" r="13"/>' +
+            '<circle class="tip" r="6" style="opacity:0"/>';
+
+        corridor = svg.querySelector(".corridor");
+        trail    = svg.querySelector(".trail");
+        tip      = svg.querySelector(".tip");
+
+        const guide = svg.querySelector(".hair");
+        const len = guide.getTotalLength();
+        samples = [];
+        for(let i = 0; i <= 120; i++) samples.push(guide.getPointAtLength(len * i / 120));
+
+        A = samples[0]; B = samples[120];
+
+        const gates = svg.querySelectorAll(".gate");
+        gates[0].setAttribute("cx", A.x); gates[0].setAttribute("cy", A.y);
+        gates[1].setAttribute("cx", B.x); gates[1].setAttribute("cy", B.y);
+
+        dots.forEach(function(d, i){
+            d.classList.toggle("won", i < level);
+            d.classList.toggle("now", i === level);
+        });
+
+        pts = []; last = null;
+        trail.setAttribute("d", "");
+        fill.style.width = "0%";
+        svg.classList.remove("live", "bust");
+        tell.textContent = "wire " + (level + 1) + " of 3. press the green dot and drag.";
+    }
 
     function at(e){
         const m = svg.getScreenCTM();
         if(!m) return null;
-        const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
-        return pt;
+        return new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
     }
 
-    function near(p, cx, cy, r){
-        return (p.x - cx) * (p.x - cx) + (p.y - cy) * (p.y - cy) < r * r;
+    function near(p, c, r){
+        return (p.x - c.x) * (p.x - c.x) + (p.y - c.y) * (p.y - c.y) < r * r;
+    }
+
+    function inside(p){
+        return corridor.isPointInStroke(p) || near(p, A, 24);
+    }
+
+    function along(p){
+        let bi = 0, bd = Infinity;
+        for(let i = 0; i < samples.length; i++){
+            const dx = samples[i].x - p.x, dy = samples[i].y - p.y;
+            const d = dx * dx + dy * dy;
+            if(d < bd){ bd = d; bi = i; }
+        }
+        return bi / 120;
+    }
+
+    function total(){
+        let s = 0;
+        times.forEach(function(t){ s += t; });
+        return s + (live ? performance.now() - from : 0);
     }
 
     function begin(e){
-        if(done) return;
+        if(over || live) return;
         const p = at(e); if(!p) return;
-        if(!near(p, 40, 190, 26)) return;
+        if(!near(p, A, 26)) return;
 
         svg.setPointerCapture(e.pointerId);
         live = true;
+        from = performance.now();
         last = p;
-        started = performance.now();
+        pts = [[p.x, p.y]];
         svg.classList.add("live");
         svg.classList.remove("bust");
         tip.style.opacity = 1;
         tell.textContent = "do not touch the sides";
-        tick = setInterval(function(){
-            v1.textContent = ((performance.now() - started) / 1000).toFixed(1) + "s";
+
+        tick = T.every(function(){
+            v1.textContent = (total() / 1000).toFixed(1) + "s";
         }, 100);
     }
 
-    /* the corridor is a stroke, so the browser itself can tell us
-       whether a point is still inside it */
-    function inside(p){
-        return corridor.isPointInStroke(p) || near(p, 40, 190, 26);
-    }
-
     function move(e){
-        if(!live || done) return;
+
+        if(!live || over) return;
         const p = at(e); if(!p) return;
 
         tip.setAttribute("cx", p.x);
         tip.setAttribute("cy", p.y);
 
-        if(near(p, 452, 66, 20)){ win(); return; }
+        if(near(p, B, 19)){ clear(); return; }
 
         /* a fast flick can jump clean over a bend between two events,
-           so check a few points along the way as well as the one we got */
-        if(last){
-            for(let k = 1; k <= 4; k++){
-                const q = new DOMPoint(
-                    last.x + (p.x - last.x) * k / 4,
-                    last.y + (p.y - last.y) * k / 4
-                );
-                if(!inside(q)){ bust(); return; }
-            }
-        }else if(!inside(p)){
-            bust(); return;
+           so check the points in between as well as the one we got */
+        for(let k = 1; k <= 4; k++){
+            const q = new DOMPoint(
+                last.x + (p.x - last.x) * k / 4,
+                last.y + (p.y - last.y) * k / 4
+            );
+            if(!inside(q)){ bust(); return; }
         }
 
+        pts.push([p.x, p.y]);
+        if(pts.length > 900) pts.shift();
+        trail.setAttribute("d", "M" + pts.map(function(q){
+            return q[0].toFixed(1) + " " + q[1].toFixed(1);
+        }).join(" L"));
+
+        fill.style.width = Math.round(along(p) * 100) + "%";
         last = p;
     }
 
     function bust(){
         live = false;
         last = null;
-        clearInterval(tick);
+        T.stop(tick);
         svg.classList.remove("live");
         svg.classList.add("bust");
         tip.style.opacity = 0;
-        v1.textContent = "ready";
+        fill.style.width = "0%";
+        v1.textContent = (total() / 1000).toFixed(1) + "s";
         tell.textContent = "off the wire. back to the green dot.";
-        slide(340, 90, 0.42, "square", 0.1);
+        slide(340, 90, .42, "square", .1);
     }
 
-    function win(){
-        live = false; done = true;
-        last = null;
-        clearInterval(tick);
+    function clear(){
+
+        live = false;
+        T.stop(tick);
+        times.push(performance.now() - from);
         svg.classList.remove("live");
         tip.style.opacity = 0;
-        const ms = Math.round(performance.now() - started);
-        v1.textContent = (ms / 1000).toFixed(1) + "s";
-        if(keepBest("steady", ms, true)){
-            tell.textContent = "clean run, and the fastest you have managed";
-        }else{
-            tell.textContent = "clean run. you have been steadier, though.";
-        }
-        tone(760, 0.18, "triangle", 0.13);
-        setTimeout(function(){ tone(1140, 0.28, "triangle", 0.11); }, 140);
+        fill.style.width = "100%";
+        dots[level].classList.remove("now");
+        dots[level].classList.add("won");
+        tone(700 + level * 140, .18, "triangle", .13);
+
+        const bb = board.getBoundingClientRect();
+        burst(bb.width / 2, bb.height / 2, 12);
+
+        level++;
+        v1.textContent = (total() / 1000).toFixed(1) + "s";
+
+        if(level >= WIRES.length){ land(); return; }
+
+        tell.textContent = "wire " + (level + 1) + ". narrower.";
+        T.wait(build, 950);
+    }
+
+    function land(){
+
+        over = true;
+        const ms = Math.round(total());
+        const rec = keepBest("steady", ms, true);
+
+        const cap = ms < 14000 ? "hands like that are wasted on a website"
+                  : ms < 24000 ? "steady. genuinely steady."
+                  : ms < 40000 ? "you got all three, that is the main thing"
+                  : "slow and unbroken beats fast and off the wire";
+
+        verdict((ms / 1000).toFixed(1) + "s", cap, [
+            ["total", (ms / 1000).toFixed(1) + "s"],
+            ["wires", "3 of 3"],
+            ["last one", (times[2] / 1000).toFixed(1) + "s"]
+        ], rec);
     }
 
     function letGo(){
-        if(!live || done) return;
+        if(!live || over) return;
         bust();
         tell.textContent = "you let go halfway. start again.";
     }
@@ -1416,7 +2030,9 @@ const GAMES_STEADY = function(){
     svg.addEventListener("pointerup", letGo);
     svg.addEventListener("pointercancel", letGo);
 
-    return function(){ clearInterval(tick); };
+    build();
+
+    return T.all;
 };
 
 
@@ -1425,35 +2041,36 @@ const GAMES_STEADY = function(){
 const GAMES = {
     flatline:{
         name:"flatline",
-        rule:"wait for the line to go flat, then tap. not a moment before.",
-        unit:"this go",
+        rule:"five rounds. tap the instant the line goes flat, and mind the stutter.",
+        unit:"last go",
         start:GAMES_FLATLINE
     },
     echo:{
         name:"echo",
-        rule:"she plays a sequence. you play it back. she adds one.",
+        rule:"she plays, you repeat, she adds one. past round six she moves the pads.",
         unit:"round",
         start:GAMES_ECHO
     },
     pairs:{
         name:"pairs",
-        rule:"six doodles, twelve cards, one increasingly short memory.",
+        rule:"one look at all twelve, then find the six pairs before she rearranges them.",
         unit:"time",
         start:GAMES_PAIRS
     },
     catch:{
         name:"catch",
-        rule:"twelve catches. she gets smaller and faster with every one.",
+        rule:"twelve catches. she dodges your finger, and two of them are wasps.",
         unit:"caught",
         start:GAMES_CATCH
     },
     steady:{
         name:"steady",
-        rule:"drag along the wire without touching the sides.",
-        unit:"time",
+        rule:"three wires, each narrower. off the sides and that one starts over.",
+        unit:"total",
         start:GAMES_STEADY
     }
 };
+
 
 </script>
 
