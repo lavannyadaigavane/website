@@ -266,31 +266,23 @@ nav{
 
 .nav-links a:hover::after{width:100%}
 
-.nav-links .mood-link{position:relative;padding-left:13px}
+/* every link gets a small charm sitting in front of it */
+.nav-links .play-link,
+.nav-links .pic-link,
+.nav-links .hi-link{position:relative;padding-left:14px}
 
-.nav-links .mood-link::before{
+.nav-links .play-link::before,
+.nav-links .pic-link::before,
+.nav-links .hi-link::before{
     content:"";
     position:absolute;left:0;top:50%;
     width:7px;height:7px;margin-top:-3.5px;
-    border-radius:50%;
-    background:var(--pink);
-    animation:moodShift 9s ease-in-out infinite;
-}
-
-@keyframes moodShift{
-    0%,100%{background:var(--pink);scale:1}
-    25%{background:var(--blue);scale:1.25}
-    50%{background:var(--yellow);scale:1}
-    75%{background:var(--sage);scale:1.25}
 }
 
 /* a little block that tumbles, the way a block does in an old game */
 .nav-links .play-link{position:relative;padding-left:14px}
 
 .nav-links .play-link::before{
-    content:"";
-    position:absolute;left:0;top:50%;
-    width:7px;height:7px;margin-top:-3.5px;
     background:var(--wine);
     animation:tumble 3.6s steps(1,end) infinite;
 }
@@ -304,6 +296,37 @@ nav{
 }
 
 .nav-links .play-link:hover::before{animation-duration:.9s}
+
+/* a lens stopping down and opening again */
+.nav-links .pic-link::before{
+    background:var(--blue);
+    animation:aperture 5s ease-in-out infinite;
+}
+
+@keyframes aperture{
+    0%,100%{border-radius:1px;scale:1;   background:var(--blue)}
+    46%    {border-radius:50%;scale:.58; background:var(--sage)}
+    62%    {border-radius:50%;scale:.58; background:var(--sage)}
+}
+
+.nav-links .pic-link:hover::before{animation-duration:1.4s}
+
+/* two beats, the way a hello sounds */
+.nav-links .hi-link::before{
+    border-radius:50%;
+    background:var(--pink);
+    animation:beat 2.8s ease-in-out infinite;
+}
+
+@keyframes beat{
+    0%,56%,100%{scale:1;background:var(--pink)}
+    62%{scale:1.55;background:var(--wine)}
+    70%{scale:1}
+    78%{scale:1.35;background:var(--wine)}
+    86%{scale:1}
+}
+
+.nav-links .hi-link:hover::before{animation-duration:1s}
 
 .label{
     font-family:var(--mono);font-size:8px;
@@ -1514,7 +1537,7 @@ footer{
     .drift b{animation:none;opacity:0 !important}
 
     nav{padding:0 7vw}
-    .nav-links{gap:11px}
+    .nav-links{gap:13px}
     .nav-links a{font-size:7px}
 
     .hero{display:block;padding:132px 7vw 64px;min-height:auto}
@@ -1596,10 +1619,9 @@ footer{
         </svg>
     </a>
     <div class="nav-links">
-        <a href="mood.html" class="mood-link">mood?</a>
         <a href="games.html" class="play-link">games</a>
-        <a href="gallery.html">gallery</a>
-        <a href="#closing">say hi</a>
+        <a href="gallery.html" class="pic-link">gallery</a>
+        <a href="#closing" class="hi-link">say hi</a>
     </div>
 </nav>
 
