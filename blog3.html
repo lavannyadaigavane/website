@@ -142,20 +142,9 @@ nav{
     font-size:clamp(54px,11.5vw,164px);
     line-height:.86;letter-spacing:-.045em;
     max-width:100%;
+    color:var(--ink);
     animation:printOn 1.1s cubic-bezier(.16,1,.3,1) .15s both;
 }
-
-.title .lay{display:block;mix-blend-mode:multiply}
-.title .lay.b,.title .lay.c{position:absolute;inset:0;pointer-events:none}
-.title .lay.a{color:var(--ink)}
-.title .lay.b{color:var(--lilac);animation:plateB 9s ease-in-out infinite}
-.title .lay.c{color:var(--mint);animation:plateC 11s ease-in-out infinite}
-
-@keyframes plateB{0%,100%{translate:6px 5px}50%{translate:11px 2px}}
-@keyframes plateC{0%,100%{translate:-6px -4px}50%{translate:-11px -1px}}
-
-.title:hover .lay.b{translate:18px 10px}
-.title:hover .lay.c{translate:-18px -9px}
 
 @keyframes printOn{
     from{opacity:0;transform:translateY(.18em) scale(.97)}
@@ -628,9 +617,33 @@ footer a{color:inherit}
 
 .leaf .words em{font-style:italic;color:var(--wine)}
 
+/* the signature at the bottom of every entry */
 .leaf .end{
-    display:block;margin-top:30px;
-    font-family:var(--hand);font-size:19px;color:var(--wine);
+    display:block;position:relative;z-index:2;
+    margin-top:44px;text-align:right;
+    opacity:0;translate:0 10px;
+    transition:opacity .7s ease,translate .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.reader.open .leaf .end{
+    opacity:1;translate:0 0;
+    transition-delay:1s;
+}
+
+.leaf .end i{
+    display:inline-block;
+    font-family:var(--hand);font-style:normal;
+    font-size:29px;line-height:1;color:var(--wine);
+    rotate:-2.5deg;
+}
+
+.leaf .end svg{
+    display:block;width:136px;margin:8px 2px 0 auto;overflow:visible;
+}
+
+.leaf .end svg path{
+    fill:none;stroke:var(--pink);stroke-width:1.7;
+    stroke-linecap:round;opacity:.85;
 }
 
 
@@ -676,11 +689,6 @@ footer a{color:inherit}
     .ribbon .dood:nth-child(even){display:none}
     .ribbon .dood,.ribbon .dood *{animation:none!important}
 
-    /* three layers of multiply blending on the title means reading
-       the backdrop three times over on every frame */
-    .title .lay{mix-blend-mode:normal}
-    .title .lay.b,.title .lay.c{opacity:.7}
-
     /* blurring the whole screen behind the reader, and masking a full
        sheet of ruled paper inside it, are both too much to ask */
     .reader{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(46,36,28,.72)}
@@ -697,7 +705,7 @@ html.reading body::after{display:none}
     .piece{opacity:1;translate:0;rotate:var(--tilt,0deg)}
     .tape{opacity:1;scale:1}
     .flourish path,.rule path{stroke-dashoffset:0}
-    .leaf .words > *{opacity:1;translate:0}
+    .leaf .words > *,.leaf .end{opacity:1;translate:0}
 }
 
 </style>
@@ -732,11 +740,7 @@ html.reading body::after{display:none}
 
 <header class="masthead">
 
-    <h1 class="title">
-        <span class="lay a">the yapbook</span>
-        <span class="lay b" aria-hidden="true">the yapbook</span>
-        <span class="lay c" aria-hidden="true">the yapbook</span>
-    </h1>
+    <h1 class="title">the yapbook</h1>
 
     <p class="caption">
         Apparently, I have thoughts and you have the
@@ -967,7 +971,12 @@ html.reading body::after{display:none}
         <span class="meta" id="rmeta"></span>
         <h1 id="rtitle"></h1>
         <div class="words" id="rwords"></div>
-        <span class="end">&#8212;&#8212;&#8212;</span>
+        <span class="end">
+            <i>Lavannya</i>
+            <svg viewBox="0 0 136 16" aria-hidden="true">
+                <path d="M4 10 C26 3, 46 15, 68 8 C88 2, 108 13, 132 6"/>
+            </svg>
+        </span>
     </article>
 </div>
 

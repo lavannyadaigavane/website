@@ -133,20 +133,9 @@ nav{
     font-size:clamp(46px,10vw,128px);
     line-height:.88;letter-spacing:-.045em;
     max-width:100%;
+    color:var(--ink);
     animation:printOn 1.1s cubic-bezier(.16,1,.3,1) .12s both;
 }
-
-.title .lay{display:block;mix-blend-mode:multiply}
-.title .lay.b,.title .lay.c{position:absolute;inset:0;pointer-events:none}
-.title .lay.a{color:var(--ink)}
-.title .lay.b{color:var(--lilac);animation:plateB 9s ease-in-out infinite}
-.title .lay.c{color:var(--mint);animation:plateC 11s ease-in-out infinite}
-
-@keyframes plateB{0%,100%{translate:6px 5px}50%{translate:11px 2px}}
-@keyframes plateC{0%,100%{translate:-6px -4px}50%{translate:-11px -1px}}
-
-.title:hover .lay.b{translate:17px 10px}
-.title:hover .lay.c{translate:-17px -9px}
 
 @keyframes printOn{
     from{opacity:0;transform:translateY(.18em) scale(.97)}
@@ -511,11 +500,7 @@ footer a{color:inherit}
 
 <header class="top">
 
-    <h1 class="title">
-        <span class="lay a">blog topics</span>
-        <span class="lay b" aria-hidden="true">blog topics</span>
-        <span class="lay c" aria-hidden="true">blog topics</span>
-    </h1>
+    <h1 class="title">blog topics</h1>
 
     <p class="caption">
         Three so far. Pick whichever one looks like the mood you are in.
