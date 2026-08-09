@@ -39,13 +39,22 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
+
+html,body{overflow-x:hidden}
+
+/* clip does the same job without turning the page into a
+   scroll container, which is what let it drift sideways */
+@supports (overflow:clip){
+    html,body{overflow-x:clip}
+}
 
 body{
     background:var(--cream);
     color:var(--ink);
     font-family:var(--sans);
-    overflow-x:hidden;
+    width:100%;
     min-height:100vh;
     min-height:100svh;
 }
@@ -204,11 +213,17 @@ nav{
     border-bottom:1.6px solid var(--ink);
     rotate:-.9deg;
     overflow:hidden;
+    contain:paint;
     white-space:nowrap;
     box-shadow:0 10px 22px rgba(var(--shadow),.14);
 }
 
-.ribbon .run{display:inline-block;animation:slide 42s linear infinite}
+.ribbon .run{
+    display:inline-block;
+    animation:slide 42s linear infinite;
+    will-change:transform;
+    backface-visibility:hidden;
+}
 
 .ribbon .dood{
     width:36px;height:36px;
@@ -647,16 +662,35 @@ footer a{color:inherit}
     .dust{display:none}
 }
 
-/* forty small animations is a lot to ask of a phone, so the belt keeps
-   moving and the drawings riding on it hold still */
+/* ══════════ what a phone is asked to draw ══════════ */
+
 @media(pointer:coarse){
+
+    /* the grain and the aged edge are two full screen layers sitting
+       above the whole page. they have to be recomposited every time
+       you scroll a pixel, and they are barely visible at this size. */
+    body::before,body::after{display:none}
+
+    /* half as many drawings on the belt. the two halves of the run
+       stay identical, so the loop is still seamless. */
+    .ribbon .dood:nth-child(even){display:none}
     .ribbon .dood,.ribbon .dood *{animation:none!important}
+
+    /* three layers of multiply blending on the title means reading
+       the backdrop three times over on every frame */
+    .title .lay{mix-blend-mode:normal}
+    .title .lay.b,.title .lay.c{opacity:.7}
+
+    /* blurring the whole screen behind the reader, and masking a full
+       sheet of ruled paper inside it, are both too much to ask */
+    .reader{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(46,36,28,.72)}
+    .leaf::before{-webkit-mask-image:none;mask-image:none;opacity:.5}
 }
 
-/* a phone should not be asked to blur the whole screen */
-@media(pointer:coarse){
-    .reader{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(46,36,28,.72)}
-}
+/* nothing behind the reader needs drawing while you are reading */
+html.reading .dust,
+html.reading body::before,
+html.reading body::after{display:none}
 
 @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
@@ -1001,12 +1035,37 @@ function openEntry(card){
 
     reader.classList.add("open");
     reader.scrollTop = 0;
-    document.body.style.overflow = "hidden";
+    lock();
 }
 
 function shutEntry(){
     reader.classList.remove("open");
-    document.body.style.overflow = "";
+    unlock();
+}
+
+
+/* ══════════ holding the page still while you read ══════════ */
+
+let held = 0;
+
+function lock(){
+    held = window.scrollY;
+    const b = document.body.style;
+    b.position = "fixed";
+    b.top = (-held) + "px";
+    b.left = "0";
+    b.right = "0";
+    document.documentElement.classList.add("reading");
+}
+
+function unlock(){
+    const b = document.body.style;
+    b.position = ""; b.top = ""; b.left = ""; b.right = "";
+    document.documentElement.classList.remove("reading");
+
+    /* the page scrolls smoothly by default, which would make this
+       restore visible as a glide. it has to be instant. */
+    window.scrollTo({top:held, left:0, behavior:"instant"});
 }
 
 document.querySelectorAll(".entry").forEach(function(card){
