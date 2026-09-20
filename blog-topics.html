@@ -361,10 +361,12 @@ nav{
 .topic:hover .blip{animation:blip 1.4s ease-in-out infinite}
 .topic:hover .blip.two{animation-delay:.2s}
 .topic:hover .blip.three{animation-delay:.4s}
+.topic:hover .strum{animation:strum .38s ease-in-out infinite alternate}
 
 @keyframes grow{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(5deg)}}
 @keyframes steam{0%{opacity:.15;transform:translateY(3px)}45%{opacity:1}100%{opacity:.15;transform:translateY(-5px)}}
 @keyframes yap{from{transform:scale(1)}to{transform:scale(1.06)}}
+@keyframes strum{from{transform:translateX(-.9px)}to{transform:translateX(.9px)}}
 @keyframes blip{0%,100%{opacity:.25}50%{opacity:1}}
 
 
@@ -503,7 +505,7 @@ footer a{color:inherit}
     <h1 class="title">blog topics</h1>
 
     <p class="caption">
-        Three so far. Pick whichever one looks like the mood you are in.
+        Four so far. Pick whichever one looks like the mood you are in.
     </p>
 
     <svg class="rule" viewBox="0 0 420 16" aria-hidden="true">
@@ -551,10 +553,10 @@ footer a{color:inherit}
     <div class="rack">
 
         <!-- ─── one ─── -->
-        <a class="topic" href="blog3.html"
-           style="--tilt:-.9deg;--wait:0s;--drop:0px;--tint:#d7cbe2">
-            <span class="tape lilac tl"></span>
-            <span class="tape butter tr"></span>
+        <a class="topic" href="blog4.html"
+           style="--tilt:-1.1deg;--wait:0s;--drop:0px;--tint:#eccfd0">
+            <span class="tape mint tl"></span>
+            <span class="tape tr"></span>
 
             <span class="latest">
                 latest
@@ -563,6 +565,35 @@ footer a{color:inherit}
                     <path d="M2 10 L7.5 16 L13 10"/>
                 </svg>
             </span>
+
+            <svg class="glyph" viewBox="0 0 72 66" aria-hidden="true">
+                <path class="fill" style="--len:230"
+                      d="M36 27 C28 27, 22 30, 22 35 C22 40, 27 40, 27 45
+                         C27 50, 19 49, 19 54 C19 59, 27 62, 36 62
+                         C45 62, 53 59, 53 54 C53 49, 45 50, 45 45
+                         C45 40, 50 40, 50 35 C50 30, 44 27, 36 27 Z"/>
+                <circle style="--len:34" cx="36" cy="40" r="5"/>
+                <path style="--len:16" d="M30 54 h12"/>
+                <path style="--len:44" d="M33 27 V9 M39 27 V9"/>
+                <path class="fill" style="--len:36" d="M31.5 9 h9 V3 h-9 Z"/>
+                <path style="--len:26" d="M31.5 5 h-3 M31.5 7.5 h-3 M40.5 5 h3 M40.5 7.5 h3"/>
+                <g class="strum">
+                    <path style="--len:50" d="M34.5 9 V54"/>
+                    <path style="--len:50" d="M37.5 9 V54"/>
+                </g>
+            </svg>
+
+            <h2><span class="swipe">being bad at things</span></h2>
+            <span class="stamp">20 / 09 / 2026</span>
+            <span class="go">read it <i></i></span>
+        </a>
+
+
+        <!-- ─── two ─── -->
+        <a class="topic" href="blog3.html"
+           style="--tilt:-.9deg;--wait:.11s;--drop:30px;--tint:#d7cbe2">
+            <span class="tape lilac tl"></span>
+            <span class="tape butter tr"></span>
 
             <svg class="glyph" viewBox="0 0 72 66" aria-hidden="true">
                 <g class="yap">
@@ -582,9 +613,9 @@ footer a{color:inherit}
         </a>
 
 
-        <!-- ─── two ─── -->
+        <!-- ─── three ─── -->
         <a class="topic" href="blogsecond.html"
-           style="--tilt:1.2deg;--wait:.11s;--drop:34px;--tint:#c9dcea">
+           style="--tilt:1.2deg;--wait:.22s;--drop:8px;--tint:#c9dcea">
             <span class="tape tc"></span>
 
             <svg class="glyph" viewBox="0 0 72 66" aria-hidden="true">
@@ -602,9 +633,9 @@ footer a{color:inherit}
         </a>
 
 
-        <!-- ─── three ─── -->
+        <!-- ─── four ─── -->
         <a class="topic" href="blog1.html"
-           style="--tilt:-1.4deg;--wait:.22s;--drop:12px;--tint:#cfd8bd">
+           style="--tilt:-1.4deg;--wait:.33s;--drop:38px;--tint:#cfd8bd">
             <span class="tape mint tl"></span>
 
             <svg class="glyph" viewBox="0 0 72 66" aria-hidden="true">
