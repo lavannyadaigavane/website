@@ -267,35 +267,15 @@ nav{
 .nav-links a:hover::after{width:100%}
 
 /* every link gets a small charm sitting in front of it */
-.nav-links .play-link,
 .nav-links .pic-link,
 .nav-links .hi-link{position:relative;padding-left:14px}
 
-.nav-links .play-link::before,
 .nav-links .pic-link::before,
 .nav-links .hi-link::before{
     content:"";
     position:absolute;left:0;top:50%;
     width:7px;height:7px;margin-top:-3.5px;
 }
-
-/* a little block that tumbles, the way a block does in an old game */
-.nav-links .play-link{position:relative;padding-left:14px}
-
-.nav-links .play-link::before{
-    background:var(--wine);
-    animation:tumble 3.6s steps(1,end) infinite;
-}
-
-@keyframes tumble{
-    0%  {rotate:0deg;   background:var(--wine)}
-    25% {rotate:90deg;  background:var(--yellow)}
-    50% {rotate:180deg; background:var(--blue)}
-    75% {rotate:270deg; background:var(--pink)}
-    100%{rotate:360deg; background:var(--wine)}
-}
-
-.nav-links .play-link:hover::before{animation-duration:.9s}
 
 /* a lens stopping down and opening again */
 .nav-links .pic-link::before{
@@ -1619,7 +1599,6 @@ footer{
         </svg>
     </a>
     <div class="nav-links">
-        <a href="games.html" class="play-link">games</a>
         <a href="gallery.html" class="pic-link">gallery</a>
         <a href="#closing" class="hi-link">say hi</a>
     </div>
@@ -1643,14 +1622,11 @@ footer{
         </h1>
 
             <p class="hero-note">
-                <span class="wd">Okay,</span> <span class="wd">so…</span> <span class="wd">hi.</span> <span class="wd">I</span> <span class="wd">made</span> <span class="wd">a</span> <span class="wd">website.</span> <span class="wd">Why?</span> <span class="wd">Good</span>
-                <span class="wd">question.</span> <span class="wd">I</span> <span class="wd">wanted</span> <span class="wd">somewhere</span> <span class="wd">to</span> <span class="wd">put</span> <span class="wd">all</span> <span class="wd">the</span> <span class="wd">random</span>
-                <span class="wd">things</span> <span class="wd">that</span> <span class="wd">live</span> <span class="wd">in</span> <span class="wd">my</span> <span class="wd">head,</span> <span class="wd">camera</span> <span class="wd">roll,</span> <span class="wd">notes</span>
-                <span class="wd">app,</span> <span class="wd">and</span> <span class="wd">37</span> <span class="wd">open</span> <span class="wd">tabs.</span> <span class="wd">So</span> <span class="wd">this</span> <span class="wd">is</span> <span class="wd">that</span>
-                <span class="wd">place.</span> <span class="wd">You’ll</span> <span class="wd">find</span> <span class="wd">things</span> <span class="wd">I</span> <span class="wd">love,</span> <span class="wd">things</span> <span class="wd">I’m</span> <span class="wd">obsessed</span>
-                <span class="wd">with</span> <span class="wd">for</span> <span class="wd">five</span> <span class="wd">business</span> <span class="wd">days,</span> <span class="wd">things</span> <span class="wd">I’m</span> <span class="wd">still</span> <span class="wd">figuring</span>
-                <span class="wd">out,</span> <span class="wd">and</span> <span class="wd">probably</span> <span class="wd">a</span> <span class="wd">few</span> <span class="wd">questionable</span> <span class="wd">decisions</span> <span class="wd">along</span> <span class="wd">the</span>
-                <span class="wd">way.</span> <span class="wd">Anyway,</span> <span class="wd">welcome.</span> <span class="wd">Make</span> <span class="wd">yourself</span> <span class="wd">comfortable.</span>
+                <span class="wd">Okay,</span> <span class="wd">so…</span> <span class="wd">hi.</span> <span class="wd">I</span> <span class="wd">made</span> <span class="wd">a</span> <span class="wd">website.</span>
+                <span class="wd">I</span> <span class="wd">wanted</span> <span class="wd">one</span> <span class="wd">place</span> <span class="wd">for</span> <span class="wd">the</span> <span class="wd">things</span> <span class="wd">that</span>
+                <span class="wd">live</span> <span class="wd">in</span> <span class="wd">my</span> <span class="wd">head</span> <span class="wd">and</span> <span class="wd">my</span> <span class="wd">camera</span> <span class="wd">roll,</span>
+                <span class="wd">instead</span> <span class="wd">of</span> <span class="wd">losing</span> <span class="wd">them</span> <span class="wd">in</span> <span class="wd">my</span> <span class="wd">notes</span> <span class="wd">app.</span>
+                <span class="wd">That’s</span> <span class="wd">all</span> <span class="wd">this</span> <span class="wd">is.</span> <span class="wd">Have</span> <span class="wd">a</span> <span class="wd">look</span> <span class="wd">around.</span>
                 <svg class="underline" viewBox="0 0 240 14" aria-hidden="true"><path d="M5 9 C52 3, 94 13, 142 6 C180 1, 214 11, 235 5"/></svg>
             </p>
 
