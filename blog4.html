@@ -598,6 +598,47 @@ nav{
 .end svg path{fill:none;stroke:var(--rust);stroke-width:1.7;stroke-linecap:round;opacity:.8}
 
 
+/* ══════════ the heart at the end ══════════
+
+   it remembers this browser and nothing leaves the page. no number
+   is shown until LIKE_ENDPOINT is filled in at the bottom, because
+   a per-browser tally is not a real count and should not be dressed
+   up as one. */
+
+.likebox{display:flex;justify-content:center;margin-bottom:32px}
+
+.like{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:11px 18px;
+    background:var(--card);
+    border:1px solid rgba(107,66,48,.26);
+    box-shadow:var(--d1);
+    cursor:pointer;
+    font-family:var(--mono);font-size:7.4px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--wine);
+    rotate:-.8deg;
+    transition:translate .3s cubic-bezier(.2,.8,.2,1),
+               rotate .3s ease, box-shadow .3s ease;
+}
+
+.like:hover{translate:0 -2px;rotate:0deg;box-shadow:var(--d2)}
+.like:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+
+.like .heart{width:17px;height:16px;overflow:visible;flex:none}
+
+.like .heart path{
+    fill:none;stroke:var(--rust);stroke-width:1.8;
+    stroke-linejoin:round;transition:fill .3s ease;
+}
+
+.like.on .heart path{fill:var(--rust)}
+
+.like .count{font-variant-numeric:tabular-nums}
+
+@keyframes likePop{0%{scale:1}38%{scale:1.26}100%{scale:1}}
+.like.pop .heart{animation:likePop .44s cubic-bezier(.2,.8,.2,1)}
+
+
 /* ══════════ the close ══════════ */
 
 .tail{
@@ -955,6 +996,18 @@ footer a{color:inherit}
 
 <section class="tail" id="tail">
 
+    <div class="likebox">
+        <button class="like" id="like" type="button" aria-pressed="false">
+            <svg class="heart" viewBox="0 0 24 22" aria-hidden="true">
+                <path d="M12 20.4 C12 20.4 1.6 13.9 1.6 7.2 C1.6 3.9 4.2 1.6 7.1 1.6
+                         C9.3 1.6 11.1 2.9 12 4.7 C12.9 2.9 14.7 1.6 16.9 1.6
+                         C19.8 1.6 22.4 3.9 22.4 7.2 C22.4 13.9 12 20.4 12 20.4 Z"/>
+            </svg>
+            <span class="label">like this one</span>
+            <span class="count" hidden></span>
+        </button>
+    </div>
+
     <a class="back" href="blog-topics.html"><i></i> back to the blogs</a>
 
     <svg class="flourish" viewBox="0 0 190 26" aria-hidden="true">
@@ -1036,6 +1089,75 @@ addEventListener("scroll", function(){
 
 addEventListener("resize", drawThread, {passive:true});
 drawThread();
+
+
+/* ══════════ the heart at the end ══════════
+
+   LIKE_ENDPOINT is the one line to change. left empty, the heart
+   only ever remembers this browser, and no total is shown, because
+   a count of one person's own taps is not a count. point it at
+   something that returns {"count": n} and the real number appears
+   beside the heart. */
+
+(function(){
+
+    const LIKE_ENDPOINT = "";
+    const KEY = "like:being-bad-at-things";
+
+    const btn = document.getElementById("like");
+    if(!btn) return;
+
+    const label = btn.querySelector(".label");
+    const count = btn.querySelector(".count");
+
+    /* storage throws outright in a locked down browser, so every
+       touch of it is wrapped and the button works regardless */
+    function remembered(){
+        try{ return localStorage.getItem(KEY) === "1"; }catch(e){ return false; }
+    }
+
+    function remember(on){
+        try{ on ? localStorage.setItem(KEY,"1") : localStorage.removeItem(KEY); }catch(e){}
+    }
+
+    let on = remembered();
+
+    function paint(){
+        btn.classList.toggle("on", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        label.textContent = on ? "liked" : "like this one";
+    }
+
+    function total(delta){
+        if(!LIKE_ENDPOINT) return;
+        fetch(LIKE_ENDPOINT, delta
+            ? {method:"POST", headers:{"Content-Type":"application/json"},
+               body:JSON.stringify({delta:delta})}
+            : {method:"GET"})
+            .then(function(r){ return r.json(); })
+            .then(function(d){
+                const n = Number(d && d.count);
+                if(!Number.isFinite(n)) return;
+                count.hidden = false;
+                count.textContent = n;
+            })
+            .catch(function(){ /* the heart still works without it */ });
+    }
+
+    btn.addEventListener("click", function(){
+        on = !on;
+        remember(on);
+        paint();
+        btn.classList.remove("pop");
+        void btn.offsetWidth;              /* restart the pop */
+        btn.classList.add("pop");
+        total(on ? 1 : -1);
+    });
+
+    paint();
+    total(0);
+
+})();
 
 </script>
 
