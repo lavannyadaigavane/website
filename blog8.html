@@ -205,14 +205,18 @@ nav{
 
 @keyframes up{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
 
+/* the line under the title is borrowed, so it is set as an epigraph
+   rather than in the handwriting the rest of the page speaks in */
 .caption{
-    margin-top:22px;max-width:560px;
-    font-family:var(--hand);
-    font-size:clamp(19px,2.5vw,27px);
-    line-height:1.4;color:var(--wine);
-    rotate:-1.2deg;
+    margin-top:24px;max-width:38ch;
+    font-family:var(--display);font-style:italic;
+    font-variation-settings:"opsz" 36,"SOFT" 40;
+    font-size:clamp(17px,2.25vw,23px);
+    line-height:1.45;color:var(--wine);
+    rotate:-.5deg;
     animation:up 1s ease .45s both;
 }
+
 
 .rule{display:block;width:min(520px,88%);margin-top:26px;overflow:visible}
 
@@ -873,7 +877,8 @@ footer a{color:inherit}
     <h1 class="title">the paradox of choice</h1>
 
     <p class="caption">
-        Every yes is a hundred quiet nos. I have been counting&nbsp;them.
+        I wanted each and every one of them, but choosing one meant losing all
+        the&nbsp;rest.
     </p>
 
     <svg class="rule" viewBox="0 0 520 16" aria-hidden="true">
@@ -975,7 +980,7 @@ footer a{color:inherit}
                 nothing at all in the way. Forty minutes later you have scrolled past about two
                 hundred things, watched four trailers, and put on something you have already
                 seen twice. Not because there was nothing good on. Because there was too much
-                good on, and <span class="sweep">choosing one meant switching off all the others</span>.
+                good on, and <span class="sweep">you only get the one evening</span>.
             </p>
 
             <p>
