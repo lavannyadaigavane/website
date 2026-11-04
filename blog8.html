@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>the paradox of choice · Lavannya</title>
+
+<link rel="icon" href="favicon.jpeg" type="image/jpeg">
+<meta name="description" content="I think we've forgotten how to be bad at things. Writing by Lavannya Daigavane.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=DM+Mono:wght@300;400&family=Manrope:wght@400;500&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    /* the neutrals are pulled browner than the rest of the site,
+       because this page is meant to have been in a loft */
+    --cream:#f3e7d1;
+    --paper:#e7d6b6;
+    --card:#fdf7e8;
+    --board:#d9c4a0;
+    --ink:#2b2420;
+    --wine:#6b4230;
+    --rust:#a2563c;
+    --red:#b23f2e;          /* the colour a teacher marks in */
+
+    --pink:#d9a09c;
+    --blue:#9fb6cc;
+    --yellow:#d9bb72;
+    --sage:#adb794;
+    --lilac:#b6a5c0;
+
+    --line:rgba(43,36,32,.16);
+    --shadow:58,40,26;
+
+    --display:"Fraunces",serif;
+    --sans:"Manrope",sans-serif;
+    --mono:"DM Mono",monospace;
+    --hand:"Shadows Into Light",cursive;
+
+    /* the essay sits on a 30px baseline and the ruling is drawn to it */
+    --rule:30px;
+
+    /* ── depth ──
+       a shadow ramped over five steps reads as a real object sitting
+       on a real surface. one big soft blur never does. */
+    --d1:
+        0 1px 1px  rgba(var(--shadow),.09),
+        0 2px 2px  rgba(var(--shadow),.09),
+        0 4px 4px  rgba(var(--shadow),.09);
+
+    --d2:
+        0 1px 1px  rgba(var(--shadow),.10),
+        0 2px 2px  rgba(var(--shadow),.10),
+        0 4px 4px  rgba(var(--shadow),.10),
+        0 8px 8px  rgba(var(--shadow),.10),
+        0 16px 16px rgba(var(--shadow),.08);
+
+    --d3:
+        0 2px 2px  rgba(var(--shadow),.12),
+        0 6px 6px  rgba(var(--shadow),.12),
+        0 14px 14px rgba(var(--shadow),.12),
+        0 28px 28px rgba(var(--shadow),.12),
+        0 48px 48px rgba(var(--shadow),.10);
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
+
+html,body{overflow-x:hidden}
+
+@supports (overflow:clip){
+    html,body{overflow-x:clip}
+}
+
+body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    width:100%;
+    min-height:100vh;
+    min-height:100svh;
+}
+
+
+/* ══════════ the graph paper everything is laid on ══════════
+
+   two grids at once: a fine one, and a heavier one every fifth
+   line, the way real gridded paper is printed. it sits under the
+   whole document, not just the album, so the page reads as one
+   continuous sheet.                                            */
+
+body{
+    background-image:
+        linear-gradient(rgba(107,66,48,.055) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(107,66,48,.055) 1px,transparent 1px),
+        linear-gradient(rgba(107,66,48,.075) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(107,66,48,.075) 1px,transparent 1px);
+    background-size:24px 24px,24px 24px,120px 120px,120px 120px;
+}
+
+/* the grain that sits over everything */
+body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:900;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* the aged edge of the page */
+body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:899;
+    background:radial-gradient(120% 100% at 50% 40%,transparent 46%,rgba(140,100,58,.2) 84%,rgba(104,70,38,.34) 100%);
+}
+
+
+/* ══════════ how far through you are ══════════ */
+
+.thread{
+    position:fixed;top:0;left:0;right:0;z-index:950;
+    height:2px;background:var(--rust);
+    transform:scaleX(0);transform-origin:left;
+    will-change:transform;
+}
+
+
+/* ══════════ dust in the light ══════════ */
+
+.dust{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+
+.dust b{
+    position:absolute;top:-10px;
+    width:3px;height:3px;border-radius:50%;
+    background:rgba(150,120,80,.5);
+    animation:sink linear infinite;
+}
+
+@keyframes sink{
+    0%{opacity:0;transform:translateY(0) translateX(0)}
+    12%{opacity:.7}
+    88%{opacity:.7}
+    100%{opacity:0;transform:translateY(108vh) translateX(60px)}
+}
+
+
+/* ══════════ nav ══════════ */
+
+nav{
+    position:fixed;top:0;left:0;right:0;z-index:80;
+    height:70px;padding:0 5vw;
+    display:flex;justify-content:space-between;align-items:center;
+    background:linear-gradient(var(--cream) 56%,transparent);
+}
+
+.mark{display:block;width:44px;height:44px;text-decoration:none;
+    transition:rotate .7s cubic-bezier(.2,.8,.2,1.25)}
+.mark svg{width:100%;height:100%;overflow:visible}
+.mark .arm{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;
+    transform-origin:30px 30px;transition:stroke .4s,scale .5s cubic-bezier(.2,.85,.3,1.6)}
+.mark .arm:nth-child(2){stroke:var(--pink)}
+.mark .arm:nth-child(4){stroke:var(--blue)}
+.mark .arm:nth-child(6){stroke:var(--yellow)}
+.mark .hub{fill:var(--wine);transform-origin:30px 30px;transition:scale .5s cubic-bezier(.2,.85,.3,1.7),fill .4s}
+.mark:hover{rotate:90deg}
+.mark:hover .arm{scale:1.16}
+.mark:hover .hub{scale:1.5;fill:var(--rust)}
+
+.links{display:flex;gap:24px}
+
+.links a{
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);text-decoration:none;position:relative;
+}
+
+.links a::after{content:"";position:absolute;left:0;bottom:-5px;
+    width:0;height:1px;background:var(--rust);transition:.3s}
+.links a:hover::after{width:100%}
+
+
+/* ══════════ the masthead ══════════ */
+
+.masthead{
+    position:relative;z-index:4;
+    max-width:1360px;margin:0 auto;
+    padding:132px 5vw 0;
+}
+
+.title{
+    display:block;max-width:14ch;
+    font-family:var(--display);font-weight:700;
+    font-variation-settings:"opsz" 144,"SOFT" 80,"WONK" 1;
+    font-size:clamp(42px,8.4vw,118px);
+    line-height:.88;letter-spacing:-.045em;
+    color:var(--ink);
+    animation:printOn 1.1s cubic-bezier(.16,1,.3,1) .15s both;
+}
+
+@keyframes printOn{
+    from{opacity:0;transform:translateY(.18em) scale(.97)}
+    to{opacity:1;transform:none}
+}
+
+@keyframes up{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+
+.caption{
+    margin-top:22px;max-width:560px;
+    font-family:var(--hand);
+    font-size:clamp(19px,2.5vw,27px);
+    line-height:1.4;color:var(--wine);
+    rotate:-1.2deg;
+    animation:up 1s ease .45s both;
+}
+
+.rule{display:block;width:min(520px,88%);margin-top:26px;overflow:visible}
+
+.rule path{
+    fill:none;stroke:var(--wine);stroke-width:1.6;stroke-linecap:round;opacity:.55;
+    stroke-dasharray:640;stroke-dashoffset:640;
+    animation:draw 1.6s cubic-bezier(.6,.05,.25,1) 1s forwards;
+}
+
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.seal{
+    position:absolute;top:130px;right:5vw;
+    width:118px;height:118px;
+    animation:up 1s ease .8s both, turn 44s linear infinite;
+}
+
+.seal .ring{fill:none;stroke:var(--wine);stroke-width:1.2;opacity:.5}
+.seal text{font-family:var(--mono);font-size:7.6px;letter-spacing:.28em;fill:var(--wine);opacity:.8}
+.seal .pip{fill:var(--rust)}
+
+@keyframes turn{to{rotate:360deg}}
+
+
+/* ══════════ the dateline ══════════ */
+
+.dateline{
+    position:relative;z-index:4;
+    max-width:1360px;margin:34px auto 0;padding:0 5vw;
+    display:flex;gap:10px 26px;flex-wrap:wrap;align-items:center;
+    font-family:var(--mono);font-size:7.2px;
+    letter-spacing:.2em;text-transform:uppercase;color:#8a7d6d;
+    animation:up 1s ease .7s both;
+}
+
+.dateline i{flex:1;min-width:30px;height:1px;background:var(--line);font-style:normal}
+
+
+/* ══════════════════════════════════════════
+   THE ALBUM PAGE
+   ══════════════════════════════════════════ */
+
+.album{
+    position:relative;z-index:4;
+    max-width:1360px;margin:0 auto;
+    padding:60px 5vw 40px;
+}
+
+.leaf{
+    position:relative;
+    padding:76px clamp(20px,4.4vw,64px) 88px;
+
+    /* the album card itself: gridded, aged, and dished in the middle
+       the way a thick page is once it has been shut for years */
+    background-image:
+        linear-gradient(rgba(107,66,48,.07) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(107,66,48,.07) 1px,transparent 1px),
+        linear-gradient(rgba(107,66,48,.11) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(107,66,48,.11) 1px,transparent 1px),
+        radial-gradient(90% 60% at 50% 40%,#e9d8b8,#dcc7a1 70%,#d2ba92);
+    background-size:24px 24px,24px 24px,120px 120px,120px 120px,100% 100%;
+
+    box-shadow:
+        var(--d3),
+        inset 0 0 90px rgba(120,84,46,.22),
+        inset 0 1px 0 rgba(255,246,226,.5);
+
+    /* a deckle cut edge rather than a ruled one */
+    clip-path:polygon(
+        0 6px, 3% 2px, 8% 7px, 14% 1px, 21% 6px, 28% 2px, 35% 7px, 43% 2px,
+        51% 6px, 58% 1px, 66% 6px, 73% 2px, 81% 7px, 88% 2px, 95% 6px, 100% 2px,
+        100% calc(100% - 5px), 95% calc(100% - 1px), 88% calc(100% - 6px),
+        80% calc(100% - 2px), 72% calc(100% - 7px), 64% calc(100% - 2px),
+        56% calc(100% - 6px), 48% calc(100% - 1px), 40% calc(100% - 6px),
+        32% calc(100% - 2px), 24% calc(100% - 7px), 16% calc(100% - 2px),
+        9% calc(100% - 6px), 3% calc(100% - 1px), 0 calc(100% - 5px)
+    );
+
+    opacity:0;translate:0 40px;
+    transition:opacity 1s ease,translate 1.1s cubic-bezier(.2,.8,.2,1);
+}
+
+.leaf.set{opacity:1;translate:0 0}
+
+/* foxing — the brown blooms old paper comes out in */
+.leaf::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+        radial-gradient(circle at 12% 18%,rgba(150,96,44,.16),transparent 9%),
+        radial-gradient(circle at 83% 11%,rgba(150,96,44,.13),transparent 7%),
+        radial-gradient(circle at 92% 63%,rgba(150,96,44,.15),transparent 8%),
+        radial-gradient(circle at 7%  71%,rgba(150,96,44,.12),transparent 6%),
+        radial-gradient(circle at 46% 94%,rgba(150,96,44,.14),transparent 7%),
+        radial-gradient(circle at 68% 41%,rgba(150,96,44,.09),transparent 5%);
+}
+
+/* somebody put a cup down on it */
+.leaf::after{
+    content:"";position:absolute;pointer-events:none;
+    top:38px;right:9%;width:132px;height:132px;border-radius:50%;
+    border:7px solid rgba(138,92,44,.13);
+    box-shadow:inset 0 0 0 2px rgba(138,92,44,.06);
+    rotate:-8deg;
+}
+
+/* the black photo corners holding the album page down */
+.pin{position:absolute;z-index:6;width:30px;height:30px;background:#332a24;opacity:.82;
+    box-shadow:var(--d1)}
+.pin.a{top:0;left:0;clip-path:polygon(0 0,100% 0,0 100%)}
+.pin.b{top:0;right:0;clip-path:polygon(0 0,100% 0,100% 100%)}
+.pin.c{bottom:0;left:0;clip-path:polygon(0 0,0 100%,100% 100%)}
+.pin.d{bottom:0;right:0;clip-path:polygon(100% 0,100% 100%,0 100%)}
+
+
+/* ══════════ washi tape ══════════ */
+
+.tape{
+    position:absolute;z-index:8;
+    width:104px;height:27px;
+    background:linear-gradient(178deg,rgba(255,248,226,.8),rgba(222,200,162,.66));
+    box-shadow:0 2px 7px rgba(var(--shadow),.24);
+    clip-path:polygon(3% 6%,10% 0,19% 8%,28% 1%,38% 7%,48% 0,58% 8%,68% 1%,78% 7%,88% 0,97% 8%,
+        100% 94%,90% 100%,80% 93%,70% 100%,60% 92%,50% 100%,40% 93%,30% 100%,20% 92%,10% 100%,0 93%);
+}
+
+.tape.pink {background:linear-gradient(178deg,rgba(236,190,186,.78),rgba(206,150,146,.62))}
+.tape.sage {background:linear-gradient(178deg,rgba(200,208,176,.78),rgba(164,176,140,.62))}
+.tape.blue {background:linear-gradient(178deg,rgba(186,206,224,.78),rgba(146,174,200,.62))}
+.tape.lilac{background:linear-gradient(178deg,rgba(208,194,220,.78),rgba(176,156,192,.62))}
+
+
+/* ══════════════════════════════════════════
+   THE WRITING
+   ══════════════════════════════════════════ */
+
+.sheet{
+    position:relative;z-index:5;
+    width:min(760px,100%);
+    margin:0 auto;
+    padding:68px clamp(26px,5.2vw,78px) 64px;
+    background:var(--card);
+    box-shadow:var(--d2);
+    rotate:var(--tilt,0deg);
+}
+
+/* ruled, and gridded faintly underneath, like ledger paper */
+.sheet::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+        linear-gradient(rgba(107,66,48,.09) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(107,66,48,.035) 1px,transparent 1px);
+    background-size:100% var(--rule),var(--rule) 100%;
+    background-position:0 67px,0 0;
+    -webkit-mask-image:linear-gradient(#000 74%,transparent);
+    mask-image:linear-gradient(#000 74%,transparent);
+}
+
+/* the red margin */
+.sheet::after{
+    content:"";position:absolute;top:0;bottom:0;left:clamp(14px,3.2vw,48px);
+    width:1px;background:rgba(170,86,74,.34);
+}
+
+/* the corner that has lifted away from the page */
+.curl{
+    position:absolute;z-index:2;right:0;bottom:0;
+    width:44px;height:44px;
+    background:linear-gradient(135deg,transparent 0 50%,#fffdf4 50%,#e4d3af 88%,#cdb389 100%);
+    box-shadow:-5px -5px 11px rgba(var(--shadow),.22);
+    clip-path:polygon(100% 0,100% 100%,0 100%);
+}
+
+.words{position:relative;z-index:3}
+
+.words p{
+    font-size:15.5px;
+    line-height:var(--rule);
+    color:#4f453d;
+    margin-bottom:var(--rule);
+}
+
+.words p:last-child{margin-bottom:0}
+
+.words p.lead::first-letter{
+    float:left;
+    font-family:var(--display);font-weight:700;
+    font-variation-settings:"opsz" 144,"WONK" 1;
+    font-size:78px;line-height:.76;padding:7px 13px 0 0;color:var(--rust);
+}
+
+.words em{font-style:italic;color:var(--wine)}
+
+
+/* ─────── the two goes at an opening line ───────
+
+   the essay is about being bad at things, so it starts by being
+   bad at starting, in front of you, before the real first line. */
+
+.goes{
+    display:block;margin-bottom:var(--rule);
+    font-family:var(--mono);font-size:9.6px;line-height:2.1;
+    color:#9a8b78;
+}
+
+.goes s{
+    display:block;
+    text-decoration-color:rgba(178,63,46,.55);
+    text-decoration-thickness:1px;
+}
+
+
+/* ─────── the line worth stopping on ───────
+
+   it stays in the sentence it belongs to and gets gone round twice
+   in biro, the way you mark a book you own. it is the one line of
+   the essay that costs the page no height at all. */
+
+.ringed{
+    position:relative;
+    display:inline-block;
+    padding:0 2px;
+    color:var(--ink);
+}
+
+.ringed .ring{
+    position:absolute;
+    left:-14px;right:-14px;top:-10px;bottom:-9px;
+    width:auto;height:auto;
+    overflow:visible;pointer-events:none;
+}
+
+/* the box is stretched to whatever the phrase measures, so the
+   stroke is held at a real width and the dash is normalised to the
+   length of the path rather than to the distorted units */
+.ringed .ring path{
+    fill:none;stroke:var(--red);stroke-width:2.1;
+    stroke-linecap:round;opacity:.6;
+    vector-effect:non-scaling-stroke;
+    stroke-dasharray:1;stroke-dashoffset:1;
+    transition:stroke-dashoffset 1.7s cubic-bezier(.6,.05,.25,1) .3s;
+}
+
+.ringed.set .ring path{stroke-dashoffset:0}
+
+
+/* ─────── what somebody wrote in the margin in red ─────── */
+
+/* nine days, counted the way anybody counts anything.
+
+   it hangs off the paragraph that mentions them rather than off a
+   measured drop from the top, so it stays put when the writing
+   above it reflows or gets added to. */
+.words p.counted{position:relative}
+
+.tally{
+    position:absolute;z-index:4;
+    left:calc(clamp(26px,5.2vw,78px) * -1 + 13px);
+    top:4px;
+    width:26px;height:auto;overflow:visible;
+}
+
+.tally path{
+    fill:none;stroke:var(--red);stroke-width:1.6;
+    stroke-linecap:round;opacity:.5;
+}
+
+/* the note at the very end, in the hand that marked the maths */
+.marked{
+    display:block;margin-top:calc(var(--rule) * 1.2);
+    font-family:var(--hand);font-size:23px;line-height:1.2;
+    color:var(--red);opacity:.82;rotate:-1.6deg;
+}
+
+
+/* ─────── notes in the margin ─────── */
+
+.aside{
+    display:block;
+    margin:0 0 var(--rule);
+    padding:14px 16px;
+    background:var(--cream);
+    box-shadow:var(--d1);
+    rotate:var(--tilt,-1deg);
+    font-family:var(--hand);
+    font-size:18px;line-height:1.45;color:var(--wine);
+}
+
+/* past 1360 the album is wide enough that a note can move out onto
+   the page beside the sheet, where a note added later belongs */
+@media(min-width:1360px){
+    .aside{
+        position:absolute;
+        left:100%;
+        margin:0 0 0 calc(clamp(26px,5.2vw,78px) + 26px);
+        width:clamp(120px,9.5vw,160px);
+        padding:0;background:none;box-shadow:none;
+        font-size:17px;color:#8a6a52;
+    }
+
+    .aside::before{
+        content:"";position:absolute;top:11px;left:-21px;
+        width:15px;height:1px;background:var(--rust);
+    }
+}
+
+
+/* ══════════════════════════════════════════
+   THE SAME WORD, FIVE TIMES
+
+   the middle of the page is the argument rather than a picture of
+   it: one trunk that forks five ways, four of them faint, and the
+   one you are standing on drawn in the colour a teacher marks in.
+   ══════════════════════════════════════════ */
+
+.forks{
+    position:relative;z-index:4;
+    margin:44px auto 38px;
+    width:min(420px,88%);
+    text-align:center;
+}
+
+.forks .tree{display:block;width:100%;height:auto;overflow:visible}
+
+/* the branches are drawn rather than printed, middle one first */
+.forks .tree path{
+    fill:none;stroke:var(--wine);stroke-width:1.4;
+    stroke-linecap:round;stroke-linejoin:round;opacity:.38;
+    stroke-dasharray:1;stroke-dashoffset:1;
+}
+
+.forks.set .tree path{animation:draw 1.3s cubic-bezier(.6,.05,.25,1) forwards}
+.forks.set .tree .b1,
+.forks.set .tree .b5{animation-delay:.34s}
+.forks.set .tree .b2,
+.forks.set .tree .b4{animation-delay:.24s}
+.forks.set .tree .b3{animation-delay:.12s}
+
+/* the one that actually happened */
+.forks .tree path.now{stroke:var(--red);stroke-width:2;opacity:.9}
+
+.forks .tree circle{fill:var(--card);stroke:var(--wine);stroke-width:1.4;opacity:0}
+.forks.set .tree circle{animation:forkIn .6s ease forwards 1.1s}
+.forks .tree circle.now{fill:var(--red);stroke:var(--red)}
+.forks.set .tree circle.now{animation:forkFull .6s ease forwards .95s}
+
+.forks .tree text{font-family:var(--hand);fill:var(--red);font-size:21px;opacity:0}
+.forks.set .tree text{animation:forkFull .7s ease forwards 1.15s}
+.forks .tree text.here{fill:var(--rust);font-size:17px}
+.forks.set .tree text.here{animation:forkIn .7s ease forwards 1.3s}
+
+@keyframes forkIn{to{opacity:.78}}
+@keyframes forkFull{to{opacity:1}}
+
+/* the line the drawing is really about */
+.forks blockquote{
+    display:block;margin:10px auto 0;max-width:32ch;
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(15px,2.1vw,19px);line-height:1.46;
+    color:var(--wine);
+    opacity:0;
+}
+.forks.set blockquote{animation:forkIn .9s ease forwards 1.3s}
+
+.forks cite{
+    display:block;margin-top:10px;
+    font-family:var(--mono);font-style:normal;font-size:8px;
+    letter-spacing:.22em;text-transform:uppercase;color:#8a7d6d;
+    opacity:0;
+}
+.forks.set cite{animation:forkIn .9s ease forwards 1.5s}
+
+
+/* ══════════ the signature ══════════ */
+
+.end{
+    display:block;position:relative;z-index:3;
+    margin-top:calc(var(--rule) * 1.4);text-align:right;
+}
+
+.end i{
+    display:inline-block;
+    font-family:var(--hand);font-style:normal;
+    font-size:30px;line-height:1;color:var(--wine);rotate:-2.5deg;
+}
+
+.end svg{display:block;width:140px;margin:8px 2px 0 auto;overflow:visible}
+.end svg path{fill:none;stroke:var(--rust);stroke-width:1.7;stroke-linecap:round;opacity:.8}
+
+
+/* ══════════ the heart at the end ══════════
+
+   it remembers this browser and nothing leaves the page. no number
+   is shown until LIKE_ENDPOINT is filled in at the bottom, because
+   a per-browser tally is not a real count and should not be dressed
+   up as one. */
+
+.likebox{display:flex;justify-content:center;margin-bottom:32px}
+
+.like{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:11px 18px;
+    background:var(--card);
+    border:1px solid rgba(107,66,48,.26);
+    box-shadow:var(--d1);
+    cursor:pointer;
+    font-family:var(--mono);font-size:7.4px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--wine);
+    rotate:-.8deg;
+    transition:translate .3s cubic-bezier(.2,.8,.2,1),
+               rotate .3s ease, box-shadow .3s ease;
+}
+
+.like:hover{translate:0 -2px;rotate:0deg;box-shadow:var(--d2)}
+.like:focus-visible{outline:2px solid var(--rust);outline-offset:3px}
+
+.like .heart{width:17px;height:16px;overflow:visible;flex:none}
+
+.like .heart path{
+    fill:none;stroke:var(--rust);stroke-width:1.8;
+    stroke-linejoin:round;transition:fill .3s ease;
+}
+
+.like.on .heart path{fill:var(--rust)}
+
+.like .count{font-variant-numeric:tabular-nums}
+
+@keyframes likePop{0%{scale:1}38%{scale:1.26}100%{scale:1}}
+.like.pop .heart{animation:likePop .44s cubic-bezier(.2,.8,.2,1)}
+
+
+/* ══════════ the close ══════════ */
+
+.tail{
+    position:relative;z-index:4;
+    max-width:660px;margin:84px auto 0;padding:0 5vw;text-align:center;
+}
+
+.back{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--mono);font-size:7.4px;
+    letter-spacing:.22em;text-transform:uppercase;
+    color:var(--rust);text-decoration:none;
+}
+
+.back i{width:24px;height:1px;background:var(--rust);font-style:normal;
+    transition:width .4s cubic-bezier(.2,.8,.2,1)}
+
+.back:hover i{width:42px}
+
+.flourish{display:block;width:190px;margin:40px auto 0;overflow:visible}
+
+.flourish path{
+    fill:none;stroke:var(--pink);stroke-width:1.5;stroke-linecap:round;opacity:.85;
+    stroke-dasharray:280;stroke-dashoffset:280;
+    transition:stroke-dashoffset 1.5s cubic-bezier(.6,.05,.25,1) .3s;
+}
+
+.tail.set .flourish path{stroke-dashoffset:0}
+.flourish circle{fill:var(--yellow)}
+
+
+footer{
+    position:relative;z-index:4;
+    margin-top:96px;padding:24px 5vw;
+    border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:7px;
+    letter-spacing:.12em;text-transform:uppercase;color:#7d7060;
+}
+
+footer a{color:inherit}
+
+
+/* ══════════ narrower ══════════ */
+
+@media(max-width:1060px){
+    .seal{width:88px;height:88px;top:126px}
+}
+
+@media(max-width:620px){
+    .masthead{padding-top:110px}
+    .title{max-width:none}
+    .seal{display:none}
+
+    .album{padding:44px 14px 30px}
+    .leaf{padding:44px 14px 56px}
+    .leaf::after{width:96px;height:96px;top:22px;right:6%}
+
+    .sheet{padding:52px 22px 56px;rotate:0deg}
+    .curl{width:34px;height:34px}
+
+    /* the margin is far too narrow on a phone to write in */
+    .tally{display:none}
+
+    .band{margin:52px auto}
+
+    /* five goes will not sit on one line at this width, so they
+       stack into two rows and the ruled line comes out */
+    .tries{flex-wrap:wrap;justify-content:center;
+        gap:14px clamp(14px,6vw,30px);padding-bottom:0}
+    .tries .baseline{display:none}
+
+    .dateline{padding:0 14px}
+    .dateline i{display:none}
+
+    .dust{display:none}
+}
+
+
+/* ══════════ what a phone is asked to draw ══════════ */
+
+@media(pointer:coarse){
+
+    /* two full screen layers recomposited on every pixel of scroll,
+       for something barely visible at this size */
+    body::before,body::after{display:none}
+
+    .sheet::before{-webkit-mask-image:none;mask-image:none;opacity:.6}
+}
+
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition-duration:.01ms!important}
+    .leaf{opacity:1;translate:0}
+    .flourish path,.rule path,.tries .baseline path{stroke-dashoffset:0}
+}
+
+
+
+/* ══════════════════════════════════════════
+   MOVEMENT
+
+   everything below is a layer laid over the finished document.
+   it can be deleted as one block and the page still reads.
+   ══════════════════════════════════════════ */
+
+/* ── the writing settles in as you reach it ── */
+
+.words p,.words .marked,.end{opacity:0;translate:0 18px}
+
+.words p.in,.words .marked.in,.end.in{
+    opacity:1;translate:0 0;
+    transition:opacity .85s ease,translate .95s cubic-bezier(.2,.8,.2,1);
+}
+
+/* ── a marker drawn under the three lines that matter ──
+   painted as a background rather than a box, so it survives a
+   line break instead of falling apart at one */
+
+.sweep{
+    --marker:rgba(178,63,46,.22);
+    background-image:linear-gradient(var(--marker),var(--marker));
+    background-repeat:no-repeat;
+    background-position:0 84%;
+    background-size:0% .46em;
+    transition:background-size .9s cubic-bezier(.6,.05,.25,1) .3s;
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.sweep.in{background-size:100% .46em}
+
+/* ── the sheets lift under the pointer ── */
+
+.sheet{transition:translate .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease}
+.sheet:hover{translate:0 -5px;box-shadow:var(--d3)}
+.tape{transition:translate .45s ease}
+.sheet:hover .tape{translate:0 -2px}
+
+/* ── the lettering round the seal turns, very slowly ── */
+
+.seal text{transform-box:view-box;transform-origin:60px 60px;animation:turn 90s linear infinite}
+
+/* ── a coffee ring, because this page has been on a desk ── */
+
+.stain{
+    position:absolute;pointer-events:none;z-index:2;
+    width:126px;height:126px;border-radius:50%;
+    border:7px solid rgba(140,96,58,.10);
+    box-shadow:inset 0 0 0 2px rgba(140,96,58,.06),
+               0 0 0 1px rgba(140,96,58,.05);
+    opacity:0;transition:opacity 1.6s ease;
+}
+.stain.in{opacity:1}
+
+/* ── doodles in the margins of the page ── */
+
+.album{position:relative}
+
+.margins{position:absolute;inset:0;pointer-events:none;z-index:2}
+
+.doodle{position:absolute;overflow:visible;width:var(--w,84px)}
+
+.doodle path,.doodle circle{
+    fill:none;stroke:var(--wine);stroke-width:1.5;
+    stroke-linecap:round;stroke-linejoin:round;opacity:.3;
+    stroke-dasharray:var(--len,240);stroke-dashoffset:var(--len,240);
+}
+.doodle.in path,.doodle.in circle{animation:draw 2s cubic-bezier(.6,.05,.25,1) forwards}
+
+.d1{top:7%; left:1.6vw; --w:80px;animation:sway 13s ease-in-out infinite}
+.d2{top:25%;right:1.4vw;--w:92px;animation:sway 16s ease-in-out infinite reverse}
+.d3{top:46%;left:1.2vw; --w:64px;animation:sway 11s ease-in-out infinite}
+.d4{top:66%;right:1.8vw;--w:84px;animation:glide 15s ease-in-out infinite}
+.d5{top:86%;left:2vw;   --w:104px;animation:sway 18s ease-in-out infinite}
+
+@keyframes sway{0%,100%{translate:0 0;rotate:-4deg}50%{translate:0 -11px;rotate:4deg}}
+@keyframes glide{0%,100%{translate:0 0;rotate:-6deg}50%{translate:-14px -13px;rotate:6deg}}
+
+/* they are ornament, so they are the first thing to go */
+@media (max-width:1180px){ .margins{display:none} }
+
+@media (prefers-reduced-motion:reduce){
+    .seal text,.doodle{animation:none}
+    .words p,.words .marked,.end{opacity:1;translate:0 0}
+}
+
+</style>
+<noscript><style>
+    .words p,.words .marked,.end{opacity:1;translate:0 0}
+    .sweep{background-size:100% .46em}
+    .doodle path,.doodle circle{stroke-dashoffset:0}
+    .stain{opacity:1}
+</style></noscript>
+
+</head>
+
+<body>
+
+<div class="thread" id="thread" aria-hidden="true"></div>
+<div class="dust" aria-hidden="true"></div>
+
+
+<nav>
+    <a href="index.html" class="mark" aria-label="Home">
+        <svg viewBox="0 0 60 60" aria-hidden="true">
+            <path class="arm" d="M30 30 L30 6"/>
+            <path class="arm" d="M30 30 L50.8 18"/>
+            <path class="arm" d="M30 30 L50.8 42"/>
+            <path class="arm" d="M30 30 L30 54"/>
+            <path class="arm" d="M30 30 L9.2 42"/>
+            <path class="arm" d="M30 30 L9.2 18"/>
+            <circle class="hub" cx="30" cy="30" r="2.6"/>
+        </svg>
+    </a>
+    <div class="links">
+        <a href="index.html">home</a>
+        <a href="blog-topics.html">blog</a>
+        <a href="about.html">about</a>
+        <a href="gallery.html">gallery</a>
+        <a href="index.html#closing">say hi</a>
+    </div>
+</nav>
+
+
+<!-- ══════════ MASTHEAD ══════════ -->
+
+<header class="masthead">
+
+    <h1 class="title">the paradox of choice</h1>
+
+    <p class="caption">
+        Every yes is a hundred quiet nos. I have been counting&nbsp;them.
+    </p>
+
+    <svg class="rule" viewBox="0 0 520 16" aria-hidden="true">
+        <path d="M2 10 C84 2, 140 14, 224 8 C308 2, 372 13, 446 7 C478 4, 502 9, 518 6"/>
+    </svg>
+
+    <svg class="seal" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="ring" cx="60" cy="60" r="54"/>
+        <circle class="ring" cx="60" cy="60" r="46"/>
+        <circle class="pip" cx="60" cy="8" r="3"/>
+        <path id="round" d="M60 108 A48 48 0 1 1 60 12 A48 48 0 1 1 60 108" fill="none"/>
+        <text><textPath href="#round" startOffset="0">&#183; what &#183; if &#183; what &#183; if &#183; what &#183; if &#183; what &#183; if &#183; what &#183; if &#183;</textPath></text>
+    </svg>
+
+</header>
+
+
+<div class="dateline">
+    <span>4 november 2026</span>
+    <i></i>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     THE ALBUM PAGE
+     ══════════════════════════════════════════ -->
+
+<main class="album">
+
+<div class="margins" aria-hidden="true">
+
+    <svg class="doodle d1" viewBox="0 0 78 78" style="--len:290">
+        <path d="M40 40 C40 34, 48 34, 48 41 C48 51, 34 52, 32 40 C29 24, 49 20, 58 34
+                 C70 52, 48 72, 28 64 C4 54, 6 20, 30 8"/>
+    </svg>
+
+    <svg class="doodle d2" viewBox="0 0 92 62" style="--len:230">
+        <path d="M4 52 C22 14, 52 4, 86 18"/>
+        <path style="--len:60" d="M86 18 L70 14 M86 18 L78 32"/>
+    </svg>
+
+    <svg class="doodle d3" viewBox="0 0 66 66" style="--len:210">
+        <path d="M33 5 C36 24, 40 28, 61 33 C40 38, 36 42, 33 61 C30 42, 26 38, 5 33
+                 C26 28, 30 24, 33 5 Z"/>
+    </svg>
+
+    <svg class="doodle d4" viewBox="0 0 84 62" style="--len:200">
+        <path d="M4 34 L80 8 L58 58 L44 38 Z"/>
+        <path style="--len:80" d="M4 34 L44 38 L80 8"/>
+    </svg>
+
+    <svg class="doodle d5" viewBox="0 0 110 30" style="--len:190">
+        <path d="M3 16 C13 3, 24 29, 35 16 C46 3, 57 29, 68 16 C79 3, 90 29, 107 14"/>
+    </svg>
+
+</div>
+
+<div class="leaf" id="leaf">
+
+    <span class="pin a"></span><span class="pin b"></span>
+    <span class="pin c"></span><span class="pin d"></span>
+
+
+    <!-- ─────── the writing, part one ─────── -->
+
+    <article class="sheet" style="--tilt:-.4deg">
+
+        <span class="tape pink" style="top:-14px;left:-16px;rotate:-30deg"></span>
+        <span class="tape sage" style="top:-14px;right:-16px;rotate:29deg"></span>
+        <span class="curl"></span>
+
+        <div class="words">
+
+            <p class="lead">
+                Okay, so I&rsquo;ve been thinking about how we&rsquo;re never really satisfied
+                with our choices.
+            </p>
+
+            <p>
+                And I mean, look at us. We can spend twenty minutes deciding what to eat, finally
+                order something, and then regret not ordering the other thing. It&rsquo;s almost
+                impressive how quickly we can turn a perfectly good decision into a questionable
+                one.
+            </p>
+
+            <p>
+                But I think this happens with much bigger things too.
+            </p>
+
+            <p>
+                There&rsquo;s a concept called the Paradox of Choice, which Barry Schwartz wrote
+                a whole book about. The idea is that more options don&rsquo;t actually make us
+                happier. Past a certain point they just make choosing harder, and they make
+                whatever we end up picking feel slightly worse afterwards.
+            </p>
+
+            <p>
+                The easiest way to see it is Netflix. You sit down with a free evening and
+                nothing at all in the way. Forty minutes later you have scrolled past about two
+                hundred things, watched four trailers, and put on something you have already
+                seen twice. Not because there was nothing good on. Because there was too much
+                good on, and <span class="sweep">choosing one meant switching off all the others</span>.
+            </p>
+
+            <p>
+                And that&rsquo;s the easy version of this, because you can always just watch the
+                other thing tomorrow.
+            </p>
+
+            <p>
+                Every now and then, I wonder what my life would look like if I&rsquo;d made just
+                one decision differently. What if I&rsquo;d chosen a different college? Taken a
+                different opportunity? Said yes to something I turned down? Would I have met the
+                same people? Would I even recognise the person I&rsquo;d become?
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ─────── the fork, and the four it wasn't ─────── -->
+
+    <section class="forks" id="band" aria-label="one choice and the lives it did not become">
+
+        <svg class="tree" viewBox="0 0 640 104" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+
+            <path class="trunk" pathLength="1" d="M320 98 V74"/>
+            <text class="here" x="332" y="96">here</text>
+
+            <path class="b1" pathLength="1" d="M320 74 C320 52, 200 56, 56 30"/>
+            <path class="b2" pathLength="1" d="M320 74 C320 56, 272 48, 188 30"/>
+            <path class="b3 now" pathLength="1" d="M320 74 V30"/>
+            <path class="b4" pathLength="1" d="M320 74 C320 56, 368 48, 452 30"/>
+            <path class="b5" pathLength="1" d="M320 74 C320 52, 440 56, 584 30"/>
+
+            <circle cx="56"  cy="30" r="3"/>
+            <circle cx="188" cy="30" r="3"/>
+            <circle class="now" cx="320" cy="30" r="4.2"/>
+            <circle cx="452" cy="30" r="3"/>
+            <circle cx="584" cy="30" r="3"/>
+
+            <text x="320" y="18" text-anchor="middle">this one</text>
+
+        </svg>
+
+        <blockquote>Life can only be understood backwards; but it must be lived forwards.</blockquote>
+        <cite>S&oslash;ren Kierkegaard</cite>
+
+    </section>
+
+
+    <!-- ─────── the writing, part two ─────── -->
+
+    <article class="sheet" style="--tilt:.5deg">
+
+        <span class="tape blue" style="top:-14px;left:-16px;rotate:-28deg"></span>
+        <span class="tape lilac" style="top:-14px;right:-16px;rotate:31deg"></span>
+        <span class="curl"></span>
+        <span class="stain" style="right:34px;bottom:88px;rotate:-14deg"></span>
+
+        <div class="words">
+
+            <p>
+                It reminds me of <em>The Midnight Library</em> by Matt Haig, where the
+                protagonist gets to explore different versions of her life based on the choices
+                she made. And then there&rsquo;s <em>Everything Everywhere All at Once</em>,
+                which takes the idea of alternate lives to an entirely different level. Both
+                leave you with a rather interesting question: how many versions of ourselves
+                could we have been?
+            </p>
+
+            <p>
+                I sometimes think we romanticise these imaginary versions a little too much.
+            </p>
+
+            <p>
+                There&rsquo;s a version of me who went to a different college, another who moved
+                to a different city, and another who took a completely different path. In my
+                imagination, they&rsquo;re all doing wonderfully.
+            </p>
+
+            <p>
+                But I never picture them having a bad day. I don&rsquo;t imagine their
+                disappointments, their difficult friendships or the things they wish they&rsquo;d
+                done differently.
+            </p>
+
+            <p>
+                I only see the highlights of <span class="sweep">lives that don&rsquo;t even exist</span>.
+            </p>
+
+            <p>
+                And isn&rsquo;t that a little unfair to the life I&rsquo;m actually living?
+            </p>
+
+            <p>
+                The other strange bit is that she wouldn&rsquo;t be me. The version who moved
+                cities isn&rsquo;t sitting in her flat feeling envious of this one. She
+                doesn&rsquo;t exist, and if she did, she&rsquo;d have her own list of lives she
+                didn&rsquo;t pick. The only person doing any of this comparing is the one who
+                ended up here.
+            </p>
+
+            <p>
+                There&rsquo;s another thing I&rsquo;ve noticed. We often give so much importance
+                to big decisions that we forget how much randomness contributes to our stories. A
+                missed bus, an unexpected invitation, sitting next to a particular person or
+                deciding to take a different route home. Sometimes, the smallest things end up
+                becoming part of our favourite memories.
+            </p>
+
+            <p>
+                Which makes me wonder how many important moments in our lives happened without us
+                knowing they were important.
+            </p>
+
+        </div>
+
+    </article>
+
+
+    <!-- ─────── the writing, part three ─────── -->
+
+    <article class="sheet" style="--tilt:-.3deg">
+
+        <span class="tape lilac" style="top:-14px;left:-16px;rotate:-31deg"></span>
+        <span class="tape sage" style="top:-14px;right:-16px;rotate:27deg"></span>
+        <span class="curl"></span>
+
+        <div class="words">
+
+            <p>
+                Of course, not every decision works out. Some choices leave us disappointed, and
+                some make us question ourselves for a long time. But I don&rsquo;t think our past
+                selves deserve all that criticism. They made decisions without having access to
+                the information we have today. It&rsquo;s easy to judge a choice when you already
+                know how the story ends.
+            </p>
+
+            <p>
+                Perhaps that&rsquo;s the difficult part of growing up: accepting that we cannot
+                experience every possibility.
+            </p>
+
+            <p>
+                There will always be a place we didn&rsquo;t visit, a person we didn&rsquo;t meet,
+                a career we didn&rsquo;t pursue or a completely different life we could have
+                imagined. And I suppose that&rsquo;s just how being human works. We have limited
+                time, but an almost unlimited ability to imagine what we could do with it.
+            </p>
+
+            <p>
+                Apparently there are two ways of making a decision. You can go looking for the
+                best possible option, or you can work out what would be good enough and take the
+                first thing that clears it. People in the first group tend to end up with
+                genuinely better outcomes and feel worse about them. Which is, I think, the most
+                annoying fact I have ever read.
+            </p>
+
+            <p>
+                I&rsquo;ve started wondering whether the real skill isn&rsquo;t making the perfect
+                choice, but learning how to live with the one we&rsquo;ve made.
+            </p>
+
+            <p>
+                Not because it&rsquo;s necessarily the best one. Not because everything will
+                magically work out. But because constantly comparing your life to an imaginary
+                alternative is a rather exhausting way to live.
+            </p>
+
+            <p>
+                Maybe the other option wasn&rsquo;t better. <span class="sweep">Maybe it was just different.</span>
+            </p>
+
+            <p>
+                And perhaps somewhere, in another version of the story, there&rsquo;s someone
+                wondering what would&rsquo;ve happened if they&rsquo;d made the choices you made.
+            </p>
+
+            <p>
+                Anyway, I don&rsquo;t have a grand conclusion to this. I&rsquo;m still someone who
+                takes ages to decide what to order and occasionally wonders about completely
+                unnecessary what-ifs.
+            </p>
+
+            <p>
+                But I do hope I learn to spend a little less time imagining the lives I could have
+                lived and a little more time being curious about the one that&rsquo;s unfolding.
+            </p>
+
+            <p>
+                <em>P.S.</em> If you still can&rsquo;t decide what to eat after reading this,
+                please just order the food.
+            </p>
+
+            <span class="marked">it was just different.</span>
+
+        </div>
+
+        <span class="end">
+            <i>Lavannya</i>
+            <svg viewBox="0 0 140 16" aria-hidden="true">
+                <path d="M4 10 C28 3, 48 15, 70 8 C90 2, 112 13, 136 6"/>
+            </svg>
+        </span>
+
+    </article>
+
+</div>
+</main>
+
+<section class="tail" id="tail">
+
+    <div class="likebox">
+        <button class="like" id="like" type="button" aria-pressed="false">
+            <svg class="heart" viewBox="0 0 24 22" aria-hidden="true">
+                <path d="M12 20.4 C12 20.4 1.6 13.9 1.6 7.2 C1.6 3.9 4.2 1.6 7.1 1.6
+                         C9.3 1.6 11.1 2.9 12 4.7 C12.9 2.9 14.7 1.6 16.9 1.6
+                         C19.8 1.6 22.4 3.9 22.4 7.2 C22.4 13.9 12 20.4 12 20.4 Z"/>
+            </svg>
+            <span class="label">like this one</span>
+            <span class="count" hidden></span>
+        </button>
+    </div>
+
+    <a class="back" href="blog-topics.html"><i></i> back to the blogs</a>
+
+    <svg class="flourish" viewBox="0 0 190 26" aria-hidden="true">
+        <path d="M6 13 C34 13, 50 4, 68 13 C80 19, 110 19, 122 13 C140 4, 156 13, 184 13"/>
+        <circle cx="52" cy="13" r="3"/>
+        <circle cx="95" cy="13" r="4"/>
+        <circle cx="138" cy="13" r="3"/>
+    </svg>
+
+</section>
+
+
+<footer>
+    <span>&copy; 2025 Lavannya Daigavane</span>
+    <span>the yapbook &#183; vol. three</span>
+    <span><a href="index.html">back to the front</a></span>
+</footer>
+
+
+<script>
+
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const COARSE  = matchMedia("(pointer:coarse)").matches;
+const LITE    = COARSE || innerWidth <= 820;
+
+
+/* ══════════ dust in the light ══════════ */
+
+if(!reduced && !LITE){
+    const dust = document.querySelector(".dust");
+    for(let i = 0; i < 22; i++){
+        const b = document.createElement("b");
+        const r = 1.5 + Math.random() * 2.5;
+        b.style.left = (Math.random() * 100) + "%";
+        b.style.width = r + "px";
+        b.style.height = r + "px";
+        b.style.opacity = (.25 + Math.random() * .4).toFixed(2);
+        b.style.animationDuration = (26 + Math.random() * 26).toFixed(1) + "s";
+        b.style.animationDelay = (-Math.random() * 40).toFixed(1) + "s";
+        dust.appendChild(b);
+    }
+}
+
+
+/* ══════════ things settle as they come into view ══════════ */
+
+const watcher = new IntersectionObserver(function(rows){
+    rows.forEach(function(row){
+        if(!row.isIntersecting) return;
+        row.target.classList.add("set");
+        watcher.unobserve(row.target);
+    });
+}, {threshold:.04, rootMargin:"0px 0px -40px 0px"});
+
+["#leaf", "#band", "#ring", "#tail"].forEach(function(sel){
+    const n = document.querySelector(sel);
+    if(n) watcher.observe(n);
+});
+
+
+/* ══════════ how far through the essay you are ══════════ */
+
+const thread = document.getElementById("thread");
+let queued = false;
+
+function drawThread(){
+    queued = false;
+    const doc = document.documentElement;
+    const run = doc.scrollHeight - innerHeight;
+    const at = run > 0 ? Math.min(1, Math.max(0, scrollY / run)) : 0;
+    thread.style.transform = "scaleX(" + at + ")";
+}
+
+addEventListener("scroll", function(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(drawThread);
+}, {passive:true});
+
+addEventListener("resize", drawThread, {passive:true});
+drawThread();
+
+
+/* ══════════ the heart at the end ══════════
+
+   LIKE_ENDPOINT is the one line to change. left empty, the heart
+   only ever remembers this browser, and no total is shown, because
+   a count of one person's own taps is not a count. point it at
+   something that returns {"count": n} and the real number appears
+   beside the heart. */
+
+(function(){
+
+    const LIKE_ENDPOINT = "";
+    const KEY = "like:the-paradox-of-choice";
+
+    const btn = document.getElementById("like");
+    if(!btn) return;
+
+    const label = btn.querySelector(".label");
+    const count = btn.querySelector(".count");
+
+    /* storage throws outright in a locked down browser, so every
+       touch of it is wrapped and the button works regardless */
+    function remembered(){
+        try{ return localStorage.getItem(KEY) === "1"; }catch(e){ return false; }
+    }
+
+    function remember(on){
+        try{ on ? localStorage.setItem(KEY,"1") : localStorage.removeItem(KEY); }catch(e){}
+    }
+
+    let on = remembered();
+
+    function paint(){
+        btn.classList.toggle("on", on);
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        label.textContent = on ? "liked" : "like this one";
+    }
+
+    function total(delta){
+        if(!LIKE_ENDPOINT) return;
+        fetch(LIKE_ENDPOINT, delta
+            ? {method:"POST", headers:{"Content-Type":"application/json"},
+               body:JSON.stringify({delta:delta})}
+            : {method:"GET"})
+            .then(function(r){ return r.json(); })
+            .then(function(d){
+                const n = Number(d && d.count);
+                if(!Number.isFinite(n)) return;
+                count.hidden = false;
+                count.textContent = n;
+            })
+            .catch(function(){ /* the heart still works without it */ });
+    }
+
+    btn.addEventListener("click", function(){
+        on = !on;
+        remember(on);
+        paint();
+        btn.classList.remove("pop");
+        void btn.offsetWidth;              /* restart the pop */
+        btn.classList.add("pop");
+        total(on ? 1 : -1);
+    });
+
+    paint();
+    total(0);
+
+})();
+
+
+/* ══════════ the page arrives in pieces ══════════
+
+   one observer for every small thing that should wait its turn.
+   each is released the moment it is reached and then forgotten
+   about, so nothing is still being watched once it has played. */
+
+(function(){
+
+    const bits = document.querySelectorAll(
+        ".words p, .words .marked, .end, .sweep, .doodle, .stain"
+    );
+    if(!bits.length) return;
+
+    if(reduced){
+        bits.forEach(function(b){ b.classList.add("in"); });
+        return;
+    }
+
+    const eye = new IntersectionObserver(function(rows){
+        rows.forEach(function(row){
+            if(!row.isIntersecting) return;
+            row.target.classList.add("in");
+            eye.unobserve(row.target);
+        });
+    }, {threshold:.08, rootMargin:"0px 0px -50px 0px"});
+
+    bits.forEach(function(b){ eye.observe(b); });
+
+})();
+
+</script>
+
+</body>
+</html>
