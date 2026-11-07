@@ -2,18 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lavannya.me/</loc>
-    <priority>1.00</priority>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blog-topics.html</loc>
+    <lastmod>2026-11-05</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blog8.html</loc>
+    <lastmod>2026-11-07</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blog4.html</loc>
+    <lastmod>2026-09-20</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blog3.html</loc>
+    <lastmod>2026-08-10</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blogsecond.html</loc>
+    <lastmod>2025-07-11</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/blog1.html</loc>
+    <lastmod>2025-07-07</lastmod>
   </url>
   <url>
     <loc>https://lavannya.me/about.html</loc>
-    <priority>0.80</priority>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/comrade.html</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/cosmic.html</loc>
+    <lastmod>2026-08-08</lastmod>
   </url>
   <url>
     <loc>https://lavannya.me/gallery.html</loc>
-    <priority>0.80</priority>
+    <lastmod>2026-11-07</lastmod>
   </url>
   <url>
-    <loc>https://lavannya.me/vibes.html</loc>
-    <priority>0.70</priority>
+    <loc>https://lavannya.me/hiraeth.html</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/loveletter.html</loc>
+    <lastmod>2025-07-06</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/moonbloom.html</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/soulthread.html</loc>
+    <lastmod>2026-08-08</lastmod>
+  </url>
+  <url>
+    <loc>https://lavannya.me/vintage.html</loc>
+    <lastmod>2026-08-08</lastmod>
   </url>
 </urlset>
