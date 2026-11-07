@@ -251,6 +251,125 @@ h1 i b{
     .end svg path{stroke-dashoffset:0}
 }
 
+
+
+/* ══════════ the number in the corner of a frame ══════════ */
+
+.slot::after{
+    content:attr(data-n);
+    position:absolute;left:5px;bottom:3px;z-index:2;
+    font-family:var(--mono);font-size:6px;letter-spacing:.16em;
+    color:#fff;mix-blend-mode:difference;
+    opacity:0;transition:opacity .35s ease;
+    pointer-events:none;
+}
+.slot:hover::after{opacity:.9}
+
+
+/* ══════════ everything else steps back ══════════ */
+
+.rows:hover .slot img{filter:grayscale(.42) contrast(1.02) brightness(.78)}
+.rows .slot:hover img{filter:grayscale(0) contrast(1.05) brightness(1)}
+
+.slot{cursor:pointer}
+.slot:focus-visible{outline:1px solid var(--ink);outline-offset:3px;z-index:31}
+
+
+/* ══════════ the line under the name ══════════ */
+
+.sub{
+    margin-top:26px;
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.26em;text-transform:uppercase;
+    color:var(--faint);
+    opacity:0;animation:fadeUp .9s ease forwards .85s;
+}
+
+@keyframes fadeUp{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+
+
+/* ══════════ the cursor says what it does ══════════ */
+
+.cursor::after{
+    content:"open";
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-size:6px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink);
+    opacity:0;transition:opacity .3s ease;
+}
+.cursor.wide::after{opacity:.75}
+
+
+/* ══════════════════════════════════════════
+   THE LIGHTBOX
+
+   the photographs are 60 pixels across on the sheet, which is a
+   contact print, not a picture. this is where you actually look
+   at one.
+   ══════════════════════════════════════════ */
+
+.lightbox[hidden]{display:none}
+
+.lightbox{
+    position:fixed;inset:0;z-index:2000;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(244,239,230,.96);
+    backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);
+    opacity:0;transition:opacity .4s ease;
+}
+.lightbox.on{opacity:1}
+
+.lightbox figure{
+    max-width:88vw;max-height:80svh;
+    display:flex;align-items:center;justify-content:center;
+}
+
+.lightbox img{
+    max-width:88vw;max-height:80svh;
+    width:auto;height:auto;object-fit:contain;display:block;
+    box-shadow:0 24px 60px rgba(27,25,24,.26);
+    scale:.965;opacity:0;
+    transition:scale .55s cubic-bezier(.2,.8,.2,1),opacity .45s ease;
+}
+.lightbox.on img{scale:1;opacity:1}
+.lightbox.turning img{opacity:0;scale:.99;transition:opacity .16s ease,scale .16s ease}
+
+/* the furniture round the edge, all of it hairline */
+.lightbox button{
+    position:absolute;z-index:2;
+    background:none;border:0;cursor:pointer;
+    font-family:var(--mono);font-size:8px;
+    letter-spacing:.24em;text-transform:uppercase;
+    color:var(--ink);opacity:.55;
+    padding:14px 18px;
+    transition:opacity .3s ease;
+}
+.lightbox button:hover{opacity:1}
+.lightbox button:focus-visible{outline:1px solid var(--ink);outline-offset:2px;opacity:1}
+
+.lb-shut{top:14px;right:3vw}
+.lb-back{left:3vw;top:50%;translate:0 -50%}
+.lb-next{right:3vw;top:50%;translate:0 -50%}
+
+.lb-count{
+    position:absolute;bottom:22px;left:50%;translate:-50% 0;
+    font-family:var(--mono);font-size:8px;letter-spacing:.26em;
+    color:var(--faint);
+}
+
+@media(max-width:700px){
+    .lb-back,.lb-next{top:auto;bottom:16px;translate:0 0}
+    .lb-back{left:5vw}
+    .lb-next{right:5vw}
+    .lightbox figure,.lightbox img{max-width:92vw;max-height:70svh}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .lightbox,.lightbox img{transition:none}
+    .sub{opacity:1;animation:none}
+}
+
 </style>
 </head>
 
@@ -267,6 +386,7 @@ h1 i b{
     <h1 aria-label="gallery">
         <i style="--n:0"><b>g</b></i><i style="--n:1"><b>a</b></i><i style="--n:2"><b>l</b></i><i style="--n:3"><b>l</b></i><i style="--n:4"><b>e</b></i><i style="--n:5"><b>r</b></i><i style="--n:6"><b>y</b></i>
     </h1>
+    <p class="sub">forty photographs &#183; open any one</p>
 </header>
 
 
@@ -307,6 +427,21 @@ h1 i b{
         <div class="slot"><img src="images/gallery-23.jpeg" alt="" loading="lazy"></div>
         <div class="slot"><img src="images/gallery-24.jpeg" alt="" loading="lazy"></div>
         <div class="slot"><img src="images/gallery-25.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-26.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-27.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-28.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-29.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-30.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-31.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-32.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-33.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-34.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-35.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-36.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-37.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-38.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-39.jpeg" alt="" loading="lazy"></div>
+        <div class="slot"><img src="images/gallery-40.jpeg" alt="" loading="lazy"></div>
 
     </div>
 </main>
@@ -328,6 +463,17 @@ h1 i b{
 </section>
 
 
+<!-- ══════════ where you actually look at one ══════════ -->
+
+<div class="lightbox" id="lightbox" hidden>
+    <button class="lb-shut" id="lbShut" type="button">close</button>
+    <button class="lb-back" id="lbBack" type="button" aria-label="previous">&#8592;</button>
+    <button class="lb-next" id="lbNext" type="button" aria-label="next">&#8594;</button>
+    <figure><img id="lbImg" alt=""></figure>
+    <span class="lb-count" id="lbCount"></span>
+</div>
+
+
 <script>
 
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -335,8 +481,12 @@ const FINE = matchMedia("(pointer:fine)").matches && innerWidth > 900;
 
 const slots = Array.prototype.slice.call(document.querySelectorAll(".slot"));
 
-/* the stagger runs across the grid in reading order */
-slots.forEach(function(s, i){ s.style.setProperty("--i", i); });
+/* the stagger runs across the grid in reading order, and each
+   frame carries its own number for the corner and the counter */
+slots.forEach(function(s, i){
+    s.style.setProperty("--i", i);
+    s.dataset.n = String(i + 1).padStart(2, "0");
+});
 
 
 /* ══════════ it develops as it comes into view ══════════ */
@@ -398,6 +548,121 @@ if(FINE && !reduced){
 }else{
     document.getElementById("cursor").remove();
 }
+
+
+/* ══════════════════════════════════════════
+   THE LIGHTBOX
+   ══════════════════════════════════════════ */
+
+(function(){
+
+    const box   = document.getElementById("lightbox");
+    const img   = document.getElementById("lbImg");
+    const count = document.getElementById("lbCount");
+    const shut  = document.getElementById("lbShut");
+    const back  = document.getElementById("lbBack");
+    const next  = document.getElementById("lbNext");
+
+    const srcs = slots.map(function(s){
+        const i = s.querySelector("img");
+        return i ? i.getAttribute("src") : "";
+    });
+
+    let at = -1;
+    let cameFrom = null;
+
+    /* the frames are divs, so they are given the keyboard and the
+       semantics of a button here rather than in the markup */
+    slots.forEach(function(s, i){
+        s.setAttribute("role", "button");
+        s.setAttribute("tabindex", "0");
+        s.setAttribute("aria-label", "open photograph " + (i + 1));
+        s.addEventListener("click", function(){ open(i); });
+        s.addEventListener("keydown", function(e){
+            if(e.key !== "Enter" && e.key !== " ") return;
+            e.preventDefault();
+            open(i);
+        });
+    });
+
+    /* the one either side is fetched early, so a turn is instant */
+    function warm(i){
+        [i - 1, i + 1].forEach(function(n){
+            if(n < 0 || n >= srcs.length) return;
+            const p = new Image();
+            p.src = srcs[n];
+        });
+    }
+
+    function show(i){
+        at = (i + srcs.length) % srcs.length;
+        img.src = srcs[at];
+        img.alt = "photograph " + (at + 1) + " of " + srcs.length;
+        count.textContent = String(at + 1).padStart(2, "0") + " / " + srcs.length;
+        warm(at);
+    }
+
+    function open(i){
+        cameFrom = slots[i];
+        box.hidden = false;
+        show(i);
+        document.body.style.overflow = "hidden";
+        requestAnimationFrame(function(){ box.classList.add("on"); });
+        shut.focus();
+    }
+
+    function close(){
+        box.classList.remove("on");
+        document.body.style.overflow = "";
+        const done = function(){
+            box.hidden = true;
+            box.removeEventListener("transitionend", done);
+        };
+        if(reduced){ done(); } else { box.addEventListener("transitionend", done); }
+        if(cameFrom) cameFrom.focus();
+    }
+
+    /* the picture is faded down before it is swapped, so you never
+       catch the next one half loaded */
+    function turn(step){
+        if(reduced){ show(at + step); return; }
+        box.classList.add("turning");
+        setTimeout(function(){
+            show(at + step);
+            box.classList.remove("turning");
+        }, 160);
+    }
+
+    shut.addEventListener("click", close);
+    back.addEventListener("click", function(){ turn(-1); });
+    next.addEventListener("click", function(){ turn(1); });
+
+    /* a click on the paper behind the photograph closes it */
+    box.addEventListener("click", function(e){
+        if(e.target === box || e.target.tagName === "FIGURE") close();
+    });
+
+    addEventListener("keydown", function(e){
+        if(box.hidden) return;
+        if(e.key === "Escape")     { close(); }
+        else if(e.key === "ArrowLeft")  { turn(-1); }
+        else if(e.key === "ArrowRight") { turn(1); }
+    });
+
+    /* and a swipe, on a phone */
+    let x0 = null;
+    box.addEventListener("touchstart", function(e){
+        x0 = e.changedTouches[0].clientX;
+    }, {passive:true});
+
+    box.addEventListener("touchend", function(e){
+        if(x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        x0 = null;
+        if(Math.abs(dx) > 46) turn(dx < 0 ? 1 : -1);
+    }, {passive:true});
+
+})();
 
 
 </script>
